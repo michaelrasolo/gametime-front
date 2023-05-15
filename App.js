@@ -45,10 +45,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    padding:16,
     flex: 1,
     backgroundColor: '#242424',
     alignItems: 'center',
     justifyContent: 'center',
-  }, 
-  text : {color:'white'},
+  }, text : {color:'white'},
 });
