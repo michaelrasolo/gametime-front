@@ -24,7 +24,6 @@ const GreyButton = ({ title, width }) => {
       <TouchableOpacity     style={[styles.button, platformShadow(),{ width }]} >
       <Text style={styles.text}>{title}</Text>
       </TouchableOpacity>
-
   );
 };
 
