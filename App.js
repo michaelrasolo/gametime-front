@@ -5,18 +5,16 @@ import RadioButtons from './components/RadioButtons'
 export default function App() {
   return (
     <View style={styles.container}>
-      <RadioButtons />
-      <Text>Open up App.js to start working on your app!</Text>
+      <RadioButtons leftTitle='1' midTitle='2'rightTitle='3'/>
       <StatusBar style="auto" />
     </View>
-  );
-}
+)}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#242424',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }, text : {color:'white'}
 });

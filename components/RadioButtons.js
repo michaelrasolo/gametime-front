@@ -3,41 +3,59 @@ import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 
 
-const RadioButtons = () => {
+const RadioButtons = (props) => {
   const [isPressedLeft, setIsPressedLeft] = useState(false);
   const [isPressedMid, setIsPressedMid] = useState(false);
   const [isPressedRight, setIsPressedRight] = useState(false);
 
 
+  const platformShadow = () => {
+    if (Platform.OS === 'android') {
+      return {
+        elevation: 4, // Android box shadow
+      };
+    } else if (Platform.OS === 'ios') {
+      return {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+      };
+    }
+  };
+
   const handlePressLeft = () => {
-    setIsPressedLeft(!isPressedLeft);
+    setIsPressedLeft(true);
     setIsPressedMid(false);
     setIsPressedRight(false);
   }
 
   const handlePressMid = () => {
     setIsPressedLeft(false);
-    setIsPressedMid(!isPressedMid);
+    setIsPressedMid(true);
     setIsPressedRight(false);
   }
 
   const handlePressRight = () => {
     setIsPressedLeft(false);
     setIsPressedMid(false);
-    setIsPressedRight(!isPressedRight);
+    setIsPressedRight(true);
   }
 
-  // [styles.button, isDisabled ? styles.disabled : null]
+  
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => handlePressLeft()} style={[styles.UnpressedButtons, isPressedLeft ? styles.pressedButton : styles.UnpressedButtons]}> 
-        <Text style={[styles.unpressedText, isPressedLeft ? styles.pressedText : styles.unpressedText]} >Rookie</Text>
+      <TouchableOpacity onPress={() => handlePressLeft()} style={[[styles.UnpressedButtons, isPressedLeft ? styles.pressedButton : styles.UnpressedButtons],platformShadow()]}> 
+        <Text style={[styles.unpressedText, isPressedLeft ? styles.pressedText : styles.unpressedText]} >{props.leftTitle}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlePressMid()} style={[styles.UnpressedButtons, isPressedMid ? styles.pressedButton : styles.UnpressedButtons]} >
-        <Text style={[styles.unpressedText, isPressedMid ? styles.pressedText : styles.unpressedText]} >Gamer</Text>
+      <TouchableOpacity onPress={() => handlePressMid()} style={[[styles.UnpressedButtons, isPressedMid ? styles.pressedButton : styles.UnpressedButtons],platformShadow()]} >
+        <Text style={[styles.unpressedText, isPressedMid ? styles.pressedText : styles.unpressedText]} >{props.midTitle}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlePressRight()} style={[styles.UnpressedButtons, isPressedRight ? styles.pressedButton : styles.UnpressedButtons]} >
-        <Text style={[styles.unpressedText, isPressedRight ? styles.pressedText : styles.unpressedText]} >All-Star</Text>
+      <TouchableOpacity onPress={() => handlePressRight()} style={[styles.UnpressedButtons, isPressedRight ? styles.pressedButton : styles.UnpressedButtons,platformShadow()]} >
+        <Text style={[styles.unpressedText, isPressedRight ? styles.pressedText : styles.unpressedText]} >{props.rightTitle}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -51,7 +69,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         padding: 10,
-        backgroundColor:'blue'
+        backgroundColor:'#242424'
       },
       UnpressedButtons : {
         borderRadius: 30,
