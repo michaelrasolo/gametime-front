@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Inputs from './components/Inputs';
+import PasswordInput from './components/PasswordInput';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Inputs name='Name' style={styles.input}/>
+      <PasswordInput name='Name' style={styles.input}/>
     </View>
   );
 }
@@ -16,5 +16,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#242424',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }, text : {color:'white'}
 });

@@ -15,7 +15,8 @@ export default Inputs
 const styles = StyleSheet.create({
 input: {
     height: 30,
-    width: '100%'
+    width: '100%',
+    color: '#fff',
   },
   container: {
     height: 50,
