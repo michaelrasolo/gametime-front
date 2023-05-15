@@ -7,9 +7,9 @@ export default function App() {
   return (
     <View  
     style={styles.container}>
+       <SearchBar name="Saisis ta ville"/>
       <OrangeButton title="Valider" width="60%"/>
-      <GreyButton title="Valider" width="60%"/>
-<SearchBar name="saisis ta ville"/>
+      {/* <GreyButton title="Valider" width="60%"/> */}
     </View>
   );
 }
@@ -17,8 +17,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop:200,
     backgroundColor: '#242424',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   }, text : {color:'white'}
 });
