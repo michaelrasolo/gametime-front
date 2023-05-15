@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import OrangeButton from './components/OrangeButton';
-import GreyButton from './components/GreyButton';
-import SearchBar from './components/SearchBar';
+import GameCard from './components/GameCard';
+import RadioButtons from './components/RadioButtons'
+
 export default function App() {
   return (
     <View  
@@ -11,11 +11,11 @@ export default function App() {
       <OrangeButton title="Valider" width="60%"/>
       {/* <GreyButton title="Valider" width="60%"/> */}
     </View>
-  );
-}
+)}
 
 const styles = StyleSheet.create({
   container: {
+    padding:16,
     flex: 1,
     paddingTop:200,
     backgroundColor: '#242424',
