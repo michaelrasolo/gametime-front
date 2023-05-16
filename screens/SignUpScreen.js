@@ -11,12 +11,14 @@ export default function SignUpScreen({ navigation }) {
     <View style={styles.header}>
      <HeaderLogo/>
     </View>
-    <View style={styles.input}>
+    <View>
         <Text style={styles.text}>S'inscrire avec l'email</Text>
+    </View>
+    <View style={styles.input}>
         <Inputs name='Email' placeholder='Email' height={50} width={"60%"}/>
         <Inputs name='Téléphone' placeholder='Téléphone' height={50} width={"60%"}/>
         <PasswordInput name='Mot de passe' placeholder='Mot de passe' height={50} width={"60%"} />
-        <OrangeButton title='Créer mon compte' width={'55%'} />
+        <OrangeButton title='Créer mon compte' width={'55%'} onPress={() => navigation.navigate('TabNavigator')}/>
     </View>
     </View>
  );
