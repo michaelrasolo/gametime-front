@@ -22,7 +22,7 @@ function PasswordInput(props){
 
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, { width: props.width, height: props.height } ]}>
             <View style={styles.left}>
                 <Text style={styles.text}>{props.name}</Text>
                 <TextInput style={styles.input} placeholder={props.name} placeholderTextColor='#B0B0B0' secureTextEntry={secureTextEntry}/>
