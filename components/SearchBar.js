@@ -128,7 +128,7 @@ const SearchBar = (props) => {
                         </View>
                     )}
                 </View>
-                <View style={styles.bottomRightContainer}>
+                <View style={styles.bottomRightContainer}> 
                     <FontAwesome style={styles.icon} name="clock-o" size={30} color="white" />
 
                     <TouchableOpacity onPress={showTimePicker}>
