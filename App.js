@@ -9,8 +9,28 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { Provider } from 'react-redux';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+//import storage from 'redux-persist/lib/storage';
+import asyncStorage from "@react-native-async-storage/async-storage";
+
+import user from './reducers/user';
+
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SignUpScreen from './screens/SignUpScreen';
+
+const reducers = combineReducers({ user });
+
+const persistConfig = { key: 'GameTime', storage: asyncStorage };
+const store = configureStore({
+  reducer: persistReducer(persistConfig, reducers),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
+ });
+
+ 
+const persistor = persistStore(store);
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -53,13 +73,17 @@ export default function App() {
     //   <RadioButtons leftTitle='1' midTitle='2'rightTitle='3'/>
     //   <StatusBar style="auto" />
     // </View>
-<NavigationContainer>
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="SignUp" component={SignUpScreen} />
-    <Stack.Screen name="TabNavigator" component={TabNavigator} />
-  </Stack.Navigator>
-</NavigationContainer>
-)}
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
+    </Provider>
+  );}
 
 const styles = StyleSheet.create({
   container: {
