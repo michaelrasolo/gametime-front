@@ -22,7 +22,7 @@ export default function App() {
        if (route.name === 'Search') {
          iconName = 'search';
        } else if (route.name === 'Session') {
-         iconName = 'circle';
+         iconName = 'basketball-ball';
        } else if (route.name === 'Favorite') {
          iconName = 'heart';
        } else if (route.name === 'Profil') {

@@ -26,20 +26,14 @@
     "moment": "^2.29.4",
     "react": "18.2.0",
     "react-native": "0.71.7",
-<<<<<<< HEAD
-<<<<<<< HEAD
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
     "react-native-svg": "^13.9.0",
-=======
     "react-native-ionicons": "^4.x",
     "react-native-svg": "13.4.0",
->>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
-=======
     "react-native-calendars": "^1.1297.0",
     "react-native-fontawesome": "^7.0.0",
     "react-native-modal-datetime-picker": "^15.0.1",
->>>>>>> 82201c52d1f32e871beb86ea30dc2232c4176d3d
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0"
   },

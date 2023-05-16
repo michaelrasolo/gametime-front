@@ -1,15 +1,8 @@
 Arguments: 
-<<<<<<< HEAD
-  /usr/local/bin/node /usr/local/bin/yarn add moment/locale/fr
+  C:\Program Files\nodejs\node.exe C:\Users\madra\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install
 
 PATH: 
-  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
-=======
-  C:\Program Files\nodejs\node.exe C:\Users\Julien\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install
-
-PATH: 
-  C:\Users\Julien\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Julien\bin;C:\Program Files\Zulu\zulu-18\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\dotnet;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Users\Julien\AppData\Local\Microsoft\WindowsApps;C:\Users\Julien\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Julien\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
->>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
+  C:\Users\madra\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\madra\bin;C:\Python311\Scripts;C:\Python311;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Users\madra\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\Brackets;C:\Users\madra\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\madra\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.22.19
@@ -18,29 +11,15 @@ Node version:
   18.15.0
 
 Platform: 
-  darwin x64
+  win32 x64
 
 Trace: 
-<<<<<<< HEAD
-  Error: https://registry.yarnpkg.com/moment%2flocale/fr: Request "https://registry.yarnpkg.com/moment%2flocale/fr" returned a 405
-      at params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66154:18)
-      at self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140890:22)
-      at Request.emit (node:events:513:28)
-      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141862:10)
-      at Request.emit (node:events:513:28)
-      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141784:12)
-      at Object.onceWrapper (node:events:627:28)
-      at IncomingMessage.emit (node:events:525:35)
-      at endReadableNT (node:internal/streams/readable:1359:12)
-      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
-=======
-  SyntaxError: C:\Users\Julien\Downloads\GameTime\gametime-front\package.json: Unexpected token < in JSON at position 806
+  SyntaxError: C:\Users\madra\OneDrive\Bureau\Game Time\gametime-front\package.json: Unexpected token < in JSON at position 897
       at JSON.parse (<anonymous>)
-      at C:\Users\Julien\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1629:59
+      at C:\Users\madra\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1629:59
       at Generator.next (<anonymous>)
-      at step (C:\Users\Julien\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
-      at C:\Users\Julien\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
->>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
+      at step (C:\Users\madra\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\madra\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
 
 npm manifest: 
   {
@@ -56,12 +35,11 @@ npm manifest:
     "dependencies": {
       "@emotion/react": "^11.11.0",
       "@emotion/styled": "^11.11.0",
-<<<<<<< HEAD
-=======
       "@fortawesome/fontawesome-svg-core": "^6.4.0",
       "@fortawesome/react-native-fontawesome": "^0.3.0",
->>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
+      "@mui/icons-material": "^5.11.16",
       "@mui/material": "^5.13.0",
+      "@react-native-community/datetimepicker": "^7.1.0",
       "@react-navigation/bottom-tabs": "6",
       "@react-navigation/native": "6",
       "@react-navigation/native-stack": "6",
@@ -69,22 +47,23 @@ npm manifest:
       "expo": "~48.0.15",
       "expo-linear-gradient": "~12.1.2",
       "expo-status-bar": "~1.4.4",
-<<<<<<< HEAD
       "moment": "^2.29.4",
       "react": "18.2.0",
       "react-native": "0.71.7",
-      "react-native-calendars": "^1.1297.0",
-      "react-native-fontawesome": "^7.0.0",
-=======
-      "fontawesome": "^5.6.3",
-      "react": "18.2.0",
-      "react-native": "0.71.7",
   <<<<<<< HEAD
+  <<<<<<< HEAD
+      "react-native-safe-area-context": "4.5.0",
+      "react-native-screens": "~3.20.0",
       "react-native-svg": "^13.9.0",
   =======
+      "react-native-ionicons": "^4.x",
+      "react-native-svg": "13.4.0",
+  >>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
+  =======
+      "react-native-calendars": "^1.1297.0",
       "react-native-fontawesome": "^7.0.0",
-  >>>>>>> 9ba195722fcbd41d048e6f8c8386b87de18a5b16
->>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
+      "react-native-modal-datetime-picker": "^15.0.1",
+  >>>>>>> 82201c52d1f32e871beb86ea30dc2232c4176d3d
       "react-redux": "^8.0.5",
       "redux-persist": "^6.0.0"
     },
@@ -1585,19 +1564,19 @@ Lockfile:
   
   "@fortawesome/fontawesome-common-types@6.4.0":
     version "6.4.0"
-    resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.4.0.tgz#88da2b70d6ca18aaa6ed3687832e11f39e80624b"
+    resolved "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.4.0.tgz"
     integrity sha512-HNii132xfomg5QVZw0HwXXpN22s7VBHQBv9CeOu9tfJnhsWQNd2lmTNi8CSrnw5B+5YOmzu1UoPAyxaXsJ6RgQ==
   
   "@fortawesome/fontawesome-svg-core@^6.4.0":
     version "6.4.0"
-    resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.4.0.tgz#3727552eff9179506e9203d72feb5b1063c11a21"
+    resolved "https://registry.npmjs.org/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.4.0.tgz"
     integrity sha512-Bertv8xOiVELz5raB2FlXDPKt+m94MQ3JgDfsVbrqNpLU9+UE2E18GKjLKw+d3XbeYPqg1pzyQKGsrzbw+pPaw==
     dependencies:
       "@fortawesome/fontawesome-common-types" "6.4.0"
   
   "@fortawesome/react-native-fontawesome@^0.3.0":
     version "0.3.0"
-    resolved "https://registry.yarnpkg.com/@fortawesome/react-native-fontawesome/-/react-native-fontawesome-0.3.0.tgz#b59c45cdae2451d15f826f937d6e1a6e9dca0c74"
+    resolved "https://registry.npmjs.org/@fortawesome/react-native-fontawesome/-/react-native-fontawesome-0.3.0.tgz"
     integrity sha512-wSfetdK4+b/pvPbM2v+bZ5hfNlwtk9l3QuJo59sbMrxJalfX7BuF2WsSIWMSxfWwSsbOtY4+TUs6uw/rE59NJA==
     dependencies:
       humps "^2.0.1"
@@ -1758,6 +1737,13 @@ Lockfile:
     version "5.13.0"
     resolved "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-5.13.0.tgz"
     integrity sha512-5nXz2k8Rv2ZjtQY6kXirJVyn2+ODaQuAJmXSJtLDUQDKWp3PFUj6j3bILqR0JGOs9R5ejgwz3crLKsl6GwjwkQ==
+  
+  "@mui/icons-material@^5.11.16":
+    version "5.11.16"
+    resolved "https://registry.npmjs.org/@mui/icons-material/-/icons-material-5.11.16.tgz"
+    integrity sha512-oKkx9z9Kwg40NtcIajF9uOXhxiyTZrrm9nmIJ4UjkU2IdHpd4QVLbCc/5hZN/y0C6qzi2Zlxyr9TGddQx2vx2A==
+    dependencies:
+      "@babel/runtime" "^7.21.0"
   
   "@mui/material@^5.13.0":
     version "5.13.0"
@@ -2029,6 +2015,13 @@ Lockfile:
       graceful-fs "^4.1.3"
       prompts "^2.4.0"
       semver "^6.3.0"
+  
+  "@react-native-community/datetimepicker@^7.1.0":
+    version "7.1.0"
+    resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-7.1.0.tgz#627c2be65256c87b25bef0ca373e0d2aae69ece5"
+    integrity sha512-bXK1/UnutKgJMbHKcbh6TQN3GmzOWROo6Hc9z6tfVG6KIwq5MrdvxZTFJA97PB6xwW8p3v9ddkaSfkFa1pelPA==
+    dependencies:
+      invariant "^2.2.4"
   
   "@react-native/assets@1.0.0":
     version "1.0.0"
@@ -2675,7 +2668,7 @@ Lockfile:
   
   boolbase@^1.0.0:
     version "1.0.0"
-    resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
+    resolved "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz"
     integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
   
   bplist-creator@0.1.0:
@@ -3232,11 +3225,9 @@ Lockfile:
     resolved "https://registry.npmjs.org/crypto-random-string/-/crypto-random-string-2.0.0.tgz"
     integrity sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==
   
-<<<<<<< HEAD
-=======
   css-select@^5.1.0:
     version "5.1.0"
-    resolved "https://registry.yarnpkg.com/css-select/-/css-select-5.1.0.tgz#b8ebd6554c3637ccc76688804ad3f6a6fdaea8a6"
+    resolved "https://registry.npmjs.org/css-select/-/css-select-5.1.0.tgz"
     integrity sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==
     dependencies:
       boolbase "^1.0.0"
@@ -3247,7 +3238,7 @@ Lockfile:
   
   css-tree@^1.1.3:
     version "1.1.3"
-    resolved "https://registry.yarnpkg.com/css-tree/-/css-tree-1.1.3.tgz#eb4870fb6fd7707327ec95c2ff2ab09b5e8db91d"
+    resolved "https://registry.npmjs.org/css-tree/-/css-tree-1.1.3.tgz"
     integrity sha512-tRpdppF7TRazZrjJ6v3stzv93qxRcSsFmW6cX0Zm2NVKpxE1WV1HblnghVv9TreireHkqI/VDEsfolRF1p6y7Q==
     dependencies:
       mdn-data "2.0.14"
@@ -3255,10 +3246,9 @@ Lockfile:
   
   css-what@^6.1.0:
     version "6.1.0"
-    resolved "https://registry.yarnpkg.com/css-what/-/css-what-6.1.0.tgz#fb5effcf76f1ddea2c81bdfaa4de44e79bac70f4"
+    resolved "https://registry.npmjs.org/css-what/-/css-what-6.1.0.tgz"
     integrity sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==
   
->>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
   csstype@^3.0.2, csstype@^3.1.2:
     version "3.1.2"
     resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.2.tgz"
@@ -3415,11 +3405,9 @@ Lockfile:
       "@babel/runtime" "^7.8.7"
       csstype "^3.0.2"
   
-<<<<<<< HEAD
-=======
   dom-serializer@^2.0.0:
     version "2.0.0"
-    resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-2.0.0.tgz#e41b802e1eedf9f6cae183ce5e622d789d7d8e53"
+    resolved "https://registry.npmjs.org/dom-serializer/-/dom-serializer-2.0.0.tgz"
     integrity sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==
     dependencies:
       domelementtype "^2.3.0"
@@ -3428,26 +3416,25 @@ Lockfile:
   
   domelementtype@^2.3.0:
     version "2.3.0"
-    resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-2.3.0.tgz#5c45e8e869952626331d7aab326d01daf65d589d"
+    resolved "https://registry.npmjs.org/domelementtype/-/domelementtype-2.3.0.tgz"
     integrity sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==
   
   domhandler@^5.0.2, domhandler@^5.0.3:
     version "5.0.3"
-    resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-5.0.3.tgz#cc385f7f751f1d1fc650c21374804254538c7d31"
+    resolved "https://registry.npmjs.org/domhandler/-/domhandler-5.0.3.tgz"
     integrity sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==
     dependencies:
       domelementtype "^2.3.0"
   
   domutils@^3.0.1:
     version "3.1.0"
-    resolved "https://registry.yarnpkg.com/domutils/-/domutils-3.1.0.tgz#c47f551278d3dc4b0b1ab8cbb42d751a6f0d824e"
+    resolved "https://registry.npmjs.org/domutils/-/domutils-3.1.0.tgz"
     integrity sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==
     dependencies:
       dom-serializer "^2.0.0"
       domelementtype "^2.3.0"
       domhandler "^5.0.3"
   
->>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
   ee-first@1.1.1:
     version "1.1.1"
     resolved "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz"
@@ -3484,7 +3471,7 @@ Lockfile:
   
   entities@^4.2.0:
     version "4.5.0"
-    resolved "https://registry.yarnpkg.com/entities/-/entities-4.5.0.tgz#5d268ea5e7113ec74c4d033b79ea5a35a488fb48"
+    resolved "https://registry.npmjs.org/entities/-/entities-4.5.0.tgz"
     integrity sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==
   
   env-editor@^0.4.1:
@@ -3647,7 +3634,7 @@ Lockfile:
   
   expo-linear-gradient@~12.1.2:
     version "12.1.2"
-    resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-12.1.2.tgz#25e352b179a73fb7c2de3c1bc48186557e445348"
+    resolved "https://registry.npmjs.org/expo-linear-gradient/-/expo-linear-gradient-12.1.2.tgz"
     integrity sha512-e1d6Hq5qsRL8sWutrOuQhuir4vHiRJ1PmvDIL8P33mt51Y8VFTQjTG/mr5qJlT8lUD/ADJfaBLzV7SNqSuDTLQ==
   
   expo-modules-autolinking@1.2.0:
@@ -3910,7 +3897,7 @@ Lockfile:
   
   fontawesome@^5.6.3:
     version "5.6.3"
-    resolved "https://registry.yarnpkg.com/fontawesome/-/fontawesome-5.6.3.tgz#73f0b865fa2b0b384e69d531c05a02c643b72f95"
+    resolved "https://registry.npmjs.org/fontawesome/-/fontawesome-5.6.3.tgz"
     integrity sha512-FCc+CawwsJWWprVEg9X14yI7zI+l9YVAyhzgu70qwGeDn0tLLDH/dVfqgij72g4BBGgLGfK2qnvFGAmYUkhaWg==
   
   fontfaceobserver@^2.1.0:
@@ -4230,7 +4217,7 @@ Lockfile:
   
   humps@^2.0.1:
     version "2.0.1"
-    resolved "https://registry.yarnpkg.com/humps/-/humps-2.0.1.tgz#dd02ea6081bd0568dc5d073184463957ba9ef9aa"
+    resolved "https://registry.npmjs.org/humps/-/humps-2.0.1.tgz"
     integrity sha512-E0eIbrFWUhwfXJmsbdjRQFQPrl5pTEoKlz163j1mTqqUnU9PgR4AgB8AIITzuB3vLBdxZXyZ9TDIrwB2OASz4g==
   
   iconv-lite@0.4.24:
@@ -4995,7 +4982,7 @@ Lockfile:
   
   mdn-data@2.0.14:
     version "2.0.14"
-    resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.14.tgz#7113fc4281917d63ce29b43446f701e68c25ba50"
+    resolved "https://registry.npmjs.org/mdn-data/-/mdn-data-2.0.14.tgz"
     integrity sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==
   
   media-typer@0.3.0:
@@ -5595,7 +5582,7 @@ Lockfile:
   
   nth-check@^2.0.1:
     version "2.1.1"
-    resolved "https://registry.yarnpkg.com/nth-check/-/nth-check-2.1.1.tgz#c9eab428effce36cd6b92c924bdb000ef1f1ed1d"
+    resolved "https://registry.npmjs.org/nth-check/-/nth-check-2.1.1.tgz"
     integrity sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==
     dependencies:
       boolbase "^1.0.0"
@@ -5999,11 +5986,11 @@ Lockfile:
       kleur "^3.0.3"
       sisteransi "^1.0.5"
   
-<<<<<<< HEAD
-  prop-types@*, prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.8.1:
-=======
+  <<<<<<< HEAD
+  prop-types@*, prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+  =======
   prop-types@*, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
->>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
+  >>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
     version "15.8.1"
     resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
     integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -6092,6 +6079,11 @@ Lockfile:
       shell-quote "^1.6.1"
       ws "^7"
   
+  react-freeze@^1.0.0:
+    version "1.0.3"
+    resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.3.tgz#5e3ca90e682fed1d73a7cb50c2c7402b3e85618d"
+    integrity sha512-ZnXwLQnGzrDpHBHiC56TXFXvmolPeMjTn1UOm610M4EXGzbEDR7oOIyS2ZiItgbs6eZc4oU/a0hpk8PrcKvv5g==
+  
   "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^18.0.0, react-is@^18.2.0:
     version "18.2.0"
     resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
@@ -6142,20 +6134,53 @@ Lockfile:
     resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.18.tgz"
     integrity sha512-7F6bD7B8Xsn3JllxcwHhFcsl9aHIig47+3eN4IHFNqfLhZr++3ElDrcqfMzugM+niWbaMi7bJ0kAkAL8eCpdWg==
   
-<<<<<<< HEAD
-  react-native-swipe-gestures@^1.0.5:
-    version "1.0.5"
-    resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz#a172cb0f3e7478ccd681fd36b8bfbcdd098bde7c"
-    integrity sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==
-=======
+  <<<<<<< HEAD
+  <<<<<<< HEAD
+  react-native-safe-area-context@4.5.0:
+    version "4.5.0"
+    resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.5.0.tgz#9208313236e8f49e1920ac1e2a2c975f03aed284"
+    integrity sha512-0WORnk9SkREGUg2V7jHZbuN5x4vcxj/1B0QOcXJjdYWrzZHgLcUzYWWIUecUPJh747Mwjt/42RZDOaFn3L8kPQ==
+  
+  react-native-screens@~3.20.0:
+    version "3.20.0"
+    resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.20.0.tgz#4d154177395e5541387d9a05bc2e12e54d2fb5b1"
+    integrity sha512-joWUKWAVHxymP3mL9gYApFHAsbd9L6ZcmpoZa6Sl3W/82bvvNVMqcfP7MeNqVCg73qZ8yL4fW+J/syusHleUgg==
+    dependencies:
+      react-freeze "^1.0.0"
+      warn-once "^0.1.0"
+  
   react-native-svg@^13.9.0:
     version "13.9.0"
     resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.9.0.tgz#8df8a690dd00362601f074dec5d3a86dd0f99c7f"
     integrity sha512-Ey18POH0dA0ob/QiwCBVrxIiwflhYuw0P0hBlOHeY4J5cdbs8ngdKHeWC/Kt9+ryP6fNoEQ1PUgPYw2Bs/rp5Q==
+  =======
+  react-native-modal-datetime-picker@^15.0.1:
+    version "15.0.1"
+    resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-15.0.1.tgz#68a540ba54d52aad48f68090d19925acc2950235"
+    integrity sha512-FmNFeGwYWH6TCUvAr8OX75tu0FSUDxeEOxCorq2PdeIqbRx9wt7y/5oKUCfbWBWM6y+gme4TzrA0xAtufHqgGg==
+    dependencies:
+      prop-types "^15.7.2"
+  
+  react-native-swipe-gestures@^1.0.5:
+    version "1.0.5"
+    resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz#a172cb0f3e7478ccd681fd36b8bfbcdd098bde7c"
+    integrity sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==
+  >>>>>>> 82201c52d1f32e871beb86ea30dc2232c4176d3d
+  =======
+  react-native-ionicons@^4.x:
+    version "4.6.5"
+    resolved "https://registry.yarnpkg.com/react-native-ionicons/-/react-native-ionicons-4.6.5.tgz#b792ec8896381e67ff237eba955e38afe7ceb7a4"
+    integrity sha512-s2Ia7M5t609LE9LWygMj3ALVPUlKhK7R9XcMb67fP4EYJv0oLcwg5pc+8ftv9XXaUuTW/WgL3zJlBYxAvtvMJg==
+  
+  react-native-svg@13.4.0:
+    version "13.4.0"
+    resolved "https://registry.npmjs.org/react-native-svg/-/react-native-svg-13.4.0.tgz"
+    integrity sha512-B3TwK+H0+JuRhYPzF21AgqMt4fjhCwDZ9QUtwNstT5XcslJBXC0FoTkdZo8IEb1Sv4suSqhZwlAY6lwOv3tHag==
+  >>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
     dependencies:
       css-select "^5.1.0"
       css-tree "^1.1.3"
->>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
+  >>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
   
   react-native@0.71.7:
     version "0.71.7"
@@ -6276,7 +6301,6 @@ Lockfile:
       source-map "~0.6.1"
       tslib "^2.0.1"
   
-<<<<<<< HEAD
   recyclerlistview@^3.0.5:
     version "3.0.5"
     resolved "https://registry.yarnpkg.com/recyclerlistview/-/recyclerlistview-3.0.5.tgz#50bf5bcaa401d56bb6bb264354083f4d424408eb"
@@ -6286,8 +6310,6 @@ Lockfile:
       prop-types "15.5.8"
       ts-object-utils "0.0.5"
   
-=======
->>>>>>> a4e42f4a6b2ac1f47ce060f9a6c6fa0c9a24c110
   redux-persist@^6.0.0:
     version "6.0.0"
     resolved "https://registry.npmjs.org/redux-persist/-/redux-persist-6.0.0.tgz"
