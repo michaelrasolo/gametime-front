@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, View , ScrollView } from 'react-native';
 import Inputs from '../components/Inputs';
 import HeaderLogo from '../components/HeaerLogo';
@@ -18,12 +18,21 @@ export default function ProfilScreen({ navigation }) {
   const [favoriteShoes, setFavoriteShoes] = useState('');
   
 
- 
+  useEffect(() => {
+    fetch('http://192.168.10.165:3000/users/:token')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+      });
+  }, []);
 
 
   const handleValidation = () => {
-    const formContent = {
-      nickname : nickname,
+    fetch('http://192.168.10.165:3000/users/update', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      token : '4NVBrgxKs1Cqz4MOSd-uIHq2stgDP_ZF',
       birthdate : birthdate,
       gender : gender,
       level : level, 
@@ -31,8 +40,14 @@ export default function ProfilScreen({ navigation }) {
       favoriteTeam : favoriteTeam,
       favoritePlayer : favoritePlayer,
       favoriteShoes : favoriteShoes,
-    }
-    console.log(formContent)
+    })
+
+})
+ .then(response => response.json())
+ .then(data => {
+  if (data.result)
+  navigation.navigate('Search');
+ });
   }
   
   const handleGenderPress = (value) => {
@@ -51,10 +66,10 @@ export default function ProfilScreen({ navigation }) {
          <Text style={styles.title}>Mon profil joueur</Text>
        </View>
        <View style={styles.topFields}>
-         <View style={styles.fieldSection} width='50%'>
+         {/* <View style={styles.fieldSection} width='50%'>
            <Text style={styles.fieldName}>Pseudo</Text>
            <Inputs onChangeText={(value) => setNickname(value)}/>
-         </View>
+         </View> */}
          <View style={styles.fieldSection} width='50%'>
            <Text style={styles.fieldName}>Date de naissance </Text>
            <DateSearch onChangeText={(value) => setBirthdate(value)} />
@@ -85,7 +100,8 @@ export default function ProfilScreen({ navigation }) {
          <Inputs onChangeText={(value) => setFavoriteShoes(value)} />
        </View>
        <View style={styles.buttonSection}>
-         <OrangeButton title='Valider' width='50%' onPress={() => handleValidation()} />
+        <GreyButton title='Passer' width='43%' onPress={() => navigation.navigate('Search')} />
+         <OrangeButton title='Valider' width='43%' onPress={() => handleValidation()} />
        </View>
      </ScrollView>
    </View>
@@ -108,7 +124,12 @@ const styles = StyleSheet.create({
   alignItems: 'center',
  },
  buttonSection: {
-  alignItems: 'flex-end',
+  flexDirection: 'row',
+  justifyContent : 'space-around',
+  paddingTop : 30,
+  paddingBottom : 30,
+  
+  
  },
   title: {
     alignItems:'center',
