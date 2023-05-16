@@ -90,7 +90,7 @@ const SearchBar = (props) => {
         <View style={styles.container}>
             <View style={styles.topContainer}>
                 <FontAwesome style={styles.icon} name="search" size={30} color="white" />
-                <TextInput style={styles.input} placeholder={props.name} onChangeText={props.onChangeText} placeholderTextColor="#242424"></TextInput>
+                <TextInput style={styles.input} placeholder={props.name} onFocus={props.onFocus} placeholderTextColor="#242424"></TextInput>
             </View>
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomLeftContainer}>
