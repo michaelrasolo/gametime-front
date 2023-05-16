@@ -11,7 +11,7 @@ Node version:
   18.15.0
 
 Platform: 
-  darwin x64
+  win32 x64
 
 Trace: 
   SyntaxError: /Users/p-ba/Desktop/Game Time/gametime-front/package.json: Unexpected token < in JSON at position 897
