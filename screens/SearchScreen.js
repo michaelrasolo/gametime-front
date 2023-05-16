@@ -1,13 +1,14 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import {Modal, Button, StyleSheet, Text, View } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import DateSearch from '../components/DateSearch';
 import SearchList from '../components/SearchList';
 
 export default function SessionScreen({ navigation }) {
+
  return (
    <View style={styles.container}>
-  {/* <SearchList/> */}
+    <SearchList/>
    </View>
  );
 }
