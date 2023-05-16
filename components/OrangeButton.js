@@ -39,8 +39,7 @@ const OrangeButton = ({ title, width, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
-    margin: 20,
+    height: 50  
   },
   button: {
     flex: 1,

@@ -2,13 +2,12 @@ import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import DateSearch from '../components/DateSearch';
+import SearchList from '../components/SearchList';
 
 export default function SessionScreen({ navigation }) {
  return (
    <View style={styles.container}>
-    <SearchBar name="Saisis ta ville"/>
-    <DateSearch width={"60%"}/>
-    <Text>SessionScreen</Text>
+  {/* <SearchList/> */}
    </View>
  );
 }
