@@ -4,6 +4,7 @@ import FavoriteScreen from './screens/FavoriteScreen';
 import ProfilScreen from './screens/ProfilScreen';
 import SearchScreen from './screens/SearchScreen';
 import SessionScreen from './screens/SessionScreen';
+import HomeScreen from './screens/HomeScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -41,7 +42,7 @@ export default function App() {
      tabBarInactiveTintColor: 'gray',
      headerShown: false,
    })}>
-    <Tab.Screen name="Search" component={SearchScreen} />
+    <Tab.Screen name="Search" component={HomeScreen} />
     <Tab.Screen name="Session" component={SessionScreen} />
     <Tab.Screen name="Favorite" component={FavoriteScreen} />
     <Tab.Screen name="Profil" component={ProfilScreen} />

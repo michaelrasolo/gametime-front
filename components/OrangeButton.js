@@ -22,7 +22,7 @@ const platformShadow = () => {
 
 const OrangeButton = ({ title, width }) => {
   return (
-    <TouchableOpacity style={[styles.container, { width },platformShadow()]}>
+    <TouchableOpacity activeOpacity={0.6} style={[styles.container, { width },platformShadow()]}>
       <View style={[styles.button, platformShadow()]}>
         <LinearGradient
           colors={['#FE904B', '#FB724C']}
@@ -40,7 +40,6 @@ const OrangeButton = ({ title, width }) => {
 const styles = StyleSheet.create({
   container: {
     height: 50,
-    margin: 20,
   },
   button: {
     flex: 1,
