@@ -5,7 +5,7 @@ import Inputs from '../components/Inputs';
 import PasswordInput from '../components/PasswordInput';
 import { useState } from "react";
 import { login, logout } from '../reducers/user';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export default function SignUpScreen({ navigation }) {
@@ -14,20 +14,37 @@ export default function SignUpScreen({ navigation }) {
     const [emailError, setEmailError] = useState(false);
     const [confirmation, setConfirmation] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState(false);
+    const [nickname, setNickname] = useState('');
 
     const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.value)
 
     const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
     const handleSubmit = () => {
-        if (EMAIL_REGEX.test(email)) {
-          dispatch(login({email: email, password: password}));
-          navigation.navigate('TabNavigator');
+        if (EMAIL_REGEX.test(email)=== false) {
+            setEmailError(true)
+        } else if (password !== confirmation) {
+            setPasswordError(true)
         } else {
-          setEmailError(true);
+            fetch('http://192.168.10.187:3000/users/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: password, nickname: nickname }),
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.result) {
+                        dispatch(login({email: email, password: password, nickname: nickname, token: data.token}));
+                    }
+                });
+                console.log(user)
+              navigation.navigate('TabNavigator');
         }
       };
+
+
 
   return (
     <View style={styles.container}>
@@ -49,6 +66,15 @@ export default function SignUpScreen({ navigation }) {
 
         {emailError && <Text style={styles.error}>Adresse mail invalide</Text>}
 
+        <Inputs
+        name="Pseudo" 
+        placeholder="Pseudo" 
+        height={50} 
+        width={"70%"} 
+        onChangeText={(value) => setNickname(value)}
+        value={nickname}
+        />
+
         <PasswordInput
           name="Mot de passe"
           placeholder="Mot de passe"
@@ -65,6 +91,9 @@ export default function SignUpScreen({ navigation }) {
           onChangeText={(value) => setConfirmation(value)}
           value={confirmation}
         />
+
+        {passwordError && <Text style={styles.error}>Mot de passe invalide</Text>}
+
       </View>
 
       <View style={styles.button}>
