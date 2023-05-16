@@ -25,7 +25,7 @@ function PasswordInput(props){
         <View style={[styles.container, { width: props.width, height: props.height } ]}>
             <View style={styles.left}>
                 <Text style={styles.text}>{props.name}</Text>
-                <TextInput style={styles.input} placeholder={props.name} placeholderTextColor='#B0B0B0' secureTextEntry={secureTextEntry}/>
+                <TextInput style={styles.input} onChangeText={props.onChangeText} placeholder={props.name} placeholderTextColor='#B0B0B0' secureTextEntry={secureTextEntry}/>
             </View>
             <View style={styles.right}>
                 <TouchableOpacity onPress={() => eyeClick()}>
