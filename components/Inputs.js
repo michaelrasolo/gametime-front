@@ -2,10 +2,13 @@ import React from 'react';
 import { Text, View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 
 function Inputs(props){
+
+
+
     return(
         <View style={[styles.container, { width: props.width, height: props.height }]}>
             <Text style={styles.text}>{props.name}</Text>
-            <TextInput style={styles.input} placeholder={props.name} placeholderTextColor='#B0B0B0'/>
+            <TextInput style={styles.input} onChangeText={props.onChangeText} placeholder={props.name} placeholderTextColor='#B0B0B0'/>
         </View>
     )
 }

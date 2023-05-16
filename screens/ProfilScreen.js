@@ -5,20 +5,42 @@ import HeaderLogo from '../components/HeaerLogo';
 import RadioButtons from '../components/RadioButtons';
 import GreyButton from '../components/GreyButton';
 import OrangeButton from '../components/OrangeButton';
+import DateSearch from '../components/DateSearch';
 
 export default function ProfilScreen({ navigation }) {
   const [nickname, setNickname] = useState('');
   const [birthdate, setBirthdate] = useState('');
-  const [gender, setGender] = useState('');
+  const [gender, setGender] = useState("");
   const [level, setLevel] = useState('');
   const [description, setDescription] = useState('');
   const [favoriteTeam, setFavoriteTeam] = useState('');
   const [favoritePlayer, setFavoritePlayer] = useState('');
   const [favoriteShoes, setFavoriteShoes] = useState('');
+  
+
+ 
 
 
   const handleValidation = () => {
-    console.log('toto')
+    const formContent = {
+      nickname : nickname,
+      birthdate : birthdate,
+      gender : gender,
+      level : level, 
+      description :  description,
+      favoriteTeam : favoriteTeam,
+      favoritePlayer : favoritePlayer,
+      favoriteShoes : favoriteShoes,
+    }
+    console.log(formContent)
+  }
+  
+  const handleGenderPress = (value) => {
+    setGender(value);
+  }
+
+  const handleLevelPress = (value) => {
+    setLevel(value);
   }
 
  return (
@@ -31,36 +53,36 @@ export default function ProfilScreen({ navigation }) {
        <View style={styles.topFields}>
          <View style={styles.fieldSection} width='50%'>
            <Text style={styles.fieldName}>Pseudo</Text>
-           <Inputs name='Pseudo'/>
+           <Inputs onChangeText={(value) => setNickname(value)}/>
          </View>
          <View style={styles.fieldSection} width='50%'>
            <Text style={styles.fieldName}>Date de naissance </Text>
-           <Inputs />
+           <DateSearch onChangeText={(value) => setBirthdate(value)} />
          </View>
        </View>
        <View style={styles.fieldSection}>
          <Text style={styles.fieldName}>Genre</Text>
-         <RadioButtons leftTitle='Homme' midTitle='Femme' rightTitle='Non binaire' />
+         <RadioButtons onPress={handleGenderPress} leftTitle='Homme' midTitle='Femme' rightTitle='Non-binaire' />
        </View>
        <View style={styles.fieldSection}>
          <Text style={styles.fieldName}>Niveau</Text>
-         <RadioButtons leftTitle='Rookie' midTitle='Baller' rightTitle='All-Star' />
+         <RadioButtons onPress={handleLevelPress} leftTitle='Rookie' midTitle='Baller' rightTitle='All-Star' />
        </View>
        <View style={styles.fieldSection}>
          <Text style={styles.fieldName} >Présente toi en quelques phrases</Text>
-         <Inputs />
+         <Inputs onChangeText={(value) => setDescription(value)} />
        </View>
        <View style={styles.fieldSection}>
          <Text style={styles.fieldName} >Ton équipe de basket préférée</Text>
-         <Inputs />
+         <Inputs onChangeText={(value) => setFavoriteTeam(value)} />
        </View>
        <View style={styles.fieldSection}>
          <Text style={styles.fieldName}>Ton joueur préféré</Text>
-         <Inputs />
+         <Inputs onChangeText={(value) => setFavoritePlayer(value)} />
        </View>
        <View style={styles.fieldSection}>
          <Text style={styles.fieldName}>Ta paire de basket préférée</Text>
-         <Inputs />
+         <Inputs onChangeText={(value) => setFavoriteShoes(value)} />
        </View>
        <View style={styles.buttonSection}>
          <OrangeButton title='Valider' width='50%' onPress={() => handleValidation()} />
