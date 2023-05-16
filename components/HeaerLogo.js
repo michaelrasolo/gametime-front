@@ -16,7 +16,7 @@ const HeaderLogo = () => {
 const styles = StyleSheet.create({
         header: {
         width: '100%',
-        height: "35%",
+        height: 100,
         backgroundColor :'#FB724C',
         justifyContent: 'center',
         alignItems: 'center',

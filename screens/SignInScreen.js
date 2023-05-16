@@ -1,43 +1,116 @@
-
-import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import HeaderLogo from '../components/HeaerLogo';
-import OrangeButton from '../components/OrangeButton';
-import Inputs from '../components/Inputs';
-import PasswordInput from '../components/PasswordInput';
+import { Button, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import HeaderLogo from "../components/HeaerLogo";
+import OrangeButton from "../components/OrangeButton";
+import Inputs from "../components/Inputs";
+import PasswordInput from "../components/PasswordInput";
+import { useState } from "react";
+import { login } from "../reducers/user";
+import { useDispatch } from "react-redux";
 
 export default function SignInScreen({ navigation }) {
- return (
-   <View style={styles.container}>
-    <View style={styles.header}>
-     <HeaderLogo/>
+  const [nickname, setNickname] = useState("");
+  const [idError, setIdError] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+
+  const handleConnection = () => {
+
+    fetch('http://192.168.10.173:3000/users/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nickname, password }),
+    }).then(response => response.json())
+        .then(data => {
+            if (data.result) {
+                dispatch(login({ nickname: nickname, token: data.token }));
+            } else {setIdError(true)}
+        });
+};
+
+  return (
+    <View style={styles.container}>
+      <HeaderLogo />
+      <View style={styles.page}>
+        <View style={styles.title}>
+          <Text style={styles.text}>Connexion</Text>
+        </View>
+
+        <View style={styles.input}>
+          <Inputs
+            name="nickname"
+            placeholder="nickname"
+            height={50}
+            width={"70%"}
+            onChangeText={(value) => setNickname(value)}
+            value={nickname}
+          />
+
+          <PasswordInput
+            name="Mot de passe"
+            placeholder="Mot de passe"
+            height={50}
+            width={"70%"}
+            onChangeText={(value) => setPassword(value)}
+            value={password}
+          />
+          <View style={styles.errorBox}>
+            {
+                idError &&
+              <Text style={styles.error}>Identifiants invalides</Text>
+            }
+          </View>
+        </View>
+
+        <View style={styles.button}>
+          <OrangeButton
+            title="Se connecter"
+            width={"55%"}
+            onPress={handleConnection}
+          />
+        </View>
+      </View>
     </View>
-    <View>
-        <Text style={styles.text}>S'inscrire avec l'email</Text>
-    </View>
-    <View style={styles.input}>
-        <Inputs name='Email' placeholder='Email' height={50} width={"60%"}/>
-        <Inputs name='Téléphone' placeholder='Téléphone' height={50} width={"60%"}/>
-        <PasswordInput name='Mot de passe' placeholder='Mot de passe' height={50} width={"60%"} />
-        <OrangeButton title='Créer mon compte' width={'55%'} onPress={() => navigation.navigate('TabNavigator')}/>
-    </View>
-    </View>
- );
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    }, 
-    header: {
-        justifyContent: "flex-start",
-        alignItems: "center",
-    },
-    input: {
-        height: "70%",
-        justifyContent: "space-around",
-        alignItems: "center",
-    },
-    text: {
-        fontSize: 25
-    }
-  });
+  container: {
+    flex: 1,
+    backgroundColor: "#242424",
+  },
+  page: {
+    justifyContent:"space-around",
+    height:"60%"
+},
+  input: {
+    // height: "50%",
+    alignItems: "center",
+    paddingVertical: "10%",
+
+  },
+  text: {
+    fontSize: 30,
+    color: "#F0F0F0",
+    alignItems: "center",
+  },
+  title: {
+    alignItems: "center",
+    paddingVertical: "10%",
+  },
+  button: {
+    alignItems: "center",
+    paddingTop: "7%",
+  },
+  errorBox:{
+    alignItems:"center",
+    justifyContent:"flex-start",
+    flexDirection:"row",
+    width:"70%",
+    marginVertical:12
+  },
+  error: {
+    color: "#FB724C",
+    alignItems: "baseline",
+  },
+});
