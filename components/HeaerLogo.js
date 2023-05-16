@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView} from 'react-native';
 
 
 
 const HeaderLogo = () => {
   return (
+    
     <View style={styles.header}>
-        <View style={styles.logo}>
-        </View>
+        <SafeAreaView style={styles.logo}>
+        </SafeAreaView>
     </View>
   );
 };
@@ -15,7 +16,7 @@ const HeaderLogo = () => {
 const styles = StyleSheet.create({
         header: {
         width: '100%',
-        height: 100,
+        height: "35%",
         backgroundColor :'#FB724C',
         justifyContent: 'center',
         alignItems: 'center',
@@ -23,8 +24,10 @@ const styles = StyleSheet.create({
       logo : {
         borderColor : 'black',
         borderWidth : 1,
-        width : '50%',
-        height: '50%', 
+        width:124,
+        height:35,
+        justifyContent:"center",
+        alignItems:"center" 
       }
 });
 

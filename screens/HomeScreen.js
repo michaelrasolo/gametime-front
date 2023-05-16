@@ -12,21 +12,14 @@ import OrangeButton from "../components/OrangeButton";
 import GreyButton from "../components/GreyButton";
 
 export default function HomeScreen({ navigation }) {
-    // SHADOW FUNCTION
-    const platformShadow = () => {
-        if (Platform.OS === "android") {
-          return {}; // Empty object for Android, removing 'elevation'
-        } else if (Platform.OS === "ios") {
-          return {
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 4,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 4,
-          };
-        }
+    // FUNCTION GO TO SIGN UP
+    const handleSignUp = () => {
+        navigation.navigate('SignUp');
+      };
+
+          // FUNCTION GO TO SIGN IN
+    const handleSignIn = () => {
+        navigation.navigate('SignIn');
       };
 //   HOME SCREEN
   return (
@@ -36,13 +29,13 @@ export default function HomeScreen({ navigation }) {
     >
       <View style={styles.logoBox}>
         <Image
-          style={[styles.logo, platformShadow()]}
+          style={[styles.logo]}
           source={require("../assets/images/logo-placeholder.png")}
         />
       </View>
       <View style={styles.btnBox}>
-        <OrangeButton title="Inscription" width={"70%"} />
-        <GreyButton title="Déjà inscrit ?" width={"70%"} />
+        <OrangeButton title="Inscription" width={"70%"} onPress={handleSignUp}/>
+        <GreyButton title="Déjà inscrit ?" width={"70%"} onPress={handleSignIn}/>
       </View>
     </ImageBackground>
   );
