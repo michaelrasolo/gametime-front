@@ -15,7 +15,6 @@ export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-
     fetch('http://192.168.10.173:3000/users/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -23,8 +22,11 @@ export default function SignInScreen({ navigation }) {
     }).then(response => response.json())
         .then(data => {
             if (data.result) {
+                console.log(data.result)
                 dispatch(login({ nickname: nickname, token: data.token }));
-            } else {setIdError(true)}
+                navigation.navigate('TabNavigator')
+            } 
+            else {setIdError(true)}
         });
 };
 
@@ -38,8 +40,8 @@ export default function SignInScreen({ navigation }) {
 
         <View style={styles.input}>
           <Inputs
-            name="nickname"
-            placeholder="nickname"
+            name="Pseudo"
+            placeholder="Ton pseudo"
             height={50}
             width={"70%"}
             onChangeText={(value) => setNickname(value)}
@@ -48,7 +50,7 @@ export default function SignInScreen({ navigation }) {
 
           <PasswordInput
             name="Mot de passe"
-            placeholder="Mot de passe"
+            placeholder="Ton mot de passe"
             height={50}
             width={"70%"}
             onChangeText={(value) => setPassword(value)}
@@ -84,7 +86,6 @@ const styles = StyleSheet.create({
     height:"60%"
 },
   input: {
-    // height: "50%",
     alignItems: "center",
     paddingVertical: "10%",
 
