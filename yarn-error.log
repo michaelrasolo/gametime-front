@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\madra\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install
+  /usr/local/bin/node /usr/local/bin/yarn install
 
 PATH: 
-  C:\Users\madra\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\madra\bin;C:\Python311\Scripts;C:\Python311;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Users\madra\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\Brackets;C:\Users\madra\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\madra\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 
 Yarn version: 
   1.22.19
@@ -14,12 +14,12 @@ Platform:
   win32 x64
 
 Trace: 
-  SyntaxError: C:\Users\madra\OneDrive\Bureau\Game Time\gametime-front\package.json: Unexpected token < in JSON at position 897
+  SyntaxError: /Users/p-ba/Desktop/Game Time/gametime-front/package.json: Unexpected token < in JSON at position 897
       at JSON.parse (<anonymous>)
-      at C:\Users\madra\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1629:59
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1629:59
       at Generator.next (<anonymous>)
-      at step (C:\Users\madra\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
-      at C:\Users\madra\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
 
 npm manifest: 
   {
