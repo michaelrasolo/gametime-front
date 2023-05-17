@@ -19,7 +19,7 @@ export default function ProfilScreen({ navigation }) {
   
 
   useEffect(() => {
-    fetch('http://192.168.10.165:3000/users/:token')
+    fetch('http://backend-gametime-d20v2apc9-michaelrasolo.vercel.app/users/:token')
       .then(response => response.json())
       .then(data => {
         console.log(data)
@@ -28,7 +28,7 @@ export default function ProfilScreen({ navigation }) {
 
 
   const handleValidation = () => {
-    fetch('http://192.168.10.165:3000/users/update', {
+    fetch('http://backend-gametime-d20v2apc9-michaelrasolo.vercel.app/users/update', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

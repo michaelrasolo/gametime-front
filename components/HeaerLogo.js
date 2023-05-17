@@ -27,7 +27,7 @@ const HeaderLogo = () => {
     <View style={styles.header}>
         <SafeAreaView style={styles.container}>
         <Image
-          style={[styles.logo,platformShadow()]}
+          style={[styles.logo]}
           source={require("../assets/images/logo.png")}
         />
         </SafeAreaView>
