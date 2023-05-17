@@ -4,6 +4,7 @@ import FavoriteScreen from './screens/FavoriteScreen';
 import ProfilScreen from './screens/ProfilScreen';
 import SearchScreen from './screens/SearchScreen';
 import SessionScreen from './screens/SessionScreen';
+import HomeScreen from './screens/HomeScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -20,6 +21,7 @@ import user from './reducers/user';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SignUpScreen from './screens/SignUpScreen';
+import SignInScreen from './screens/SignInScreen';
 
 const reducers = combineReducers({ user });
 
@@ -67,16 +69,13 @@ const TabNavigator = () => {
 
 export default function App() {
   return (
-    // <View style={styles.container}>
-    //   <Text>Open up App.js to start working on your app!</Text>
-    //   <GameCard  gametype="3X3" city="Marseille" playground="City Stadium de la Verrerie" date="Dimanche 2 juillet 2023" hour="15h78" players="3" maxplayers="9" level="rookie"/>
-    //   <RadioButtons leftTitle='1' midTitle='2'rightTitle='3'/>
-    //   <StatusBar style="auto" />
-    // </View>
+
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="SignIn" component={SignInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>

@@ -22,7 +22,7 @@ const platformShadow = () => {
 
 const OrangeButton = ({ title, width, onPress }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.container, { width },platformShadow()]}>
+    <TouchableOpacity activeOpacity={0.6} onPress={onPress}style={[styles.container, { width },platformShadow()]}>
       <View style={[styles.button, platformShadow()]}>
         <LinearGradient
           colors={['#FE904B', '#FB724C']}

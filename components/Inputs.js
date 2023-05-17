@@ -28,6 +28,7 @@ input: {
     borderBottomWidth: 2,
     borderBottomColor: '#B0B0B0',
     width: 200,
+    marginBottom:"8%"
 
   },
   text: {
