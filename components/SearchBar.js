@@ -88,10 +88,11 @@ const SearchBar = (props) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.topContainer}>
+                <TouchableOpacity  style={styles.topContainer} onPress={props.onPress} >
                 <FontAwesome style={styles.icon} name="search" size={30} color="white" />
-                <TextInput style={styles.input} placeholder={props.name} onFocus={props.onFocus} placeholderTextColor="#242424"></TextInput>
-            </View>
+                <Text style={styles.input}>{props.name}</Text>
+                {/* <TextInput style={styles.input} placeholder={props.name}  placeholderTextColor="#242424"></TextInput> */}
+                </TouchableOpacity>
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomLeftContainer}>
                     <FontAwesome style={styles.icon} name="calendar" size={30} color="white" />

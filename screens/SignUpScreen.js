@@ -24,24 +24,24 @@ export default function SignUpScreen({ navigation }) {
 
 
     const handleSubmit = () => {
-        if (EMAIL_REGEX.test(email)=== false) {
-            setEmailError(true)
-        } else if (password !== confirmation) {
-            setPasswordError(true)
-        } else {
-            fetch('http://192.168.10.187:3000/users/signup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, password: password, nickname: nickname }),
-            }).then(response => response.json())
-                .then(data => {
-                    if (data.result) {
-                        dispatch(login({email: email, password: password, nickname: nickname, token: data.token}));
-                    }
-                });
-                console.log(user)
+        // if (EMAIL_REGEX.test(email)=== false) {
+        //     setEmailError(true)
+        // } else if (password !== confirmation) {
+        //     setPasswordError(true)
+        // } else {
+        //     fetch('http://192.168.10.187:3000/users/signup', {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify({ email: email, password: password, nickname: nickname }),
+        //     }).then(response => response.json())
+        //         .then(data => {
+        //             if (data.result) {
+        //                 dispatch(login({email: email, password: password, nickname: nickname, token: data.token}));
+        //             }
+        //         });
+        //         console.log(user)
               navigation.navigate('TabNavigator');
-        }
+        // }
       };
 
 
