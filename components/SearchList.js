@@ -9,22 +9,20 @@ import OrangeButton from './OrangeButton';
 import GreyButton from './GreyButton';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
-import {Dimensions} from 'react-native'
+import { Dimensions } from 'react-native'
 import PlaygroundCard from './PlaygroundCard';
 
 const SearchList = () => {
   const [isListVisible, setListVisible] = useState(false);
   const [isMapVisible, setMapVisible] = useState(false);
-  const [latitude, setLatitude] = useState(48.866667) 
-  const [longitude, setLongitude] = useState(2.333333) 
+  const [latitude, setLatitude] = useState(48.866667)
+  const [longitude, setLongitude] = useState(2.333333)
   const [animation, setAnimation] = useState("slide")
   const [searchText, setSearchText] = useState('');
   const [playgrounds, setPlaygrounds] = useState([])
   const [selectedPlayground, setSelectedPlayground] = useState('Saisis ta ville')
   const [playgroundCity, setPlaygroundCity] = useState('')
   const [playgroundAddress, setPlaygroundAddress] = useState('')
-  const [playgroundLatitude, setPlaygroundLatitude] = useState('')
-  const [playgroundLongitude, setPlaygroundLongitude] = useState('')
 
   const inputRef = useRef();
 
@@ -40,12 +38,13 @@ const SearchList = () => {
       })
   }
 
+
   const handleCard = (value) => {
     setSelectedPlayground(value.name)
     setPlaygroundCity(value.city)
     setPlaygroundAddress(value.address)
     handleOpenMap()
-    }
+  }
 
   const handleCloseModal = () => {
     setPlaygrounds([])
@@ -81,13 +80,11 @@ const SearchList = () => {
     playground6: require('../assets/playgrounds/playground6.jpg'),
   };
 
-
-
   const markers = playgrounds && playgrounds.map((data, i) => {
-    return <Marker key={i} coordinate={{ latitude: data.longitude, longitude: data.latitude }} title={data.name} onPress={handleMarker(data)} >
-        <Image source={require('../assets/images/basketball_hoop_icon.png')} style={{ width: 30, height: 30}} />
-          </Marker>
-    ;
+    return <Marker key={i} coordinate={{ latitude: data.latitude, longitude: data.longitude }} title={data.name} onPress={handleMarker(data)} >
+      <Image source={require('../assets/images/basketball_hoop_icon.png')} style={{ width: 30, height: 30 }} />
+    </Marker>
+      ;
   });
 
 
@@ -119,32 +116,32 @@ const SearchList = () => {
           setListVisible(!isListVisible);
         }}>
         <SafeAreaView style={styles.modal} >
-        <View style={styles.header} >
-        <View style={[styles.inputContainer]}>
-        <FontAwesome style={styles.icon} name="search" size={30} color="white" />
-        <TextInput
-          style={styles.input}
-          ref={inputRef}  
-          onLayout={()=> inputRef.current.focus()} 
-          placeholder="Saisis ta ville" 
-          onChangeText={handleChange} 
-          placeholderTextColor="#242424"
-          value={searchText} />
+          <View style={styles.header} >
+            <View style={[styles.inputContainer]}>
+              <FontAwesome style={styles.icon} name="search" size={30} color="white" />
+              <TextInput
+                style={styles.input}
+                ref={inputRef}
+                onLayout={() => inputRef.current.focus()}
+                placeholder="Saisis ta ville"
+                onChangeText={handleChange}
+                placeholderTextColor="#242424"
+                value={searchText} />
               <TouchableOpacity
                 style={styles.buttonClose}
                 onPress={() => handleCloseModal()}>
-              <FontAwesome style={styles.icon} name="close" size={20} color="white" />
+                <FontAwesome style={styles.icon} name="close" size={20} color="white" />
               </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-      <OrangeButton title="Liste"  width={"48%"}/>
-      <GreyButton title="Carte" onPress={handleOpenMap} width={"48%"} />
-      </View>
-      </View>
+            </View>
+            <View style={styles.buttonContainer}>
+              <OrangeButton title="Liste" width={"48%"} />
+              <GreyButton title="Carte" onPress={handleOpenMap} width={"48%"} />
+            </View>
+          </View>
           <View style={styles.playgroundList}>
-          <ScrollView >
-            {playgroundList}
-          </ScrollView>
+            <ScrollView >
+              {playgroundList}
+            </ScrollView>
           </View>
 
         </SafeAreaView >
@@ -157,44 +154,44 @@ const SearchList = () => {
           Alert.alert('Modal has been closed.');
           setMapVisible(!isMapVisible);
         }}>
-          <View style={styles.modal} >
+        <View style={styles.modal} >
           <View style={styles.header} >
-          <View style={styles.inputContainer}>
-        <FontAwesome style={styles.icon} name="search" size={30} color="white" />
-        <TextInput
-          style={styles.input}
-          placeholder="Saisis ta ville" 
-          onChangeText={handleChange} 
-          placeholderTextColor="#242424"
-          value={searchText} />
+            <View style={styles.inputContainer}>
+              <FontAwesome style={styles.icon} name="search" size={30} color="white" />
+              <TextInput
+                style={styles.input}
+                placeholder="Saisis ta ville"
+                onChangeText={handleChange}
+                placeholderTextColor="#242424"
+                value={searchText} />
               <TouchableOpacity
                 style={styles.buttonClose}
                 onPress={() => handleCloseModal()}>
-              <FontAwesome style={styles.icon} name="close" size={20} color="white" />
+                <FontAwesome style={styles.icon} name="close" size={20} color="white" />
               </TouchableOpacity>
-      </View>
-      <View style={styles.buttonContainer}>
-      <GreyButton onPress={handleOpenMap} title="Liste" width={"48%"}/>
-      <OrangeButton title="Carte" width={"48%"}/>
-      </View>
-      </View>
-     {selectedPlayground!="Saisis ta ville" && <PlaygroundCard name={selectedPlayground} onPress={handleSelect} city={playgroundCity} address={playgroundAddress} />}
+            </View>
+            <View style={styles.buttonContainer}>
+              <GreyButton onPress={handleOpenMap} title="Liste" width={"48%"} />
+              <OrangeButton title="Carte" width={"48%"} />
+            </View>
+          </View>
+          {selectedPlayground != "Saisis ta ville" && <PlaygroundCard name={selectedPlayground} onPress={handleSelect} city={playgroundCity} address={playgroundAddress} />}
           <MapView
- initialRegion={{
-   latitude: 48.390394,
-   longitude: -4.486076,
-   latitudeDelta: 0.0922,
-   longitudeDelta: 0.0421,
- }}
- style={styles.map}
->
-{playgrounds && markers}
+            initialRegion={{
+              latitude: 48.390394,
+              longitude: -4.486076,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            style={styles.map}
+          >
+            {playgrounds && markers}
 
-</MapView>
+          </MapView>
 
         </View >
 
-        </Modal>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -203,7 +200,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-    modal: {
+  modal: {
     top: 0,
     left: 0,
     right: 0,
@@ -222,12 +219,12 @@ const styles = StyleSheet.create({
   searchInput: {
     marginBottom: 30
   },
-  playgroundList:{
-    marginTop:"30%", //marginTop afin d'apparaitre en dessous de la barre de recherche et des boutons
-    height:"90%"
+  playgroundList: {
+    marginTop: "30%", //marginTop afin d'apparaitre en dessous de la barre de recherche et des boutons
+    height: "90%"
   },
   inputContainer: {
-    width:"90%",
+    width: "90%",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     borderBottomLeftRadius: 30,
@@ -239,38 +236,39 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 3,
     paddingLeft: 15
-},
-mapContainer:{
-  
-},
-input: {
+  },
+  mapContainer: {
+
+  },
+  input: {
     flex: 1,
     fontSize: 20,
     color: "white"
-},
-buttonClose: {
-paddingRight:5,
-},
-icon: {
+  },
+  buttonClose: {
+    paddingRight: 5,
+  },
+  icon: {
     marginRight: 10
-},
-buttonContainer:{
-  height: 60,
-  width:"90%",
-  flexDirection:"row",
-  justifyContent:"space-between",
-  alignItems:"center",
-  marginBottom:10
-},
-map: {
-  width: Dimensions.get('window').width,
-  height: Dimensions.get('window').height,
-}, header :{
-  position:"absolute",
-   width:"100%",
-zIndex:1,  alignItems : "center",
-justifyContent : "flex-start",
-paddingTop:40, height:"20%"}
+  },
+  buttonContainer: {
+    height: 60,
+    width: "90%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10
+  },
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  }, header: {
+    position: "absolute",
+    width: "100%",
+    zIndex: 1, alignItems: "center",
+    justifyContent: "flex-start",
+    paddingTop: 40, height: "20%"
+  }
 });
 
 export default SearchList 
