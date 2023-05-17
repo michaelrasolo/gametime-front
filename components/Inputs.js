@@ -8,7 +8,7 @@ function Inputs(props){
     return(
         <View style={[styles.container, { width: props.width, height: props.height }]}>
             <Text style={styles.text}>{props.name}</Text>
-            <TextInput style={styles.input} onChangeText={props.onChangeText} placeholder={props.name} placeholderTextColor='#B0B0B0'/>
+            <TextInput style={styles.input} value={props.value} onChangeText={props.onChangeText} placeholder={props.name} placeholderTextColor='#B0B0B0'/>
         </View>
     )
 }

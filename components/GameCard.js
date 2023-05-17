@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
+import { height } from "@mui/system";
 
 const GameCard = (props) => {
   // SHADOW FUNCTION
@@ -71,7 +72,7 @@ const GameCard = (props) => {
     }
   };
   return (
-    <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow()]}>
+    <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow(), {height:props.height}]}>
       <Image
         style={[styles.image]}
         source={require("../assets/images/citystade-marseille.png")}
@@ -107,6 +108,7 @@ const styles = StyleSheet.create({
   card: {
     width: "100%",
     height: "30%",
+    borderWidth:1,
     justifyContent: "flex-start",
     borderRadius: 30,
     position: "relative",
