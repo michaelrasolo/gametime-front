@@ -30,7 +30,7 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.logoBox}>
         <Image
           style={[styles.logo]}
-          source={require("../assets/images/logo-placeholder.png")}
+          source={require("../assets/images/logo.png")}
         />
       </View>
       <View style={styles.btnBox}>
