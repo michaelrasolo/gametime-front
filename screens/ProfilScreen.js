@@ -21,7 +21,7 @@ export default function ProfilScreen({ navigation }) {
   
 
   useEffect(() => {
-    fetch(`http://192.168.10.149:3000/users/${user.token}`)
+    fetch(`http://backend-gametime-d20v2apc9-michaelrasolo.vercel.app/users/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setBirthdate(data.data.birthdate)
@@ -37,20 +37,18 @@ export default function ProfilScreen({ navigation }) {
 
 
   const handleValidation = () => {
-    fetch('http://192.168.10.149:3000/users/update', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        token: user.token,
-        birthdate: birthdate,
-        city: city,
-        gender: gender,
-        level: level,
-        description: description,
-        favoriteTeam: favoriteTeam,
-        favoritePlayer: favoritePlayer,
-        favoriteShoes: favoriteShoes,
-      })
+    fetch('http://backend-gametime-d20v2apc9-michaelrasolo.vercel.app/users/update', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      token: user.token,
+      birthdate : birthdate,
+      gender : gender,
+      level : level, 
+      description :  description,
+      favoriteTeam : favoriteTeam,
+      favoritePlayer : favoritePlayer,
+      favoriteShoes : favoriteShoes,
     })
       .then(response => response.json())
       .then(data => {

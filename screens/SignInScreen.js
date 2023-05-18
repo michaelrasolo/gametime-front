@@ -8,22 +8,22 @@ import { login } from "../reducers/user";
 import { useDispatch } from "react-redux";
 
 export default function SignInScreen({ navigation }) {
-  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
   const [idError, setIdError] = useState(false);
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-    fetch('http://192.168.10.149:3000/users/signin', {
+    fetch('http:/backend-gametime-d20v2apc9-michaelrasolo.vercel.app/users/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nickname, password }),
+        body: JSON.stringify({ email, password }),
     }).then(response => response.json())
         .then(data => {
             if (data.result) {
                 console.log(data.result)
-                dispatch(login({ nickname: nickname, token: data.token }));
+                dispatch(login({ email: email, token: data.token }));
                 navigation.navigate('TabNavigator')
             } 
             else {setIdError(true)}
@@ -40,12 +40,12 @@ export default function SignInScreen({ navigation }) {
 
         <View style={styles.input}>
           <Inputs
-            name="Pseudo"
-            placeholder="Ton pseudo"
+            name="Email"
+            placeholder="Email"
             height={50}
             width={"70%"}
-            onChangeText={(value) => setNickname(value)}
-            value={nickname}
+            onChangeText={(value) => setEmail(value)}
+            value={email}
           />
 
           <PasswordInput
