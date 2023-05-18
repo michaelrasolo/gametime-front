@@ -16,14 +16,13 @@ export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-    fetch('http:/backend-gametime-d20v2apc9-michaelrasolo.vercel.app/users/signin', {
+    fetch('https://backend-gametime.vercel.app/users/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
     }).then(response => response.json())
         .then(data => {
             if (data.result) {
-                console.log(data.result)
                 dispatch(login({ email: email, token: data.token }));
                 navigation.navigate('TabNavigator')
             } 
