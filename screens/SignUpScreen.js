@@ -41,7 +41,7 @@ export default function SignUpScreen({ navigation }) {
                 });
                 console.log(user)
               navigation.navigate('TabNavigator');
-        }
+        // }
       };
 
 
@@ -106,6 +106,7 @@ export default function SignUpScreen({ navigation }) {
     </View>
   );
 }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -134,4 +135,4 @@ const styles = StyleSheet.create({
   error: {
     color: '#FB724C',
   }
-});
+})
