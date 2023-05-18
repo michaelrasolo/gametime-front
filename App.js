@@ -18,12 +18,13 @@ import { PersistGate } from "redux-persist/integration/react";
 import asyncStorage from "@react-native-async-storage/async-storage";
 
 import user from './reducers/user';
+import playground from './reducers/playground';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SignUpScreen from './screens/SignUpScreen';
 import SignInScreen from './screens/SignInScreen';
 
-const reducers = combineReducers({ user });
+const reducers = combineReducers({ user, playground });
 
 const persistConfig = { key: 'GameTime', storage: asyncStorage };
 const store = configureStore({

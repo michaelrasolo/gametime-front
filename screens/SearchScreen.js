@@ -9,15 +9,52 @@ import DateSearch from '../components/DateSearch';
 import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
 import RadioButtons2 from '../components/RadioButton2';
+import { useSelector } from "react-redux";
+
 
 export default function SessionScreen({ navigation }) {
-  const [isChecked, setChecked] = useState(false);
+  const [isWeekly, setIsWeekly] = useState(false);
+  const [bringBall, setBringBall] = useState(false);
   const [gameGroup, setGameGroup] = useState(1);
   const [teamGroup, setTeamGroup] = useState(1);
+  const [selectedLevel, setSelectedLevel] = useState()
+  
+
+  const playground = useSelector((state) => state.playground.value)
+
+// const selectPlayground = (id) => {
+//   setPlaygroundId(id)
+// }
+
+  const handleCreate = () => {
+    const participantData = [{ user: userID, group: req.body.group }];
+
+
+    fetch('192.168.10.153:3000/sessions/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          playground: playground.playgroundId, 
+          sessionType: req.body.sessionType,
+          date: playground.date,
+          time: playground.time,
+          level: req.body.level,
+          mood: req.body.mood,
+          ball: userID,
+          participants: participantData,
+          frequency: req.body.frequency,
+          limitDate: new Date(),
+        }),
+    }).then(response => response.json())
+        .then(data => {
+            
+        });
+}
+  
 
  return (
     <SafeAreaView style={styles.container}>
-    <SearchList/>
+    <SearchList />
     <View style={styles.middleSection}>
     <ScrollView>
     <View style={styles.titleSection}>
@@ -26,9 +63,9 @@ export default function SessionScreen({ navigation }) {
     <View>
     <Text style={styles.fieldName}>Hebdomadaire</Text>
     <Checkbox    
-          value={isChecked}
-          onValueChange={setChecked}
-          color={isChecked ? '#4630EB' : undefined} />
+          value={isWeekly}
+          onValueChange={setIsWeekly}
+          color={isWeekly ? '#4630EB' : undefined} />
           </View>
           <View>
           <Text style={styles.fieldName}>Date limite</Text>
@@ -42,7 +79,7 @@ export default function SessionScreen({ navigation }) {
   <RadioButtons leftTitle={"3X3"} midTitle={"5X5"} rightTitle={"Freestyle"} />
   </View>
   <View style={styles.titleSection}>
-    <Text style={styles.title}>Niveau Game</Text>
+    <Text style={styles.title}>Niveau du Game</Text>
   <RadioButtons leftTitle={"Rookies"} midTitle={"Ballers"} rightTitle={"All-Stars"} />
   </View>
       <View style={styles.titleSection}>
@@ -50,18 +87,26 @@ export default function SessionScreen({ navigation }) {
     <View style={styles.fieldSection}>
     <View style={styles.SubfieldSection}>
     <Text style={styles.fieldName}>Le Game</Text>
-    <Inputs width={"50%"} height={50} />
+    <Inputs width={"50%"} height={50} onChangeText={(value) => setGameGroup(value)} value={gameGroup} />
     </View>
     <View style={styles.SubfieldSection}>
     <Text style={styles.fieldName}>Ma team</Text>
-    <Inputs width={"50%"} height={50} />
+    <Inputs width={"50%"} height={50} onChangeText={(value) => setTeamGroup(value)} value={teamGroup}  />
     </View>
     </View>
     </View>
     <View style={styles.titleSection}>
     <Text style={styles.title}>Intensité du game</Text>
-  <RadioButtons2 leftTitle={"3X3"} rightTitle={"Freestyle"} />
+  <RadioButtons2 leftTitle={"Pour le fun"} rightTitle={"Pour la gagne"} />
+  <Text style={styles.fieldName}>J'apporte un ballon</Text>
+
+  <Checkbox    
+          value={bringBall}
+          onValueChange={setBringBall}
+          color={bringBall ? '#4630EB' : undefined} />
   </View>
+   
+  
 
   </ScrollView>
   </View>

@@ -9,8 +9,11 @@ import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import { Dimensions } from 'react-native'
 import PlaygroundCard from './PlaygroundCard';
+import { useDispatch } from 'react-redux';
+import { addPlaygroundId} from '../reducers/playground';
 
 const SearchList = () => {
+  const dispatch = useDispatch()
   const [isListVisible, setListVisible] = useState(false);
   const [isMapVisible, setMapVisible] = useState(false);
   const [latitude, setLatitude] = useState(48.866667)
@@ -21,9 +24,13 @@ const SearchList = () => {
   const [selectedPlayground, setSelectedPlayground] = useState('Choisis un terrain')
   const [playgroundCity, setPlaygroundCity] = useState('')
   const [playgroundAddress, setPlaygroundAddress] = useState('')
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState('');
 
 
   const inputRef = useRef(); // cible l'input search du modal pour pouvoir mettre un focus dessus et ouvrir le keyboard directement à l'ouverture du modal
+
+
 
   const handleChange = (value) => {
     setSearchText(value)
@@ -40,7 +47,8 @@ const SearchList = () => {
   const handleCard = (value) => {
     setSelectedPlayground(value.name)
     setPlaygroundCity(value.city)
-    setPlaygroundAddress(value.address)
+    setPlaygroundAddress(value.address)   
+    dispatch(addPlaygroundId(value._id)) 
     handleOpenMap()
   }
 
