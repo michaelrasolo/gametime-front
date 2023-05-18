@@ -7,7 +7,7 @@ import HeaderLogo from '../components/HeaerLogo';
 import GreyButton from '../components/GreyButton';
 import OrangeButton from '../components/OrangeButton';
 import Gamecard from '../components/GameCard';
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
 
