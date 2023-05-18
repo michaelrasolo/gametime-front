@@ -16,20 +16,22 @@ export default function SignUpScreen({ navigation }) {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [nickname, setNickname] = useState('');
+    const [city, setCity] = useState('');
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value)
 
-    const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+    const EMAIL_REGEX = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/gi
 
     const handleSubmit = () => {
-        if (EMAIL_REGEX.test(email)=== false) {
+        console.log(EMAIL_REGEX.test(email));
+        console.log(emailError)
+        if (!EMAIL_REGEX.test(email)) {
             setEmailError(true)
         } else if (password !== confirmation) {
             setPasswordError(true)
         } else {
-            fetch('http://192.168.10.187:3000/users/signup', {
+            fetch('http://192.168.10.140:3000/users/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password, nickname: nickname }),
@@ -37,11 +39,12 @@ export default function SignUpScreen({ navigation }) {
                 .then(data => {
                     if (data.result) {
                         dispatch(login({email: email, password: password, nickname: nickname, token: data.token}));
+                        console.log('token',user.token);
                     }
                 });
-                console.log(user)
+                // console.log(user)
               navigation.navigate('TabNavigator');
-        }
+        // }
       };
 
 
@@ -64,7 +67,7 @@ export default function SignUpScreen({ navigation }) {
           value={email}
           />
 
-        {emailError && <Text style={styles.error}>Adresse mail invalide</Text>}
+        {emailError === true && <Text style={styles.error}>Adresse mail invalide</Text>}
 
         <Inputs
         name="Pseudo" 
@@ -73,6 +76,15 @@ export default function SignUpScreen({ navigation }) {
         width={"70%"} 
         onChangeText={(value) => setNickname(value)}
         value={nickname}
+        />
+
+        <Inputs
+        name="Ville" 
+        placeholder="Ville" 
+        height={50} 
+        width={"70%"} 
+        onChangeText={(value) => setCity(value)}
+        value={city}
         />
 
         <PasswordInput
@@ -105,6 +117,7 @@ export default function SignUpScreen({ navigation }) {
       </View>
     </View>
   );
+}
 }
 
 const styles = StyleSheet.create({
