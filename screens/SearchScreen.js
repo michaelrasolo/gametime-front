@@ -16,23 +16,32 @@ export default function SessionScreen({ navigation }) {
 
 
   useEffect(() => {
-    fetch(`http://192.168.10.149:3000/sessions`)
-      .then(response => response.json())
-      .then(data => {
-        // console.log(data.data)
-        setSessions(data.data)
-        
-      });
+  fetch(`https://backend-gametime.vercel.app/sessions`)
+    .then(response => response.json())
+    .then(data => {
+      // console.log(data.data)
+      setSessions(data.data)
+    });
   }, []);
 
   
   const gamecards = sessions.map((data, i) => {
     return (
-      <Gamecard key={i} height={220} playground={data.playground.name}/>
-     
+      <Gamecard key={i} height={220} 
+      formattedDate={data.formattedDate} 
+      formattedTime={data.formattedTime}
+      hour={data.hour}
+      playground={data.playground.name} 
+      city={data.playground.city} 
+      totalParticipants={data.totalParticipants} 
+      maxParticipants={data.maxParticipants} 
+      level={data.level} 
+      sessionType={data.sessionType}
+       
+      />
     );
   });
-  console.log(sessions)
+  
   
   return (
     <View style={styles.container}>
@@ -49,17 +58,8 @@ export default function SessionScreen({ navigation }) {
       <View style={styles.SessionsSection}>
         <ScrollView>
           {gamecards}
-          <Gamecard level="baller" gametype='Freestyle' height={220} playground='Terrain de basket champ de mars' city='Paris' date='Jeudi 11 mai' hour='15h00' players='3' maxplayers='10' />
-          <Gamecard level="baller" gametype='Freestyle' height={220} playground='Terrain de basket champ de mars' city='Paris' date='Jeudi 11 mai' hour='15h00' players='3' maxplayers='10' />
-
         </ScrollView>
       </View>
-
-
-
-
-
-
     </View>
   );
 }

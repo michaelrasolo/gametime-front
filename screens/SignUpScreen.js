@@ -29,7 +29,7 @@ export default function SignUpScreen({ navigation }) {
         } else if (password !== confirmation) {
             setPasswordError(true)
         } else {
-            fetch('http://backend-gametime-d20v2apc9-michaelrasolo.vercel.app/users/signup', {
+            fetch('https://backend-gametime.vercel.app/users/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password, nickname: nickname }),
@@ -37,9 +37,9 @@ export default function SignUpScreen({ navigation }) {
                 .then(data => {
                     if (data.result) {
                         dispatch(login({email: email, password: password, nickname: nickname, token: data.token}));
+                        console.log(user)
                     }
                 });
-                console.log(user)
               navigation.navigate('TabNavigator');
         }
       };

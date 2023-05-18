@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Button, StyleSheet, Text, View , ScrollView } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { Button, StyleSheet, Text, View , ScrollView, TouchableOpacity } from 'react-native';
 import Inputs from '../components/Inputs';
 import HeaderLogo from '../components/HeaerLogo';
 import RadioButtons from '../components/RadioButtons';
 import GreyButton from '../components/GreyButton';
 import OrangeButton from '../components/OrangeButton';
 import DateSearch from '../components/DateSearch';
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import Icon from "react-native-ionicons";
+import { logout } from '../reducers/user';
 
 export default function ProfilScreen({ navigation }) {
   const [birthdate, setBirthdate] = useState('');
@@ -18,10 +21,11 @@ export default function ProfilScreen({ navigation }) {
   const [favoritePlayer, setFavoritePlayer] = useState('');
   const [favoriteShoes, setFavoriteShoes] = useState('');
   const user = useSelector((state) => state.user.value);
+  const dispatch = useDispatch();
   
 
   useEffect(() => {
-    fetch(`http://backend-gametime-d20v2apc9-michaelrasolo.vercel.app/users/${user.token}`)
+    fetch(`https://backend-gametime.vercel.app/users/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setBirthdate(data.data.birthdate)
@@ -36,26 +40,31 @@ export default function ProfilScreen({ navigation }) {
   }, []);
 
 
-  const handleValidation = () => {
-    fetch('http://backend-gametime-d20v2apc9-michaelrasolo.vercel.app/users/update', {
+
+const handleValidation = () => {
+  fetch('https://backend-gametime.vercel.app/users/update', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       token: user.token,
-      birthdate : birthdate,
-      gender : gender,
-      level : level, 
-      description :  description,
-      favoriteTeam : favoriteTeam,
-      favoritePlayer : favoritePlayer,
-      favoriteShoes : favoriteShoes,
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.result)
-          navigation.navigate('Search');
-      });
-  };
+      // birthdate: birthdate,
+      city: city,
+      gender: gender,
+      level: level,
+      description: description,
+      favoriteTeam: favoriteTeam,
+      favoritePlayer: favoritePlayer,
+      favoriteShoes: favoriteShoes,
+    }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.result)
+      console.log(data.result)
+        navigation.navigate('Search');
+    });
+}
+
   
   const handleGenderPress = (value) => {
     setGender(value);
@@ -65,12 +74,22 @@ export default function ProfilScreen({ navigation }) {
     setLevel(value);
   }
 
+  const handleLogoutPress = () => {
+    dispatch(logout());
+    navigation.navigate('Home');
+  }
+  
  return (
    <View style={styles.container}>
      <HeaderLogo />
      <ScrollView>
        <View style={styles.titleSection}>
          <Text style={styles.title}>Mon profil joueur</Text>
+         <TouchableOpacity style={styles.signOutSection} onPress={() => handleLogoutPress()}>
+          <Text style={styles.signOutText}>Se déconnecter</Text>
+         <FontAwesome5 name={"sign-out-alt"} style={styles.signOut} />
+         </TouchableOpacity>
+         
        </View>
        <View style={styles.topFields}>
          <View style={styles.fieldSection} width='50%'>
@@ -128,7 +147,8 @@ const styles = StyleSheet.create({
     padding: 15,
   },
  titleSection: {
-  alignItems: 'center',
+  alignItems: 'flex-start',
+  flexDirection: 'row',
  },
  buttonSection: {
   flexDirection: 'row',
@@ -149,7 +169,16 @@ const styles = StyleSheet.create({
     fontSize: 17,
     padding: 5,
   },
-  
-
-
+  signOutSection:{
+    alignItems:'center',
+    padding:20,
+  },
+  signOut: {
+    color:'white',
+    fontSize:25,
+  },
+  signOutText : {
+    color:'white',
+    fontSize:15,
+  },
 })
