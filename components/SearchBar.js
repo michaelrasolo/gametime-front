@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Platform, TextInput, Button, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, Platform, TextInput, Button, TouchableWithoutFeedback, Keyboard, Modal} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import moment from 'moment';
@@ -14,6 +14,10 @@ const SearchBar = (props) => {
     const [selectedTime, setSelectedTime] = useState('');
     const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
+    const closeCalendar = () => {
+        setIsCalendarVisible(false);
+      };
+    
     
     LocaleConfig.locales['fr'] = {
         monthNames: [
@@ -63,6 +67,7 @@ const SearchBar = (props) => {
         const formattedDate = moment(date.timestamp).format('DD MMMM YYYY');
         setSelectedDate(formattedDate);
         setIsCalendarVisible(false);
+        console.log(date) 
     };
 
     const toggleCalendar = () => {
@@ -84,7 +89,7 @@ const SearchBar = (props) => {
 
         setSelectedTime(formattedTime);
         hideTimePicker();
-    };
+  };
 
     return (
         <View style={styles.container}>
@@ -102,8 +107,15 @@ const SearchBar = (props) => {
                         </Text>
                     </TouchableOpacity>
                     {isCalendarVisible && (
+                        <Modal
+                        visible={isCalendarVisible}
+                        transparent={true}
+                        animationType="fade"
+                        onRequestClose={() => setIsCalendarVisible(false)}
+                      >
                         <View style={styles.calendarContainer}>
                             <Calendar
+                            
                                 onDayPress={handleDateSelect}
                                 markedDates={selectedDate ? { [selectedDate]: { selected: true } } : {}}
                                 theme={{
@@ -127,6 +139,8 @@ const SearchBar = (props) => {
                                 }}
                             />
                         </View>
+                        </Modal>
+
                     )}
                 </View>
                 <View style={styles.bottomRightContainer}> 
@@ -223,7 +237,13 @@ const styles = StyleSheet.create({
         color: "white",
         backgroundColor: 'rgba(56, 56, 56, 0.8)',
 
-    }
+    },
+    calendarContainer: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'white',
+      },
 });
 
 

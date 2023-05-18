@@ -5,29 +5,13 @@ import { StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
 
 const HeaderLogo = () => {
   // SHADOW FUNCTION
-  const platformShadow = () => {
-    if (Platform.OS === "android") {
-      return {
-        elevation: 4, // Android box shadow
-      };
-    } else if (Platform.OS === "ios") {
-      return {
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-      };
-    }
-  };
+  
   return (
     
     <View style={styles.header}>
         <SafeAreaView style={styles.container}>
         <Image
-          style={[styles.logo,platformShadow()]}
+          style={[styles.logo]}
           source={require("../assets/images/logo.png")}
         />
         </SafeAreaView>

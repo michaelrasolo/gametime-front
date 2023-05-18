@@ -1,8 +1,6 @@
-import { sliderClasses } from '@mui/material';
 import React from 'react';
-import { Modal, SafeAreaView, ScrollView, Text, View, TouchableOpacity, Image, TextInput, StyleSheet, Keyboard } from 'react-native';
+import { Modal, SafeAreaView, ScrollView, Text, View, TouchableOpacity, Image, TextInput, StyleSheet, Keyboard, Platform } from 'react-native';
 import SearchBar from '../components/SearchBar';
-import SearchInput from './SearchInput';
 import { useState, useRef, useEffect } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import OrangeButton from './OrangeButton';
@@ -20,15 +18,16 @@ const SearchList = () => {
   const [animation, setAnimation] = useState("slide")
   const [searchText, setSearchText] = useState('');
   const [playgrounds, setPlaygrounds] = useState([])
-  const [selectedPlayground, setSelectedPlayground] = useState('Saisis ta ville')
+  const [selectedPlayground, setSelectedPlayground] = useState('Choisis un terrain')
   const [playgroundCity, setPlaygroundCity] = useState('')
   const [playgroundAddress, setPlaygroundAddress] = useState('')
 
-  const inputRef = useRef();
+
+  const inputRef = useRef(); // cible l'input search du modal pour pouvoir mettre un focus dessus et ouvrir le keyboard directement à l'ouverture du modal
 
   const handleChange = (value) => {
     setSearchText(value)
-    fetch(`http://192.168.10.170:3000/playgrounds/city/${value}`, {
+    fetch(`http://192.168.10.153:3000/playgrounds/city/${value}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' }
     })
@@ -37,7 +36,6 @@ const SearchList = () => {
         setPlaygrounds([...data])
       })
   }
-
 
   const handleCard = (value) => {
     setSelectedPlayground(value.name)
@@ -50,7 +48,8 @@ const SearchList = () => {
     setPlaygrounds([])
     setSearchText('')
     setListVisible(isListVisible && !isListVisible);
-    setMapVisible(isListVisible && !isMapVisible)
+    setMapVisible(isMapVisible && !isMapVisible)
+    setAnimation("slide")
   }
 
   const handleOpenMap = () => {
@@ -60,6 +59,7 @@ const SearchList = () => {
   }
 
   const handleSelect = () => {
+    setAnimation("none")
     setMapVisible(!isMapVisible)
   }
 
@@ -70,6 +70,7 @@ const SearchList = () => {
       setPlaygroundAddress(data.address);
     };
   };
+
 
   const images = {
     playground1: require('../assets/playgrounds/playground1.jpg'),
@@ -105,24 +106,27 @@ const SearchList = () => {
   });
 
   return (
-    <SafeAreaView>
-      <SearchBar name={selectedPlayground} onPress={() => setListVisible(true)} />
+    <SafeAreaView style={styles.container} >
+      <SearchBar name={selectedPlayground} onPress={ () => {
+        setListVisible(true)
+      }} />
       <Modal
         animationType={animation}
+        statusBarTranslucent={true}
         transparent={true}
-        visible={isListVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setListVisible(!isListVisible);
-        }}>
+        visible={isListVisible}>
         <SafeAreaView style={styles.modal} >
-          <View style={styles.header} >
+          <View style={[styles.headerList, {paddingTop: Platform.OS === 'android' && 40}] } >
             <View style={[styles.inputContainer]}>
               <FontAwesome style={styles.icon} name="search" size={30} color="white" />
               <TextInput
                 style={styles.input}
                 ref={inputRef}
-                onLayout={() => inputRef.current.focus()}
+                onLayout={ () => {inputRef.current.focus()
+                  setAnimation("none")
+                }
+                }
+                
                 placeholder="Saisis ta ville"
                 onChangeText={handleChange}
                 placeholderTextColor="#242424"
@@ -148,6 +152,7 @@ const SearchList = () => {
       </Modal>
       <Modal
         animationType={animation}
+        statusBarTranslucent={true}
         transparent={true}
         visible={isMapVisible}
         onRequestClose={() => {
@@ -155,7 +160,7 @@ const SearchList = () => {
           setMapVisible(!isMapVisible);
         }}>
         <View style={styles.modal} >
-          <View style={styles.header} >
+          <View style={styles.headerMap} >
             <View style={styles.inputContainer}>
               <FontAwesome style={styles.icon} name="search" size={30} color="white" />
               <TextInput
@@ -198,14 +203,12 @@ const SearchList = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
+   paddingTop:50,    
+   alignItems: "center",
+    },
   modal: {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: "space-between",
+flex:1,
+justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "white",
   },
@@ -215,12 +218,11 @@ const styles = StyleSheet.create({
     width: "30%",
     height: 70,
   }, name: { fontWeight: 700 },
-  text: { width: "65%", alignItems: "start" },
+  text: { width: "65%" },
   searchInput: {
     marginBottom: 30
   },
   playgroundList: {
-    marginTop: "30%", //marginTop afin d'apparaitre en dessous de la barre de recherche et des boutons
     height: "90%"
   },
   inputContainer: {
@@ -256,19 +258,20 @@ const styles = StyleSheet.create({
     width: "90%",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10
-  },
+    alignItems: "center"  },
   map: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  }, header: {
+    height: Dimensions.get('window').height*1.2,
+  }, headerMap: {
     position: "absolute",
     width: "100%",
     zIndex: 1, alignItems: "center",
-    justifyContent: "flex-start",
-    paddingTop: 40, height: "20%"
-  }
+    justifyContent: "flex-start",height: "20%",  paddingTop:47
+  },
+  headerList: {
+    width: "100%", alignItems: "center",
+    justifyContent: "flex-start", marginBottom:"5%"
+  },
 });
 
 export default SearchList 

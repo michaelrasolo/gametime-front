@@ -7,6 +7,7 @@ import { useState } from "react";
 import { login } from "../reducers/user";
 import { useDispatch } from "react-redux";
 
+
 export default function SignInScreen({ navigation }) {
   const [nickname, setNickname] = useState("");
   const [idError, setIdError] = useState(false);
