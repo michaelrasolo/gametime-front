@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
   logo: {
     flex: 1,
     aspectRatio: 1.5, 
-    resizeMode: 'contain'  },
+    resizeMode: 'contain'
+  },
   btnBox: {
     width: "100%",
     height: "20%",

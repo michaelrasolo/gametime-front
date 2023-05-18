@@ -8,15 +8,22 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 
 const SearchInput = (props) => {
-
-
-    return (
-            <View style={[styles.topContainer, {width:props.width}]}>
-                <FontAwesome style={styles.icon} name="search" size={30} color="white" />
-                <TextInput style={styles.input} placeholder={props.name}    onChangeText={props.onChangeText} onFocus={props.onFocus} placeholderTextColor="#242424" value={props.value}></TextInput>
-            </View>
-    )
-}
+  return (
+    <View style={[styles.topContainer, { width: props.width }]}>
+      <FontAwesome style={styles.icon} name="search" size={30} color="white" />
+      <TextInput
+        style={styles.input}
+        ref={props.ref}
+        onLayout={props.onLayout}
+        placeholder={props.name}
+        onChangeText={props.onChangeText}
+        onFocus={props.onFocus}
+        placeholderTextColor="#242424"
+        value={props.value}
+      />
+    </View>
+  );
+};
 
 
 const styles = StyleSheet.create({
