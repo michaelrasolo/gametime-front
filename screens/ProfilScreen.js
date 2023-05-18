@@ -6,6 +6,8 @@ import RadioButtons from '../components/RadioButtons';
 import GreyButton from '../components/GreyButton';
 import OrangeButton from '../components/OrangeButton';
 import DateSearch from '../components/DateSearch';
+import ProfilePicture from '../components/ProfilePicture';
+// import { useSelect } from 'react-redux';
 
 export default function ProfilScreen({ navigation }) {
   const [nickname, setNickname] = useState('');
@@ -58,12 +60,19 @@ export default function ProfilScreen({ navigation }) {
     setLevel(value);
   }
 
+  const camera = () => {
+    navigation.navigate('Camera')
+  };
+
  return (
    <View style={styles.container}>
      <HeaderLogo />
      <ScrollView>
        <View style={styles.titleSection}>
          <Text style={styles.title}>Mon profil joueur</Text>
+       </View>
+       <View style={styles.picture}>
+         <ProfilePicture camera={camera}  />
        </View>
        <View style={styles.topFields}>
          {/* <View style={styles.fieldSection} width='50%'>
@@ -142,7 +151,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     padding: 5,
   },
-  
-
-
+  picture: {
+    alignItems:"center"
+  }
 })

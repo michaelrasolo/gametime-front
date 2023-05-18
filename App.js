@@ -22,6 +22,7 @@ import user from './reducers/user';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SignUpScreen from './screens/SignUpScreen';
 import SignInScreen from './screens/SignInScreen';
+import CameraScreen from './screens/CameraScreen';
 
 const reducers = combineReducers({ user });
 
@@ -77,6 +78,8 @@ export default function App() {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="SignIn" component={SignInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="Camera" component={CameraScreen} />
+            <Stack.Screen name="Profile" component={ProfilScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
