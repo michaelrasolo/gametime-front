@@ -170,7 +170,9 @@ const styles = StyleSheet.create({
         height: 100,
         width: "90%",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        
+        
     },
     topContainer: {
         borderTopLeftRadius: 30,

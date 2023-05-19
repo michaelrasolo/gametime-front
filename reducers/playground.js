@@ -1,30 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  value: { playgroundId: null, date: null, time: null},
+  value:{ 
+
+    selectedPlayground: { 
+        playgroundId: null,
+        name:null, 
+        address: null,
+        city: null,
+        date: null,
+        time: null}, 
+    playgrounds: []} 
 };
 
 export const playgroundSlice = createSlice({
   name: 'playground',
   initialState,
   reducers: {
-    addPlaygroundId: (state, action) => {
-     state.value.playgroundId = action.payload
+    setPlaygroundList: (state, action) => {
+     state.value.playgrounds = action.payload
   },
-  addPlaygroundDate: (state,action) => {
-    state.value.date = action.payload.date 
-  },
-  addPlaygroundTime: (state,action) => {
-    state.value.time = action.payload.time
-  },
-    removePlayground: (state, action) => {
-    state.value.playgroundId = null
-    state.value.date = null 
-    state.value.time = null
-
- },
+  selectedPlayground:(state, action) => {
+    state.value.selectedPlayground = {
+      ...state.value.selectedPlayground,
+      playgroundId: action.payload.id,
+      name: action.payload.name, 
+      address: action.payload.address,
+      city: action.payload.city    
+    }}
 
 }});
 
-export const { addPlaygroundId, removePlayground,  addPlaygroundDate,addPlaygroundTime } = playgroundSlice.actions;
+export const { setPlaygroundList,selectedPlayground } = playgroundSlice.actions;
 export default playgroundSlice.reducer;

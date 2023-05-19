@@ -1,61 +1,63 @@
 import React from 'react';
 import {Modal, Button, StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native';
+import SearchBar from '../components/SearchBar';
+import MapListSearchBar from '../components/MapListSearchBar';
 import SearchList from '../components/SearchList';
-import RadioButtons from '../components/RadioButtons';
-import GreyButton from '../components/GreyButton';
-import OrangeButton from '../components/OrangeButton';
-import Inputs from '../components/Inputs';
-import DateSearch from '../components/DateSearch';
+import MapPlayground from '../components/MapPlayground';
 import Checkbox from 'expo-checkbox';
-import { useState } from 'react';
+import DateSearch from '../components/DateSearch';
+import RadioButtons from '../components/RadioButtons';
+import Inputs from '../components/Inputs';
 import RadioButtons2 from '../components/RadioButton2';
-import { useSelector } from "react-redux";
+import OrangeButton from '../components/OrangeButton';
 
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setPlaygroundList } from '../reducers/playground';
 
 export default function SessionScreen({ navigation }) {
+  const dispatch = useDispatch()
+  const playgrounds = useSelector((state) => state.playground.value);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isListVisible, setListVisible] = useState(true)
+  const [isMapVisible, setMapVisible] = useState(false)
   const [isWeekly, setIsWeekly] = useState(false);
   const [bringBall, setBringBall] = useState(false);
   const [gameGroup, setGameGroup] = useState(1);
   const [teamGroup, setTeamGroup] = useState(1);
   const [selectedLevel, setSelectedLevel] = useState()
+
+
+  const handleCloseModal = () => {
+    setModalVisible(!isModalVisible)
+    dispatch(setPlaygroundList([]))
+  }
+
+  const handleMap = () => {
+    setMapVisible(!isMapVisible)
+  }
+
+  const handleList = () => {
+    setListVisible(!isListVisible)
+  }
   
 
-  const playground = useSelector((state) => state.playground.value)
-
-// const selectPlayground = (id) => {
-//   setPlaygroundId(id)
-// }
-
-  const handleCreate = () => {
-    const participantData = [{ user: userID, group: req.body.group }];
-
-
-    fetch('192.168.10.153:3000/sessions/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          playground: playground.playgroundId, 
-          sessionType: req.body.sessionType,
-          date: playground.date,
-          time: playground.time,
-          level: req.body.level,
-          mood: req.body.mood,
-          ball: userID,
-          participants: participantData,
-          frequency: req.body.frequency,
-          limitDate: new Date(),
-        }),
-    }).then(response => response.json())
-        .then(data => {
-            
-        });
-}
-  
-
- return (
-    <SafeAreaView style={styles.container}>
-    <SearchList />
-    <View style={styles.middleSection}>
+return (
+  <SafeAreaView style={styles.container} >
+    <SearchBar name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name :'Choisis un terrain' } onPress={ () => {
+        setModalVisible(true)
+      }} />
+        <Modal
+        animationType="slide"
+        statusBarTranslucent={true}
+        visible={isModalVisible}>
+          <SafeAreaView style={styles.modal}>
+          <MapListSearchBar handleList={handleList} handleMap={handleMap} handleCloseModal={handleCloseModal}/>
+          {isListVisible && <SearchList handleList={handleList} handleMap={handleMap}/>}
+          {isMapVisible && <MapPlayground handleCloseModal={handleCloseModal} />}
+          </SafeAreaView>
+        </Modal>
+        <View style={styles.middleSection}>
     <ScrollView>
     <View style={styles.titleSection}>
     <Text style={styles.title}>Récurrence</Text>
@@ -111,8 +113,9 @@ export default function SessionScreen({ navigation }) {
   </ScrollView>
   </View>
   <OrangeButton title={"Créer le game"} width={"60%"}/>
-    </SafeAreaView>
- );
+  </SafeAreaView>
+
+  )
 }
 
 const styles = StyleSheet.create({
@@ -121,30 +124,35 @@ const styles = StyleSheet.create({
      backgroundColor:"#242424",
       alignItems:"center",
       justifyContent:"space-around",
-  },  
-  middleSection:{
-    paddingTop:40,
-    height:"75%",
   },
-  title: {
-    alignItems:'center',
-    color: 'white',
-    fontSize: 25,
-  },
-  fieldSection: {
-    width:"100%",
-    padding: 15,
-    flexDirection:"row",
-    justifyContent:"space-around",
-    alignItems:"center"
-  }, 
-  SubfieldSection:{width:"80%", alignItems:"center"},
-   fieldName: {
-    color: 'white',
-    fontSize: 17,
-    padding: 5,
-  },
-  titleSection: {
-    alignItems: 'center',
-   }
+  modal: {
+    flex:1,
+    justifyContent: "space-between",
+        alignItems: "center",
+      },
+     middleSection:{
+       paddingTop:40,
+       height:"75%",
+     },
+     title: {
+       alignItems:'center',
+       color: 'white',
+       fontSize: 25,
+     },
+     fieldSection: {
+       width:"100%",
+       padding: 15,
+       flexDirection:"row",
+       justifyContent:"space-around",
+       alignItems:"center"
+     }, 
+     SubfieldSection:{width:"80%", alignItems:"center"},
+      fieldName: {
+       color: 'white',
+       fontSize: 17,
+       padding: 5,
+     },
+     titleSection: {
+       alignItems: 'center',
+      }
 })
