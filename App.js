@@ -4,6 +4,7 @@ import FavoriteScreen from './screens/FavoriteScreen';
 import ProfilScreen from './screens/ProfilScreen';
 import SearchScreen from './screens/SearchScreen';
 import SessionScreen from './screens/SessionScreen';
+import CreateSession from './screens/CreateSession';
 import HomeScreen from './screens/HomeScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -46,7 +47,9 @@ const TabNavigator = () => {
  
         if (route.name === 'Search') {
           iconName = 'search';
-        } else if (route.name === 'Session') {
+        } else if (route.name === 'Create') {
+          iconName = 'basketball-ball';
+        }  else if (route.name === 'Session') {
           iconName = 'basketball-ball';
         } else if (route.name === 'Favorite') {
           iconName = 'heart';
@@ -61,6 +64,7 @@ const TabNavigator = () => {
       headerShown: false,
     })}>
      <Tab.Screen name="Search" component={SearchScreen} />
+     <Tab.Screen name="Create" component={CreateSession} />
      <Tab.Screen name="Session" component={SessionScreen} />
      <Tab.Screen name="Favorite" component={FavoriteScreen} />
      <Tab.Screen name="Profil" component={ProfilScreen} />

@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPlaygroundList } from '../reducers/playground';
 
-export default function SessionScreen({ navigation }) {
+export default function CreateSession({ navigation }) {
   const dispatch = useDispatch()
   const playgrounds = useSelector((state) => state.playground.value);
   const [isModalVisible, setModalVisible] = useState(false);
