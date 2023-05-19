@@ -14,6 +14,7 @@ import GreyButton from "../components/GreyButton";
 export default function HomeScreen({ navigation }) {
     // FUNCTION GO TO SIGN UP
     const handleSignUp = () => {
+        // navigation.navigate('Join');
         navigation.navigate('SignUp');
       };
 
