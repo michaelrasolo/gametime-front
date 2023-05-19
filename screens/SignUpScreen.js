@@ -26,12 +26,12 @@ export default function SignUpScreen({ navigation }) {
     const handleSubmit = () => {
         console.log(EMAIL_REGEX.test(email));
         console.log(emailError)
-        if (!EMAIL_REGEX.test(email)) {
-            setEmailError(true)
-        } else if (password !== confirmation) {
-            setPasswordError(true)
-        } else {
-            fetch('https://backend-gametime.vercel.app/users/signup', {
+        // if (!EMAIL_REGEX.test(email)) {
+        //     setEmailError(true)
+        // } else if (password !== confirmation) {
+        //     setPasswordError(true)
+        // } else {
+            fetch('http://192.168.10.151:3000/users/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password, nickname: nickname }),
@@ -117,7 +117,7 @@ export default function SignUpScreen({ navigation }) {
     </View>
   );
 }
-}
+
 
 const styles = StyleSheet.create({
   container: {

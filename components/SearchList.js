@@ -203,7 +203,7 @@ const SearchList = () => {
 
 const styles = StyleSheet.create({
   container: {
-   paddingTop:50,    
+    paddingTop:50, 
    alignItems: "center",
     },
   modal: {

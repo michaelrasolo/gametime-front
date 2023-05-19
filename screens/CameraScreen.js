@@ -42,7 +42,7 @@ export default function CameraScreen({ navigation }) {
 
        console.log("photo", photo.uri);
   
-      const response = await fetch("http://192.168.10.140:3000/users/upload", {
+      const response = await fetch("http://192.168.10.151:3000/users/upload", {
         method: 'POST',
         body: formData,
        })

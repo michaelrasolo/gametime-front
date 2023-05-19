@@ -8,7 +8,6 @@ import GreyButton from '../components/GreyButton';
 import OrangeButton from '../components/OrangeButton';
 import DateSearch from '../components/DateSearch';
 import ProfilePicture from '../components/ProfilePicture';
-// import { useSelect } from 'react-redux';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { logout } from '../reducers/user';
@@ -27,7 +26,7 @@ export default function ProfilScreen({ navigation }) {
   
 
   useEffect(() => {
-    fetch(`https://backend-gametime.vercel.app/users/${user.token}`)
+    fetch(`http://192.168.10.151:3000/users/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setBirthdate(data.data.birthdate)
@@ -44,7 +43,7 @@ export default function ProfilScreen({ navigation }) {
 
 
 const handleValidation = () => {
-  fetch('https://backend-gametime.vercel.app/users/update', {
+  fetch('http://192.168.10.151:3000/users/update', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
