@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Button, StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import MapListSearchBar from '../components/MapListSearchBar';
@@ -10,14 +10,14 @@ import RadioButtons from '../components/RadioButtons';
 import Inputs from '../components/Inputs';
 import RadioButtons2 from '../components/RadioButton2';
 import OrangeButton from '../components/OrangeButton';
+import ConfettiCannon from 'react-native-confetti-cannon';
 
-import { useState } from 'react';
+import { useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setPlaygroundList } from '../reducers/playground';
+import { setPlaygroundList, emptySelected } from '../reducers/playground';
 
 export default function CreateSession({ navigation }) {
   const dispatch = useDispatch()
-  const playgrounds = useSelector((state) => state.playground.value);
   const [isModalVisible, setModalVisible] = useState(false);
   const [isListVisible, setListVisible] = useState(true)
   const [isMapVisible, setMapVisible] = useState(false)
@@ -26,11 +26,21 @@ export default function CreateSession({ navigation }) {
   const [gameGroup, setGameGroup] = useState(1);
   const [teamGroup, setTeamGroup] = useState(1);
   const [selectedLevel, setSelectedLevel] = useState()
+  const [Mood, setMood] = useState()
+  const [SessionType, setSessionType] = useState()
+  const [limitDate, setLimitDate] = useState()
+  const [showConfetti, setShowConfetti] = useState(false);
+
+ 
+  const user = useSelector((state) => state.user.value);
+  const playgrounds = useSelector((state) => state.playground.value);
 
 
   const handleCloseModal = () => {
     setModalVisible(!isModalVisible)
     dispatch(setPlaygroundList([]))
+    setMapVisible(false)
+    setListVisible(true)
   }
 
   const handleMap = () => {
@@ -41,10 +51,53 @@ export default function CreateSession({ navigation }) {
     setListVisible(!isListVisible)
   }
 
+  const handleLevelPress = (value) => {
+    setSelectedLevel(value);
+  }
+
+  const handleMoodPress = (value) => {
+    setMood(value);
+  }
+
+  const handleSessionPress = (value) => {
+    setSessionType(value);
+  }
+  const handleLimitDate = (value) => {
+    setLimitDate(value)
+  }
+
+  const handleValidation = () => {
+    fetch('http://192.168.10.152:3000/sessions/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+          playground:  playgrounds.selectedPlayground.playgroundId,
+          sessionType: SessionType,
+          date: playgrounds.selectedPlayground.date,
+          time: playgrounds.selectedPlayground.time,
+          level: selectedLevel,
+          mood : Mood,
+          ball: bringBall,
+          token : user.token,
+          group : teamGroup,
+          maxParticipants : gameGroup,
+          frequency: isWeekly,
+          limitDate: limitDate,
+      }
+      ),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        if (data.result)
+        setShowConfetti(true)
+        dispatch(emptySelected())
+      });
+  }
 
   return (
     <SafeAreaView style={styles.container} >
-      <SearchBar name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Choisis un terrain'} onPress={() => {
+   {!showConfetti && <><SearchBar name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Choisis un terrain'} onPress={() => {
         setModalVisible(true)
       }} />
       <Modal
@@ -62,49 +115,49 @@ export default function CreateSession({ navigation }) {
           <View style={styles.titleSection}>
             <Text style={styles.title}>Récurrence</Text>
             <View style={styles.fieldSection}>
-              <View>
+              <View style={styles.checkSection}>
                 <Text style={styles.fieldName}>Hebdomadaire</Text>
                 <Checkbox
                   value={isWeekly}
-                  onValueChange={setIsWeekly}
+                  onValueChange={() => setIsWeekly(!isWeekly)}
                   color={isWeekly ? '#4630EB' : undefined} />
-              </View>
+                  </View>
               <View>
                 <Text style={styles.fieldName}>Date limite</Text>
-                <DateSearch />
+                <DateSearch selectDate={handleLimitDate}/>
               </View>
 
             </View>
           </View>
           <View style={styles.titleSection}>
             <Text style={styles.title}>Type de Game</Text>
-            <RadioButtons leftTitle={"3X3"} midTitle={"5X5"} rightTitle={"Freestyle"} />
+            <RadioButtons  onPress={handleSessionPress} leftTitle={"3X3"} midTitle={"5X5"} rightTitle={"Freestyle"} />
           </View>
           <View style={styles.titleSection}>
             <Text style={styles.title}>Niveau du Game</Text>
-            <RadioButtons leftTitle={"Rookies"} midTitle={"Ballers"} rightTitle={"All-Stars"} />
+            <RadioButtons onPress={handleLevelPress} leftTitle={"Rookies"} midTitle={"Ballers"} rightTitle={"All-Stars"} />
           </View>
           <View style={styles.titleSection}>
             <Text style={styles.title}>Nombre de joueurs</Text>
             <View style={styles.fieldSection}>
               <View style={styles.SubfieldSection}>
                 <Text style={styles.fieldName}>Le Game</Text>
-                <Inputs width={"50%"} height={50} onChangeText={(value) => setGameGroup(value)} value={gameGroup} />
+                <Inputs name="Nombre maxium" width={"50%"} height={50} onChangeText={(value) => setGameGroup(value)} value={gameGroup} />
               </View>
               <View style={styles.SubfieldSection}>
                 <Text style={styles.fieldName}>Ma team</Text>
-                <Inputs width={"50%"} height={50} onChangeText={(value) => setTeamGroup(value)} value={teamGroup} />
+                <Inputs  name="Moi et mes potes" width={"50%"} height={50} onChangeText={(value) => setTeamGroup(value)} value={teamGroup} />
               </View>
             </View>
           </View>
           <View style={styles.titleSection}>
             <Text style={styles.title}>Intensité du game</Text>
-            <RadioButtons2 leftTitle={"Pour le fun"} rightTitle={"Pour la gagne"} />
+            <RadioButtons2 onPress={handleMoodPress} leftTitle={"Pour le fun"} rightTitle={"Pour la gagne"} />
             <Text style={styles.fieldName}>J'apporte un ballon</Text>
 
             <Checkbox
               value={bringBall}
-              onValueChange={setBringBall}
+              onValueChange={() => setBringBall(!bringBall)}
               color={bringBall ? '#4630EB' : undefined} />
           </View>
 
@@ -112,7 +165,25 @@ export default function CreateSession({ navigation }) {
 
         </ScrollView>
       </View>
-      <OrangeButton title={"Créer le game"} width={"60%"} />
+      <OrangeButton onPress={() => handleValidation()} title={"Créer le game"} width={"60%"} />
+      </>
+      }
+      {showConfetti && (
+    <View style={styles.confettiContainer}>
+            <View style={styles.confettiText}>
+
+      <Text style={styles.title}>Votre Session est créée !</Text>
+      </View>
+
+      <View style={styles.confettiButtons}>
+      <OrangeButton onPress={() => navigation.navigate('TabNavigator', { screen: 'Session' })}title="Voir sessions" width={"45%"}/>
+      <OrangeButton onPress={()=> setShowConfetti(false)}title="Créer session" width={"45%"}/>
+      </View>
+        <ConfettiCannon count={300} origin={{x: -10, y: 0}} />
+
+  </View>
+  
+  )}
     </SafeAreaView>
 
   )
@@ -124,6 +195,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#242424",
     alignItems: "center",
     justifyContent: "space-around",
+    paddingTop:30,
   },
   modal: {
     flex: 1,
@@ -154,5 +226,26 @@ const styles = StyleSheet.create({
   },
   titleSection: {
     alignItems: 'center',
+  },
+  confettiContainer: {
+    flex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  confettiButtons:{
+    flexDirection:"row",
+    width : "90%",
+    justifyContent:"space-between"
+  },
+  confettiText: {
+    height:100,
+  },
+  checkSection: {
+    alignItems:"center"
   }
 })

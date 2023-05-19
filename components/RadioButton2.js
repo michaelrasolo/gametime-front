@@ -7,7 +7,6 @@ const RadioButtons2 = (props) => {
   const [isPressedLeft, setIsPressedLeft] = useState(false);
   const [isPressedRight, setIsPressedRight] = useState(false);
 
-
   const platformShadow = () => {
     if (Platform.OS === 'android') {
       return {
@@ -26,23 +25,25 @@ const RadioButtons2 = (props) => {
     }
   };
 
-  const handlePressLeft = () => {
-    setIsPressedLeft(true);
-    setIsPressedRight(false);
-  }
 
-  const handlePressRight = () => {
-    setIsPressedLeft(false);
-    setIsPressedRight(true);
-  }
+  const handlePress = (value) => {
+    if (value === props.leftTitle  ) {
+      setIsPressedLeft(true);
+      setIsPressedRight(false);
+    } else if (value === props.rightTitle) {
+      setIsPressedLeft(false);
+      setIsPressedRight(true);
+    }
+    props.onPress(value);
+  };
 
   
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => handlePressLeft()} style={[[styles.UnpressedButtons, isPressedLeft ? styles.pressedButton : styles.UnpressedButtons],platformShadow()]}> 
+      <TouchableOpacity onPress={() => handlePress(props.leftTitle)} style={[[styles.UnpressedButtons, isPressedLeft ? styles.pressedButton : styles.UnpressedButtons],platformShadow()]}> 
         <Text style={[styles.unpressedText, isPressedLeft ? styles.pressedText : styles.unpressedText]} >{props.leftTitle}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlePressRight()} style={[styles.UnpressedButtons, isPressedRight ? styles.pressedButton : styles.UnpressedButtons,platformShadow()]} >
+      <TouchableOpacity onPress={() => handlePress(props.rightTitle)} style={[styles.UnpressedButtons, isPressedRight ? styles.pressedButton : styles.UnpressedButtons,platformShadow()]} >
         <Text style={[styles.unpressedText, isPressedRight ? styles.pressedText : styles.unpressedText]} >{props.rightTitle}</Text>
       </TouchableOpacity>
     </View>

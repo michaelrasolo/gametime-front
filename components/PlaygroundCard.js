@@ -49,7 +49,7 @@ const PlaygroundCard = (props) => {
         <Text style={styles.address}>
           {props.address}
         </Text>
-        <OrangeButton title="Choisir" onPress={props.onPress} width={"35%"}/>
+        <OrangeButton title="Choisir" onPress={props.onPress} width={"30%"}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -60,7 +60,7 @@ const PlaygroundCard = (props) => {
 const styles = StyleSheet.create({
   card: {
     width: "90%",
-    height: "20%",
+    height: "30%",
     borderRadius: 30,
     bottom:20,
     zIndex:1,
@@ -104,10 +104,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   address:{
+    width:"50%",
     color: "#F0F0F0",
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: "500",
+    fontWeight: "300",
   }
 });
 

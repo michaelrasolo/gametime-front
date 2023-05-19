@@ -5,7 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import PlaygroundCard from './PlaygroundCard';
-import { selectedPlayground } from '../reducers/playground';
+import { selectedPlayground, setPlaygroundList } from '../reducers/playground';
 
 
 const MapPlayground = (props ) => {
@@ -16,6 +16,24 @@ const MapPlayground = (props ) => {
     const [initialLatitude,setInitialLatitude] = useState(48.390394)
     const [initialLongitude,setInitialLongitude] = useState(-4.486076)
 
+    calculateDistance = (lat1, lon1, lat2, lon2) => {
+      // Formule pour calculer la distance entre deux coordonnées géographiques
+      const R = 6371; // Rayon de la Terre en km
+      const dLat = this.deg2rad(lat2 - lat1);
+      const dLon = this.deg2rad(lon2 - lon1);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c;
+  
+      return distance;
+    };
+  
+    deg2rad = (deg) => {
+      return deg * (Math.PI / 180);
+    };
 
     useEffect(() => {
         (async () => {
@@ -24,9 +42,16 @@ const MapPlayground = (props ) => {
           if (status === 'granted') {
             Location.watchPositionAsync({ distanceInterval: 10 },
               (location) => {
-setInitialLatitude(location.coords.latitude) 
-setInitialLongitude(location.coords.longitude)
- });
+    setInitialLatitude(location.coords.latitude) 
+    setInitialLongitude(location.coords.longitude)
+    // fetch(`http://192.168.10.152:3000/playgrounds/${location.coords.latitude}/${location.coords.longitude}`, {
+    //   method: 'PUT',
+    //   headers: { 'Content-Type': 'application/json' }
+    // })  .then(res => res.json())
+    // .then(data => {console.log(data)}
+            
+    // )
+    });
           }
         })();
        }, []);
@@ -50,7 +75,7 @@ setInitialLongitude(location.coords.longitude)
         props.handleCloseModal()
     }
     
-    const markers = playgrounds && playgrounds.playgrounds.map((data, i) => {
+    const markers = playgrounds.playgrounds && playgrounds.playgrounds.map((data, i) => {
         return <Marker key={i} coordinate={{ latitude: data.latitude, longitude: data.longitude }} title={data.name} 
         onPress={() => handleMarker(data)} 
         >
