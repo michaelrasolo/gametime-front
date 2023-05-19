@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: 700,
     fontSize: 20}
-});
+}
+);
 
 export default GreyButton;
