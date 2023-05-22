@@ -16,7 +16,7 @@ export default function SessionScreen({ navigation }) {
 
 
   useEffect(() => {
-    fetch(`http://192.168.10.151:3000/sessions/all`)
+    fetch(`http://192.168.0.103:3000/sessions/all`)
       .then(response => response.json())
       .then(data => {
         // console.log(data.data[0].playground.photo)

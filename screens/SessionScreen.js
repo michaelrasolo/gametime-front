@@ -14,7 +14,7 @@ export default function SessionScreen({ navigation }) {
   const [PressedButton, setPressedButton] = useState("");
 
   useEffect(() => {
-    fetch(`http://192.168.10.151:3000/sessions/futur/${user.token}`)
+    fetch(`http://192.168.0.103:3000/sessions/futur/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)
@@ -23,13 +23,13 @@ export default function SessionScreen({ navigation }) {
 
   const handleButtonPress = (value) => {
     if(value === 'A venir') {
-      fetch(`http://192.168.10.151:3000/sessions/futur/${user.token}`)
+      fetch(`http://192.168.0.103:3000/sessions/futur/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)
       });
     } else {
-      fetch(`http://192.168.10.151:3000/sessions/past/${user.token}`)
+      fetch(`http://192.168.0.103:3000/sessions/past/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)

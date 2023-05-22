@@ -24,12 +24,14 @@ export default function SignUpScreen({ navigation }) {
     const EMAIL_REGEX = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/gi
 
     const handleSubmit = () => {
-        if (EMAIL_REGEX.test(email)=== false) {
-            setEmailError(true)
-        } else if (password !== confirmation) {
-            setPasswordError(true)
-        } else {
-            fetch('http://192.168.10.163:3000/sessions/game', {
+        console.log(EMAIL_REGEX.test(email));
+        console.log(emailError)
+        // if (!EMAIL_REGEX.test(email)) {
+        //     setEmailError(true)
+        // } else if (password !== confirmation) {
+        //     setPasswordError(true)
+        // } else {
+            fetch('http://192.168.0.103:3000/users/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password, nickname: nickname }),
