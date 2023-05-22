@@ -52,7 +52,7 @@ export default function SignUpScreen({ navigation }) {
           setErrorMessages((previousErrors) => [...previousErrors, "Champ confirmation vide"]);
         } 
         else if (errorMessages.length === 0) {
-            fetch('http://192.168.1.18:3000/users/signup', {
+            fetch('http://192.168.10.175:3000/users/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password, nickname: nickname, city: city }),

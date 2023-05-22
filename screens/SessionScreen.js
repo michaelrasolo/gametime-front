@@ -18,18 +18,19 @@ export default function SessionScreen({ navigation }) {
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)
+        console.log('user token:', user.token, ' data: ',data )
+        
       });
   }, []);
-
   const handleButtonPress = (value) => {
     if(value === 'A venir') {
-      fetch(`http://192.168.10.151:3000/sessions/futur/${user.token}`)
+      fetch(`http://192.168.10.175:3000/sessions/futur/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)
       });
     } else {
-      fetch(`http://192.168.10.151:3000/sessions/past/${user.token}`)
+      fetch(`http://192.168.10.175:3000/sessions/past/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)
@@ -46,7 +47,7 @@ export default function SessionScreen({ navigation }) {
     playground6: require('../assets/playgrounds/playground6.jpg'),
   };
 
-  const gamecards = sessions.map((data, i) => {
+  const gamecards = sessions && sessions.map((data, i) => {
     const imagePath = `playground${data.playground.photo}`;
     const imageSource = images[imagePath];
     return (
@@ -76,7 +77,7 @@ export default function SessionScreen({ navigation }) {
         </View>
         <View style={styles.SessionsSection}>
           <ScrollView>
-            {gamecards}
+            {sessions && gamecards}
           </ScrollView>
         </View>
       </View>

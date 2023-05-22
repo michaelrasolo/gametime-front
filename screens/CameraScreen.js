@@ -42,7 +42,7 @@ export default function CameraScreen({ navigation }) {
 
        console.log("photo", photo.uri);
   
-      const response = await fetch('http://192.168.1.18:3000/users/upload', {
+      const response = await fetch('http://192.168.10.175:3000/users/upload', {
         method: 'PUT',
         body: formData,
        })
@@ -58,7 +58,7 @@ export default function CameraScreen({ navigation }) {
   }
 
   return (
-    <Camera style={styles.container} type={type} flashMode={flash} ref={(ref) => cameraRef = ref}>
+    <Camera style={styles.container} type={type} flashMode={flash} ref={(ref) => cameraRef = ref} ratio={'16:9'}>
 
     <View style={styles.topContainer}>
         <View>

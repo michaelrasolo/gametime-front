@@ -42,7 +42,7 @@ export default function ProfilePicture(props) {
       });
       formData.append("token", user.token);
 
-      fetch("http://192.168.1.18:3000/users/upload", {
+      fetch("http://192.168.10.175:3000/users/upload", {
         method: "PUT",
         body: formData,
         headers: {
@@ -60,7 +60,7 @@ export default function ProfilePicture(props) {
   };
 
   const deletePicture = () => {
-    fetch("http://192.168.1.18:3000/users/deletePicture", {
+    fetch("http://192.168.10.175:3000/users/deletePicture", {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
