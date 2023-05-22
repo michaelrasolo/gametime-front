@@ -26,7 +26,7 @@ export default function ProfilScreen({ navigation }) {
   
 
   useEffect(() => {
-    fetch(`http://192.168.10.151:3000/users/${user.token}`)
+    fetch(`http://192.168.10.164:3000/users/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setBirthdate(data.data.birthdate)
@@ -43,7 +43,7 @@ export default function ProfilScreen({ navigation }) {
 
 
 const handleValidation = () => {
-  fetch('http://192.168.10.151:3000/users/update', {
+  fetch('http://192.168.10.164:3000/users/update', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

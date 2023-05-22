@@ -16,7 +16,7 @@ export default function SessionScreen({ navigation }) {
 
 
   useEffect(() => {
-    fetch(`http://192.168.10.151:3000/sessions/all`)
+    fetch(`http://192.168.10.164:3000/sessions/all`)
       .then(response => response.json())
       .then(data => {
         // console.log(data.data[0].playground.photo)
@@ -48,7 +48,6 @@ export default function SessionScreen({ navigation }) {
         maxParticipants={data.maxParticipants}
         level={data.level}
         sessionType={data.sessionType}
-
       />
     );
   });
@@ -94,6 +93,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     // height: "auto",
     flex: 1, // Ensure the ScrollView expands to fill the available space
-
   },
 })

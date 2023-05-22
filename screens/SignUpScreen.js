@@ -29,7 +29,7 @@ export default function SignUpScreen({ navigation }) {
         } else if (password !== confirmation) {
             setPasswordError(true)
         } else {
-            fetch('http://192.168.10.163:3000/sessions/game', {
+            fetch('http://192.168.10.164:3000/sessions/game', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password, nickname: nickname }),

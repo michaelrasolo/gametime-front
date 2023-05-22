@@ -26,13 +26,11 @@ const platformShadow = () => {
   }
 };
 
-
 const MapListSearchBar = (props) => {
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState('');
   const [isPressedLeft, setIsPressedLeft] = useState(true);
   const [isPressedRight, setIsPressedRight] = useState(false);
-
   const handlePressLeft = () => {
 
     if (isPressedLeft === false) {
@@ -57,7 +55,7 @@ const MapListSearchBar = (props) => {
   const handleChange = (value) => {
     setSearchText(value)
     if (value.length > 2) {
-      fetch(`http://192.168.10.152:3000/playgrounds/city/${value}`, {
+      fetch(`http://192.168.10.164:3000/playgrounds/city/${value}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' }
       })

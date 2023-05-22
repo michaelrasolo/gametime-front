@@ -8,17 +8,16 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useDispatch } from 'react-redux';
 import { selectTime,selectDate} from '../reducers/playground';
 
-const SearchBar = (props) => {
+const SessionBar = (props) => {
     const dispatch = useDispatch()
     const [selectedDate, setSelectedDate] = useState(null);
     const [isCalendarVisible, setIsCalendarVisible] = useState(false);
-    const [selectedTime, setSelectedTime] = useState('');
-    const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
     const handleCloseCalendar = () => {
         setIsCalendarVisible(false);
-      };   
- 
+      };
+    
+    
     LocaleConfig.locales['fr'] = {
         monthNames: [
             'janvier',
@@ -67,7 +66,7 @@ const SearchBar = (props) => {
         const formattedDate = moment(date.timestamp).format('DD MMMM YYYY');
         setSelectedDate(formattedDate);
         setIsCalendarVisible(false);
-        console.log(date)
+        console.log(date.dateString)
         dispatch(selectDate(date.dateString))
     };
 
@@ -88,8 +87,7 @@ const SearchBar = (props) => {
         const selectedMinutes = time.getMinutes();
         const formattedTime = `${selectedHours.toString().padStart(2, '0')}:${selectedMinutes.toString().padStart(2, '0')}`;
         setSelectedTime(formattedTime);
-        console.log(formattedTime)
-        dispatch(selectTime(formattedTime))
+        dispatch(selectTime(time))
         hideTimePicker();
   };
 
@@ -151,21 +149,6 @@ const SearchBar = (props) => {
 
                     )}
                 </View>
-                <View style={styles.bottomRightContainer}> 
-                    <FontAwesome style={styles.icon} name="clock-o" size={30} color="white" />
-
-                    <TouchableOpacity onPress={showTimePicker}>
-                        <Text style={styles.timeInput} >{selectedTime ? selectedTime : "12:00"}</Text>
-                    </TouchableOpacity>
-
-                    <DateTimePickerModal
-                        isVisible={isTimePickerVisible}
-                        mode="time"
-                        onConfirm={handleTimeConfirm}
-                        onCancel={hideTimePicker}
-                        minuteInterval={15}
-                    />
-                </View>
             </View>
         </View>
     )
@@ -215,9 +198,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
+
         backgroundColor: 'rgba(56, 56, 56, 0.8)',
         height: "100%",
-        width: "69%",
+        width: "100%",
         marginRight: 3,
         paddingLeft: 15
     },
@@ -262,4 +247,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default SearchBar;
+export default SessionBar;
