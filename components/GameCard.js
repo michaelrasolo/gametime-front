@@ -13,7 +13,8 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { height } from "@mui/system";
 
-const GameCard = (props) => {
+
+const GameCard = (props,{navigation}) => {
   // SHADOW FUNCTION
   const platformShadow = () => {
     if (Platform.OS === "android") {
@@ -32,6 +33,8 @@ const GameCard = (props) => {
       };
     }
   };
+
+
 
   //   BBALLS COLORS BASED ON LEVEL
   const levelBalls = () => {
@@ -73,7 +76,7 @@ const GameCard = (props) => {
     }
   };
   return (
-    <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow(), {height:props.height}]}>
+    <TouchableOpacity onPress={props.onPress} activeOpacity={0.8} style={[styles.card, platformShadow(), {height:props.height}]}>
       <Image
         style={[styles.image]}
         // source={require(`../assets/playgrounds/playground${props.playgroundPictureNumber}.jpg`)}

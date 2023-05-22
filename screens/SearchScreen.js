@@ -10,19 +10,29 @@ import Gamecard from '../components/GameCard';
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
+import { useDispatch } from 'react-redux';
+
 
 export default function SessionScreen({ navigation }) {
   const [sessions, setSessions] = useState([]);
-
+  const [cardPress, setCardPress] = useState (false);
 
   useEffect(() => {
-    fetch(`http://192.168.0.103:3000/sessions/all`)
+    fetch(`http://192.168.10.168:3000/sessions/all`)
       .then(response => response.json())
       .then(data => {
         // console.log(data.data[0].playground.photo)
         setSessions(data.formattedData)
       });
   }, []);
+
+const handleCardPress = (value) => {
+  console.log(value)
+  // navigation.navigate('Join')
+  setCardPress(true)
+  
+}
+
 
   const images = {
     playground1: require('../assets/playgrounds/playground1.jpg'),
@@ -47,7 +57,8 @@ export default function SessionScreen({ navigation }) {
         totalParticipants={data.totalParticipants}
         maxParticipants={data.maxParticipants}
         level={data.level}
-        sessionType={data.sessionType}
+        sessionType={data.sessionType} 
+        onPress={() => handleCardPress(data._id)}
 
       />
     );
@@ -57,19 +68,20 @@ export default function SessionScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <HeaderLogo />
-      <View style={styles.content}>
+      {!cardPress &&  <View style={styles.content}>
         <SearchList style={styles.searchList} />
         <View style={styles.buttonSection}>
           <OrangeButton title='Liste' width='43%' />
           <GreyButton title='Carte' width='43%' />
         </View>
+       
         <View style={styles.SessionsSection}>
           <ScrollView>
             {gamecards}
-            {gamecards}
           </ScrollView>
-        </View>
-      </View>
+        </View> 
+      </View> }
+      <Text>toto</Text>
     </View>
   );
 }

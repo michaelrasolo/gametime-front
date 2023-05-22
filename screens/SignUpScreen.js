@@ -31,7 +31,7 @@ export default function SignUpScreen({ navigation }) {
         } else if (password !== confirmation) {
             setPasswordError(true)
         } else {
-            fetch('http://192.168.0.103:3000/users/signup', {
+            fetch('http://192.168.10.168:3000/users/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password, nickname: nickname }),
