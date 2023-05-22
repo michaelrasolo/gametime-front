@@ -36,6 +36,7 @@ export default function CreateSession({ navigation }) {
   const [limitDate, setLimitDate] = useState()
   const [showConfetti, setShowConfetti] = useState(false);
 
+
   const user = useSelector((state) => state.user.value);
   const playgrounds = useSelector((state) => state.playground.value);
 

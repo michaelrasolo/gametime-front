@@ -6,7 +6,7 @@ import Gamecard from '../components/GameCard';
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Config from "../config";
 
@@ -16,16 +16,21 @@ export default function SessionScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
   const [sessions, setSessions] = useState([]);
   const [PressedButton, setPressedButton] = useState("");
-
+  
+  
   useEffect(() => {
     fetch(`${IPAdresse}/sessions/futur/${user.token}`)
       .then(response => response.json())
       .then(data => {
-        setSessions(data.formattedData)
+        if(data.result ) {
+          setSessions(data.formattedData)
         console.log('user token:', user.token, ' data: ',data )
         
+          
+        }
       });
   }, []);
+
   const handleButtonPress = (value) => {
     if(value === 'A venir') {
       fetch(`${IPAdresse}/sessions/futur/${user.token}`)
@@ -66,6 +71,8 @@ export default function SessionScreen({ navigation }) {
         maxParticipants={data.maxParticipants}
         level={data.level}
         sessionType={data.sessionType}
+        onPress={() => handleCardPress(data._id)}
+
       />
     );
   });
