@@ -51,6 +51,18 @@ const MapListSearchBar = (props) => {
     }
     setIsPressedLeft(false);
     setIsPressedRight(true);
+    fetch('http://192.168.1.41:3000/playgrounds/nearby', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ longitude : 2.349014, latitude: 48.864716
+      }),
+  })
+    .then(res => res.json())
+    .then(data => {console.log(data)
+      dispatch(setPlaygroundList(data))
+
+    }
+    )
   }
 
   const inputRef = useRef(); // cible l'input search du modal pour pouvoir mettre un focus dessus et ouvrir le keyboard directement à l'ouverture du modal

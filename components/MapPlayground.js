@@ -13,31 +13,30 @@ const MapPlayground = (props ) => {
     const playgrounds = useSelector((state) => state.playground.value);
     const [latitude,setLatitude] = useState(null)
     const [longitude,setLongitude] = useState(null)
-    const [initialLatitude,setInitialLatitude] = useState(48.390394)
-    const [initialLongitude,setInitialLongitude] = useState(-4.486076)
+    const [initialLatitude,setInitialLatitude] = useState(48.866667)
+    const [initialLongitude,setInitialLongitude] = useState(2.333333)
 
     useEffect(() => {
         (async () => {
           const { status } = await Location.requestForegroundPermissionsAsync();
        
           if (status === 'granted') {
-            Location.watchPositionAsync({ distanceInterval: 10 },
+            Location.getCurrentPositionAsync({ distanceInterval: 10 },
               (location) => {
     setInitialLatitude(location.coords.latitude) 
     setInitialLongitude(location.coords.longitude)
-    // fetch(`http://192.168.10.152:3000/playgrounds/${location.coords.latitude}/${location.coords.longitude}`, {
-    //   method: 'PUT',
-    //   headers: { 'Content-Type': 'application/json' }
-    // })  .then(res => res.json())
-    // .then(data => {console.log(data)}
-            
-    // )
+  
     });
           }
         })();
        }, []);
 
+    
+
+   
+      
     const handleMarker = (value) => {
+  
 
         const playgroundData = {
             id: value._id,
@@ -72,7 +71,7 @@ const buttonTitle = (props.sessionsNb === 0
     };
     
     const markers = playgrounds.playgrounds && playgrounds.playgrounds.map((data, i) => {
-        return <Marker key={i} coordinate={{ latitude: data.latitude, longitude: data.longitude }} title={data.name} 
+        return <Marker key={i} coordinate={{ latitude: data.coordinates, longitude: data.coordinates }} title={data.name} 
         onPress={() => handleMarker(data)} 
         >
           <Image source={data.sessionsNb===0 ? images.playgroundWithoutSession : images.playgroundWithSessions} style={{ width: 30, height: 30 }} />
