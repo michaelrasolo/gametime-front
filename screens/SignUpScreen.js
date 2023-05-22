@@ -154,6 +154,7 @@ export default function SignUpScreen({ navigation }) {
       </View>
     </View>
   );
+
 }
 
 

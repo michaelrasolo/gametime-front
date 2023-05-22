@@ -3,9 +3,10 @@ import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 
 
-const RadioButtons2 = (props) => {
-  const [isPressedLeft, setIsPressedLeft] = useState(false);
+const RadioButtons3 = (props) => {
+  const [isPressedLeft, setIsPressedLeft] = useState(true);
   const [isPressedRight, setIsPressedRight] = useState(false);
+
 
   const platformShadow = () => {
     if (Platform.OS === 'android') {
@@ -37,6 +38,8 @@ const RadioButtons2 = (props) => {
     props.onPress(value);
   };
 
+
+
   
   return (
     <View style={styles.container}>
@@ -57,33 +60,37 @@ const styles = StyleSheet.create({
         height: 100,
         justifyContent: 'space-around',
         alignItems: 'center',
-        padding: 10,
+        padding: 1,
         backgroundColor:'#242424'
       },
       UnpressedButtons : {
         borderRadius: 30,
-        backgroundColor : '#383838',
+        backgroundColor : 'rgba(56, 56, 56, 0.8)',
         opacity : 0.8,
-        width : '30%',
-        height: '50%', 
+        width : '45%',
+        height: '60%', 
         alignItems: 'center',
         justifyContent: 'center',
       },
       pressedButton: {
         borderRadius: 30,
-        backgroundColor : 'white',
+        backgroundColor : '#FB724C',
         opacity : 0.8,
-        width : '30%',
-        height: '50%', 
+        width : '45%',
+        height: '60%', 
         alignItems: 'center',
         justifyContent: 'center',
       },
       unpressedText : {
         color : 'white',
+        fontWeight: '700',
+        fontSize: 20,
       },
       pressedText : {
-        color : 'black',
+        color : 'white',
+        fontWeight: '700',
+        fontSize: 20,
       },
 });
 
-export default RadioButtons2;
+export default RadioButtons3;

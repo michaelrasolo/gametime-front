@@ -8,7 +8,6 @@ import GreyButton from '../components/GreyButton';
 import OrangeButton from '../components/OrangeButton';
 import DateSearch from '../components/DateSearch';
 import ProfilePicture from '../components/ProfilePicture';
-// import { useSelect } from 'react-redux';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { addPhoto, logout } from '../reducers/user';

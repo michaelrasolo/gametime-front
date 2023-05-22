@@ -5,16 +5,17 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import moment from 'moment';
 import 'moment/locale/fr'
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
+import { useDispatch } from 'react-redux';
+import { addPlaygroundDate, selectTime,selectDate} from '../reducers/playground';
 
 const SearchBar = (props) => {
-
+    const dispatch = useDispatch()
     const [selectedDate, setSelectedDate] = useState(null);
     const [isCalendarVisible, setIsCalendarVisible] = useState(false);
     const [selectedTime, setSelectedTime] = useState('');
     const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
-    const closeCalendar = () => {
+    const handleCloseCalendar = () => {
         setIsCalendarVisible(false);
       };
     
@@ -67,7 +68,7 @@ const SearchBar = (props) => {
         const formattedDate = moment(date.timestamp).format('DD MMMM YYYY');
         setSelectedDate(formattedDate);
         setIsCalendarVisible(false);
-        console.log(date) 
+        dispatch(selectDate(date))
     };
 
     const toggleCalendar = () => {
@@ -86,8 +87,8 @@ const SearchBar = (props) => {
         const selectedHours = time.getHours();
         const selectedMinutes = time.getMinutes();
         const formattedTime = `${selectedHours.toString().padStart(2, '0')}:${selectedMinutes.toString().padStart(2, '0')}`;
-
         setSelectedTime(formattedTime);
+        dispatch(selectTime(time))
         hideTimePicker();
   };
 
@@ -138,6 +139,12 @@ const SearchBar = (props) => {
                                     textDayHeaderFontSize: 14,
                                 }}
                             />
+                                          <TouchableOpacity
+              style={styles.closeButton}
+              onPress={handleCloseCalendar}
+            >
+              <Text style={styles.closeButtonText}>Fermer</Text>
+            </TouchableOpacity>
                         </View>
                         </Modal>
 
@@ -169,7 +176,9 @@ const styles = StyleSheet.create({
         height: 100,
         width: "90%",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        
+        
     },
     topContainer: {
         borderTopLeftRadius: 30,
@@ -244,6 +253,11 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: 'white',
       },
+      closeButtonText: {
+        color: "#FB724C",
+        fontSize:20,
+        textAlign:"center",
+    height:50,  }
 });
 
 
