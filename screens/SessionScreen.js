@@ -22,9 +22,10 @@ export default function SessionScreen({ navigation }) {
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)
+        console.log('user token:', user.token, ' data: ',data )
+        
       });
   }, []);
-
   const handleButtonPress = (value) => {
     if(value === 'A venir') {
       fetch(`${IPAdresse}/sessions/futur/${user.token}`)
@@ -50,7 +51,7 @@ export default function SessionScreen({ navigation }) {
     playground6: require('../assets/playgrounds/playground6.jpg'),
   };
 
-  const gamecards = sessions.map((data, i) => {
+  const gamecards = sessions && sessions.map((data, i) => {
     const imagePath = `playground${data.playground.photo}`;
     const imageSource = images[imagePath];
     return (
@@ -79,7 +80,7 @@ export default function SessionScreen({ navigation }) {
         </View>
         <View style={styles.SessionsSection}>
           <ScrollView>
-            {gamecards}
+            {sessions && gamecards}
           </ScrollView>
         </View>
       </View>

@@ -37,7 +37,7 @@ export default function SessionScreen({ navigation }) {
     playground6: require('../assets/playgrounds/playground6.jpg'),
   };
 
-  const gamecards = sessions.map((data, i) => {
+  const gamecards = sessions && sessions.map((data, i) => {
     const imagePath = `playground${data.playground.photo}`;
     const imageSource = images[imagePath];
     return (
@@ -68,8 +68,7 @@ export default function SessionScreen({ navigation }) {
         </View>
         <View style={styles.SessionsSection}>
           <ScrollView>
-            {gamecards}
-            {gamecards}
+            {sessions && gamecards}
           </ScrollView>
         </View>
       </View>
@@ -85,11 +84,12 @@ const styles = StyleSheet.create({
   },
   content: {
     flex:1,
-
+// borderWidth:3
   },
   buttonSection: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+
     padding: 10,
   },
   SessionsSection: {
