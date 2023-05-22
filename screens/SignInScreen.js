@@ -16,7 +16,7 @@ export default function SignInScreen({ navigation }) {
 
   const handleConnection = () => {
     // navigation.navigate('TabNavigator')
-    fetch('http://192.168.10.151:3000/users/signin', {
+    fetch('http://192.168.0.103:3000/users/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
