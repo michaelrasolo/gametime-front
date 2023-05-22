@@ -3,7 +3,7 @@ import HeaderLogo from "../components/HeaerLogo";
 import OrangeButton from "../components/OrangeButton";
 import Inputs from '../components/Inputs';
 import PasswordInput from '../components/PasswordInput';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { login, logout } from '../reducers/user';
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,41 +11,61 @@ import { useDispatch, useSelector } from "react-redux";
 export default function SignUpScreen({ navigation }) {
 
     const [email, setEmail] = useState('');
-    const [emailError, setEmailError] = useState(false);
     const [confirmation, setConfirmation] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState(false);
     const [nickname, setNickname] = useState('');
     const [city, setCity] = useState('');
+    const [errorMessages, setErrorMessages] = useState([]);
+
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value)
 
-    const EMAIL_REGEX = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/gi
+    const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const isEmailValid = EMAIL_REGEX.test(email)
 
     const handleSubmit = () => {
-        console.log(EMAIL_REGEX.test(email));
-        console.log(emailError)
-        if (!EMAIL_REGEX.test(email)) {
-            setEmailError(true)
-        } else if (password !== confirmation) {
-            setPasswordError(true)
-        } else {
-            fetch('https://backend-gametime.vercel.app/users/signup', {
+
+        setErrorMessages([]);
+
+        console.log(isEmailValid);
+
+        if (!isEmailValid) {
+          setErrorMessages((previousErrors) => [...previousErrors, "Adresse mail invalide"]);
+        }
+        if (password !== confirmation) {
+          setErrorMessages((previousErrors) => [...previousErrors, "Mot de passe invalide"]);
+        }
+        if (email === '') {
+          setErrorMessages((previousErrors) => [...previousErrors, "Champ email vide"]);
+        }
+        if (city === '') {
+          setErrorMessages((previousErrors) => [...previousErrors, "Champ ville vide"]);
+        }
+        if (password === '') {
+          setErrorMessages((previousErrors) => [...previousErrors, "Champ mot de passe vide"]);
+        }
+        if (nickname === '') {
+          setErrorMessages((previousErrors) => [...previousErrors, "Champ pseudo vide"]);
+        }
+        if (confirmation === '') {
+          setErrorMessages((previousErrors) => [...previousErrors, "Champ confirmation vide"]);
+        } 
+        else if (errorMessages.length === 0) {
+            fetch('http://192.168.1.18:3000/users/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, password: password, nickname: nickname }),
+                body: JSON.stringify({ email: email, password: password, nickname: nickname, city: city }),
             }).then(response => response.json())
                 .then(data => {
                     if (data.result) {
-                        dispatch(login({email: email, password: password, nickname: nickname, token: data.token}));
+                        dispatch(login({city: city, nickname: nickname, token: data.token}));
                         console.log(user)
                     }
                 });
-              navigation.navigate('TabNavigator');
-        // }
+                navigation.navigate('TabNavigator');    
+        }
       };
-
 
 
   return (
@@ -63,10 +83,14 @@ export default function SignUpScreen({ navigation }) {
           height={50} 
           width={"70%"} 
           onChangeText={(value) => setEmail(value)}
-          value={email}
+          value={email.trim()}
           />
 
-        {emailError === true && <Text style={styles.error}>Adresse mail invalide</Text>}
+        {errorMessages.includes("Champ email vide") && (
+            <Text style={styles.error}>Champ email vide</Text>)}
+
+          {errorMessages.includes("Adresse mail invalide") && (
+            <Text style={styles.error}>Adresse mail invalide</Text>)}
 
         <Inputs
         name="Pseudo" 
@@ -77,6 +101,9 @@ export default function SignUpScreen({ navigation }) {
         value={nickname}
         />
 
+        {errorMessages.includes("Champ pseudo vide") && (
+                    <Text style={styles.error}>Champ pseudo vide</Text>)}
+
         <Inputs
         name="Ville" 
         placeholder="Ville" 
@@ -86,6 +113,9 @@ export default function SignUpScreen({ navigation }) {
         value={city}
         />
 
+        {errorMessages.includes("Champ ville vide") && (
+                            <Text style={styles.error}>Champ ville vide</Text>)}
+
         <PasswordInput
           name="Mot de passe"
           placeholder="Mot de passe"
@@ -94,6 +124,10 @@ export default function SignUpScreen({ navigation }) {
           onChangeText={(value) => setPassword(value)}
           value={password}
         />
+
+        {errorMessages.includes("Champ mot de passe vide") && (
+                            <Text style={styles.error}>Champ mot de passe vide</Text>)}
+
         <PasswordInput
           name="Confirmation"
           placeholder="Mot de passe"
@@ -103,7 +137,11 @@ export default function SignUpScreen({ navigation }) {
           value={confirmation}
         />
 
-        {passwordError && <Text style={styles.error}>Mot de passe invalide</Text>}
+          {errorMessages.includes("Champ confirmation vide") && (
+                      <Text style={styles.error}>Champ confirmation de mot de passe vide</Text>)}
+
+          {errorMessages.includes("Mot de passe invalide") && (
+            <Text style={styles.error}>Mot de passe invalide</Text>)}
 
       </View>
 
@@ -117,7 +155,7 @@ export default function SignUpScreen({ navigation }) {
     </View>
   );
 }
-}
+
 
 const styles = StyleSheet.create({
   container: {
@@ -125,10 +163,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#242424",
   },
   input: {
-    height: "50%",
+    height: "60%",
     justifyContent: "space-around",
     alignItems: "center",
-    paddingTop: "10%",
+    paddingTop: "5%",
   },
   text: {
     fontSize: 30,
@@ -137,11 +175,11 @@ const styles = StyleSheet.create({
   },
   title: {
     alignItems: "center",
-    paddingTop: "15%",
+    paddingTop: "10%",
   },
   button: {
     alignItems: "center",
-    paddingTop: "7%",
+    paddingTop: "8%",
   },
   error: {
     color: '#FB724C',

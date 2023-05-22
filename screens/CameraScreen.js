@@ -38,12 +38,12 @@ export default function CameraScreen({ navigation }) {
         name: 'photo.jpg',
         type: 'image/jpeg',
        });
-      //  formData.append('token', user.token)
+       formData.append('token', user.token)
 
        console.log("photo", photo.uri);
   
-      const response = await fetch("http://192.168.10.140:3000/users/upload", {
-        method: 'POST',
+      const response = await fetch('http://192.168.1.18:3000/users/upload', {
+        method: 'PUT',
         body: formData,
        })
        const data = await response.json()
