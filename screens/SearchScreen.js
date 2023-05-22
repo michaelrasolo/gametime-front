@@ -10,6 +10,8 @@ import Gamecard from '../components/GameCard';
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
+import { useDispatch } from 'react-redux';
+
 
 import Config from "../config";
 
@@ -17,7 +19,7 @@ const IPAdresse = Config.IPAdresse;
 
 export default function SessionScreen({ navigation }) {
   const [sessions, setSessions] = useState([]);
-
+  const [cardPress, setCardPress] = useState (false);
 
   useEffect(() => {
     fetch(`${IPAdresse}/sessions/all`)
@@ -28,6 +30,14 @@ export default function SessionScreen({ navigation }) {
       });
   }, []);
 
+const handleCardPress = (value) => {
+  console.log(value)
+  // navigation.navigate('Join')
+  setCardPress(true)
+  
+}
+
+
   const images = {
     playground1: require('../assets/playgrounds/playground1.jpg'),
     playground2: require('../assets/playgrounds/playground2.jpg'),
@@ -37,7 +47,7 @@ export default function SessionScreen({ navigation }) {
     playground6: require('../assets/playgrounds/playground6.jpg'),
   };
 
-  const gamecards = sessions.map((data, i) => {
+  const gamecards = sessions && sessions.map((data, i) => {
     const imagePath = `playground${data.playground.photo}`;
     const imageSource = images[imagePath];
     return (
@@ -51,7 +61,9 @@ export default function SessionScreen({ navigation }) {
         totalParticipants={data.totalParticipants}
         maxParticipants={data.maxParticipants}
         level={data.level}
-        sessionType={data.sessionType}
+        sessionType={data.sessionType} 
+        onPress={() => handleCardPress(data._id)}
+
       />
     );
   });
@@ -62,17 +74,20 @@ export default function SessionScreen({ navigation }) {
       <HeaderLogo />
       <View style={styles.content}>
         <SearchBar/>
+      {!cardPress &&  <View style={styles.content}>
         <View style={styles.buttonSection}>
           <OrangeButton title='Liste' width='43%' />
           <GreyButton title='Carte' width='43%' />
         </View>
+       
         <View style={styles.SessionsSection}>
           <ScrollView>
-            {gamecards}
-            {gamecards}
+            {sessions && gamecards}
           </ScrollView>
-        </View>
-      </View>
+        </View> 
+      </View> }
+      <Text>toto</Text>
+    </View>
     </View>
   );
 }
@@ -85,11 +100,12 @@ const styles = StyleSheet.create({
   },
   content: {
     flex:1,
-
+// borderWidth:3
   },
   buttonSection: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+
     padding: 10,
   },
   SessionsSection: {

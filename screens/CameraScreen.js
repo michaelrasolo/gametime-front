@@ -62,7 +62,7 @@ export default function CameraScreen({ navigation }) {
   }
 
   return (
-    <Camera style={styles.container} type={type} flashMode={flash} ref={(ref) => cameraRef = ref}>
+    <Camera style={styles.container} type={type} flashMode={flash} ref={(ref) => cameraRef = ref} ratio={'16:9'}>
 
     <View style={styles.topContainer}>
         <View>
