@@ -14,7 +14,7 @@ export default function SessionScreen({ navigation }) {
   const [PressedButton, setPressedButton] = useState("");
 
   useEffect(() => {
-    fetch(`http://192.168.10.151:3000/sessions/futur/${user.token}`)
+    fetch(`http://192.168.10.175:3000/sessions/futur/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)

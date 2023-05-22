@@ -73,7 +73,7 @@ const GameCard = (props) => {
     }
   };
   return (
-    <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow(), {height:props.height}]}>
+    <TouchableOpacity onPress={navigation.navigate('Join')} activeOpacity={0.8} style={[styles.card, platformShadow(), {height:props.height}]}>
       <Image
         style={[styles.image]}
         // source={require(`../assets/playgrounds/playground${props.playgroundPictureNumber}.jpg`)}

@@ -69,32 +69,32 @@ export default function CreateSession({ navigation }) {
   const handleValidation = () => {
     setShowConfetti(true)
 
-    // fetch('http://192.168.10.152:3000/sessions/create', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //       playground:  playgrounds.selectedPlayground.playgroundId,
-    //       sessionType: SessionType,
-    //       date: playgrounds.selectedPlayground.date,
-    //       time: playgrounds.selectedPlayground.time,
-    //       level: selectedLevel,
-    //       mood : Mood,
-    //       ball: bringBall,
-    //       token : user.token,
-    //       group : teamGroup,
-    //       maxParticipants : gameGroup,
-    //       frequency: isWeekly,
-    //       limitDate: limitDate,
-    //   }
-    //   ),
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data)
-    //     if (data.result)
-    //     setShowConfetti(true)
-    //     dispatch(emptySelected())
-    //   });
+    fetch('http://192.168.10.175:3000/sessions/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+          playground:  playgrounds.selectedPlayground.playgroundId,
+          sessionType: SessionType,
+          date: playgrounds.selectedPlayground.date,
+          time: playgrounds.selectedPlayground.time,
+          level: selectedLevel,
+          mood : Mood,
+          ball: bringBall,
+          token : user.token,
+          group : teamGroup,
+          maxParticipants : gameGroup,
+          frequency: isWeekly,
+          limitDate: limitDate,
+      }
+      ),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        if (data.result)
+        setShowConfetti(true)
+        dispatch(emptySelected())
+      });
   }
 
   return (

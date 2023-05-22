@@ -28,6 +28,7 @@ export default function ProfilScreen({ navigation }) {
 
   useEffect(() => {
     fetch(`http://192.168.1.18:3000/users/${user.token}`)
+    fetch(`http://192.168.10.175:3000/users/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setBirthdate(data.data.birthdate)
