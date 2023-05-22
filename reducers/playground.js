@@ -2,15 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   value:{ 
-
-    selectedPlayground: { 
+selectedPlayground: { 
         playgroundId: null,
         name:null, 
         address: null,
         city: null,
+        sessionsNb:null,
         date: new Date(),
         time: new Date(0, 0, 0, 12, 0)},     
-    playgrounds: []} 
+
+    playgrounds: []
+  } 
 };
 
 export const playgroundSlice = createSlice({
@@ -26,7 +28,8 @@ export const playgroundSlice = createSlice({
       playgroundId: action.payload.id,
       name: action.payload.name, 
       address: action.payload.address,
-      city: action.payload.city    
+      city: action.payload.city,
+      sessionsNb : action.payload.sessionsNb
     }},
     selectDate:(state, action) => {
       state.value.selectedPlayground = {

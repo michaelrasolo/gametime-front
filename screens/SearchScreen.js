@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, StyleSheet, Text, View, ScrollView } from 'react-native';
-import SearchBar from '../components/SearchBar';
+import { Modal,SafeAreaView, Button, StyleSheet, Text, View, ScrollView } from 'react-native';
 import DateSearch from '../components/DateSearch';
 import SearchList from '../components/SearchList';
 import HeaderLogo from '../components/HeaerLogo';
@@ -11,15 +10,20 @@ import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
 import { useDispatch } from 'react-redux';
-
+import SessionBar from '../components/SessionBar';
+import MapSearchBar from '../components/MapSearchBar';
+import MapPlayground from '../components/MapPlayground';
+import { emptySelected } from '../reducers/playground'; 
 
 import Config from "../config";
 
 const IPAdresse = Config.IPAdresse;
 
 export default function SessionScreen({ navigation }) {
+  const dispatch = useDispatch()
   const [sessions, setSessions] = useState([]);
   const [cardPress, setCardPress] = useState (false);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     fetch(`${IPAdresse}/sessions/all`)
@@ -36,6 +40,18 @@ const handleCardPress = (value) => {
   setCardPress(true)
   
 }
+
+const handleOpenModal = () => {
+  dispatch(emptySelected())
+  setModalVisible(true)
+}
+
+const handleCloseModal = () => {
+  setModalVisible(!isModalVisible)
+}
+
+
+
 
 
   const images = {
@@ -73,13 +89,18 @@ const handleCardPress = (value) => {
     <View style={styles.container}>
       <HeaderLogo />
       <View style={styles.content}>
-        <SearchBar/>
+        <SessionBar name="Paris 17" onPress={handleOpenModal}/>
+        <Modal
+        animationType="slide"
+        statusBarTranslucent={true}
+        visible={isModalVisible}>
+        <SafeAreaView style={styles.modal}>
+          <MapSearchBar handleCloseModal={handleCloseModal} />
+          <MapPlayground handleCloseModal={handleCloseModal}/>
+        </SafeAreaView>
+      </Modal>
       {!cardPress &&  <View style={styles.content}>
-        <View style={styles.buttonSection}>
-          <OrangeButton title='Liste' width='43%' />
-          <GreyButton title='Carte' width='43%' />
-        </View>
-       
+       <Text style={styles.title}>Les sessions autour de toi</Text>
         <View style={styles.SessionsSection}>
           <ScrollView>
             {sessions && gamecards}
@@ -100,6 +121,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex:1,
+    alignItems:"center",
+    paddingTop:20,
 // borderWidth:3
   },
   buttonSection: {
@@ -110,8 +133,17 @@ const styles = StyleSheet.create({
   },
   SessionsSection: {
     padding: 10,
-    borderWidth: 1,
     // height: "auto",
     flex: 1, // Ensure the ScrollView expands to fill the available space
+  },
+  title: {
+    alignItems: 'center',
+    color: 'white',
+    fontSize: 25,
+  },
+  modal: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 })

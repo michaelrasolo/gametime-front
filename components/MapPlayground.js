@@ -16,25 +16,6 @@ const MapPlayground = (props ) => {
     const [initialLatitude,setInitialLatitude] = useState(48.390394)
     const [initialLongitude,setInitialLongitude] = useState(-4.486076)
 
-    calculateDistance = (lat1, lon1, lat2, lon2) => {
-      // Formule pour calculer la distance entre deux coordonnées géographiques
-      const R = 6371; // Rayon de la Terre en km
-      const dLat = this.deg2rad(lat2 - lat1);
-      const dLon = this.deg2rad(lon2 - lon1);
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      const distance = R * c;
-  
-      return distance;
-    };
-  
-    deg2rad = (deg) => {
-      return deg * (Math.PI / 180);
-    };
-
     useEffect(() => {
         (async () => {
           const { status } = await Location.requestForegroundPermissionsAsync();
@@ -63,6 +44,7 @@ const MapPlayground = (props ) => {
             name: value.name,
             address: value.address,
             city: value.city,
+            sessionsNb : value.sessionsNb
           };
 
             dispatch(selectedPlayground((playgroundData)))
@@ -71,24 +53,38 @@ const MapPlayground = (props ) => {
             
             }
     
+const buttonTitle = (props.sessionsNb === 0
+              ? "Créer"
+              : props.sessionsNb === 1
+              ? "Rejoindre"
+              :  "Voir")
+
     const handleSelect = () => {
+
+
         props.handleCloseModal()
+
     }
+
+    const images = {
+      playgroundWithSessions: require('../assets/images/basketball_hoop_icon.png'),
+      playgroundWithoutSession: require('../assets/images/8725379_basketball_hoop_icon.png'),
+    };
     
     const markers = playgrounds.playgrounds && playgrounds.playgrounds.map((data, i) => {
         return <Marker key={i} coordinate={{ latitude: data.latitude, longitude: data.longitude }} title={data.name} 
         onPress={() => handleMarker(data)} 
         >
-          <Image source={require('../assets/images/basketball_hoop_icon.png')} style={{ width: 30, height: 30 }} />
+          <Image source={data.sessionsNb===0 ? images.playgroundWithoutSession : images.playgroundWithSessions} style={{ width: 30, height: 30 }} />
         </Marker>
           ;
       });
 
   return (
     <>
-    {playgrounds.selectedPlayground != "Saisis ta ville" && <PlaygroundCard name={playgrounds.selectedPlayground.name}
+    {playgrounds.selectedPlayground.name && <PlaygroundCard name={playgrounds.selectedPlayground.name}
     onPress={handleSelect} 
-     city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} />}
+     city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
     <MapView 
 
       region={{
@@ -99,7 +95,7 @@ const MapPlayground = (props ) => {
       }}
       style={styles.map}
     >           
-     {playgrounds && markers}
+     {playgrounds.playgrounds && markers}
 
     </MapView>
     </>

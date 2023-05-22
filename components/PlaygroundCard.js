@@ -32,6 +32,19 @@ const PlaygroundCard = (props) => {
     }
   };
 
+const sessions =   (props.sessionsNb === 0
+  ? "aucun game"
+  : props.sessionsNb === 1
+  ? "1 game"
+  : props.sessionsNb + " games")
+
+const buttonTitle = (props.sessionsNb === 0
+  ? "Créer"
+  : props.sessionsNb === 1
+  ? "Rejoindre"
+  :  "Voir")
+
+
   return (
     <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow()]}>
       <Image
@@ -39,7 +52,7 @@ const PlaygroundCard = (props) => {
         source={require("../assets/images/citystade-marseille.png")}
       />
       <View style={[styles.gametype, platformShadow()]}>
-        <Text>Aucun game</Text>
+        <Text>{sessions}</Text>
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.playground}>
@@ -49,7 +62,7 @@ const PlaygroundCard = (props) => {
         <Text style={styles.address}>
           {props.address}
         </Text>
-        <OrangeButton title="Choisir" onPress={props.onPress} width={"30%"}/>
+        <OrangeButton title={buttonTitle} onPress={props.onPress} width={"30%"}/>
         </View>
       </View>
     </TouchableOpacity>
