@@ -52,7 +52,6 @@ export default function SessionScreen({ navigation }) {
         maxParticipants={data.maxParticipants}
         level={data.level}
         sessionType={data.sessionType}
-
       />
     );
   });
@@ -62,7 +61,7 @@ export default function SessionScreen({ navigation }) {
     <View style={styles.container}>
       <HeaderLogo />
       <View style={styles.content}>
-        <SearchList style={styles.searchList} />
+        <SearchBar/>
         <View style={styles.buttonSection}>
           <OrangeButton title='Liste' width='43%' />
           <GreyButton title='Carte' width='43%' />
@@ -98,6 +97,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     // height: "auto",
     flex: 1, // Ensure the ScrollView expands to fill the available space
-
   },
 })

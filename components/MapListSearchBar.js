@@ -29,13 +29,11 @@ const platformShadow = () => {
   }
 };
 
-
 const MapListSearchBar = (props) => {
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState('');
   const [isPressedLeft, setIsPressedLeft] = useState(true);
   const [isPressedRight, setIsPressedRight] = useState(false);
-
   const handlePressLeft = () => {
 
     if (isPressedLeft === false) {

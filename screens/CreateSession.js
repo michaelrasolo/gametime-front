@@ -11,6 +11,7 @@ import Inputs from '../components/Inputs';
 import RadioButtons2 from '../components/RadioButton2';
 import OrangeButton from '../components/OrangeButton';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import SessionBar from '../components/SessionBar';
 
 import { useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -35,10 +36,8 @@ export default function CreateSession({ navigation }) {
   const [limitDate, setLimitDate] = useState()
   const [showConfetti, setShowConfetti] = useState(false);
 
- 
   const user = useSelector((state) => state.user.value);
   const playgrounds = useSelector((state) => state.playground.value);
-
 
 
   const handleCloseModal = () => {
@@ -71,6 +70,16 @@ export default function CreateSession({ navigation }) {
     setLimitDate(value)
   }
 
+const selectedDate = new Date(playgrounds.selectedPlayground.date);
+const timeString = playgrounds.selectedPlayground.time ? playgrounds.selectedPlayground.time : "12:00"
+
+    // Convert time from string to Date object
+const timeArray = timeString.split(':');
+
+    // Add the time to the date
+    selectedDate.setHours(timeArray[0]);
+    selectedDate.setMinutes(timeArray[1]);
+
   const handleValidation = () => {
     setShowConfetti(true)
 
@@ -80,10 +89,10 @@ export default function CreateSession({ navigation }) {
       body: JSON.stringify({
           playground:  playgrounds.selectedPlayground.playgroundId,
           sessionType: SessionType,
-          date: playgrounds.selectedPlayground.date,
-          time: playgrounds.selectedPlayground.time,
+          date: selectedDate,
           level: selectedLevel,
           mood : Mood,
+          admin: true,
           ball: bringBall,
           token : user.token,
           group : teamGroup,
@@ -104,9 +113,11 @@ export default function CreateSession({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container} >
-   {!showConfetti && <><SearchBar name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Choisis un terrain'} onPress={() => {
-        setModalVisible(true)
-      }} />
+   {!showConfetti && 
+   <>
+   <SearchBar 
+   name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Choisis un terrain'} 
+   onPress={() => {setModalVisible(true)}} />
       <Modal
         animationType="slide"
         statusBarTranslucent={true}

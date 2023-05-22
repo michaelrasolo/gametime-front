@@ -8,10 +8,8 @@ const initialState = {
         name:null, 
         address: null,
         city: null,
-        date: null,
-        time: null}, 
-    
-    
+        date: new Date(),
+        time: new Date(0, 0, 0, 12, 0)},     
     playgrounds: []} 
 };
 
