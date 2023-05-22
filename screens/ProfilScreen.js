@@ -10,7 +10,11 @@ import DateSearch from '../components/DateSearch';
 import ProfilePicture from '../components/ProfilePicture';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
-import { logout } from '../reducers/user';
+import { addPhoto, logout } from '../reducers/user';
+
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
 
 export default function ProfilScreen({ navigation }) {
   const [birthdate, setBirthdate] = useState('');
@@ -21,12 +25,14 @@ export default function ProfilScreen({ navigation }) {
   const [favoriteTeam, setFavoriteTeam] = useState('');
   const [favoritePlayer, setFavoritePlayer] = useState('');
   const [favoriteShoes, setFavoriteShoes] = useState('');
+  const [picture, setPicture] = useState('');
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
+ 
   
 
   useEffect(() => {
-    fetch(`http://192.168.0.103:3000/users/${user.token}`)
+    fetch(`${IPAdresse}/users/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setBirthdate(data.data.birthdate)
@@ -37,17 +43,18 @@ export default function ProfilScreen({ navigation }) {
         setFavoriteTeam(data.data.favoriteTeam)
         setFavoritePlayer(data.data.favoritePlayer)
         setFavoriteShoes(data.data.favoriteShoes)
+        setPicture(data.data.picture)
       });
   }, []);
 
 
 
 const handleValidation = () => {
-  fetch('http://192.168.0.103:3000/users/update', {
+  fetch(`${IPAdresse}/users/update`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       token: user.token,
+      picture: picture,
       // birthdate: birthdate,
       city: city,
       gender: gender,
@@ -60,7 +67,9 @@ const handleValidation = () => {
   })
     .then(response => response.json())
     .then(data => {
-      if (data.result)
+      if (data.result){
+        dispatch(addPhoto(data.url))
+      }
       console.log(data.result)
         navigation.navigate('Search');
     });
@@ -97,7 +106,7 @@ const handleValidation = () => {
          
        </View>
        <View style={styles.picture}>
-         <ProfilePicture camera={camera}  />
+         <ProfilePicture camera={camera} picture={picture} setPicture={setPicture} />
        </View>
        <View style={styles.topFields}>
          <View style={styles.fieldSection} width='50%'>

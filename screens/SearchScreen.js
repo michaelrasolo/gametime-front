@@ -11,12 +11,16 @@ import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
 
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
+
 export default function SessionScreen({ navigation }) {
   const [sessions, setSessions] = useState([]);
 
 
   useEffect(() => {
-    fetch(`http://192.168.0.103:3000/sessions/all`)
+    fetch(`${IPAdresse}/sessions/all`)
       .then(response => response.json())
       .then(data => {
         // console.log(data.data[0].playground.photo)
@@ -33,7 +37,7 @@ export default function SessionScreen({ navigation }) {
     playground6: require('../assets/playgrounds/playground6.jpg'),
   };
 
-  const gamecards = sessions.map((data, i) => {
+  const gamecards = sessions && sessions.map((data, i) => {
     const imagePath = `playground${data.playground.photo}`;
     const imageSource = images[imagePath];
     return (
@@ -48,7 +52,6 @@ export default function SessionScreen({ navigation }) {
         maxParticipants={data.maxParticipants}
         level={data.level}
         sessionType={data.sessionType}
-
       />
     );
   });
@@ -58,15 +61,14 @@ export default function SessionScreen({ navigation }) {
     <View style={styles.container}>
       <HeaderLogo />
       <View style={styles.content}>
-        <SearchList style={styles.searchList} />
+        <SearchBar/>
         <View style={styles.buttonSection}>
           <OrangeButton title='Liste' width='43%' />
           <GreyButton title='Carte' width='43%' />
         </View>
         <View style={styles.SessionsSection}>
           <ScrollView>
-            {gamecards}
-            {gamecards}
+            {sessions && gamecards}
           </ScrollView>
         </View>
       </View>
@@ -82,11 +84,12 @@ const styles = StyleSheet.create({
   },
   content: {
     flex:1,
-
+// borderWidth:3
   },
   buttonSection: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+
     padding: 10,
   },
   SessionsSection: {
@@ -94,6 +97,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     // height: "auto",
     flex: 1, // Ensure the ScrollView expands to fill the available space
-
   },
 })

@@ -20,6 +20,10 @@ import Checkbox from "expo-checkbox";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import NumericInput from "react-native-numeric-input";
 
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
+
 export default function JoinScreen({ navigation }) {
   const [sessionInfos, setSessionInfos] = useState(null);
   const [sessionParticipants, setSessionParticipants] = useState(null);
@@ -33,7 +37,7 @@ export default function JoinScreen({ navigation }) {
 
 // INITIALISATION
   useEffect(() => {
-    fetch(`http://192.168.1.76:3000/sessions/game/6464f4eda9764ac33bf06d40/`) // Token + User
+    fetch(`${IPAdresse}/sessions/game/6464f4eda9764ac33bf06d40/`) // Token + User
       .then((res) => res.json())
       .then((response) => {
         setSessionInfos(response.sessionData); // Session data
@@ -42,7 +46,7 @@ export default function JoinScreen({ navigation }) {
       .catch((error) => {
         console.log("Error fetching session data:", error);
       });
-      fetch(`http://192.168.1.76:3000/sessions/check/6464f4eda9764ac33bf06d40/${user.token}`) // Token + User
+      fetch(`${IPAdresse}/sessions/check/6464f4eda9764ac33bf06d40/${user.token}`) // Token + User
       .then((res) => res.json())
       .then((response) => {
         setHasJoined(response.result)
@@ -52,7 +56,7 @@ console.log("hasJoined", hasJoined)
   // FUNCTION JOIN THE GAME
 
   const handleJoin = () => {
-    fetch(`http://192.168.1.76:3000/sessions/join/6464f4eda9764ac33bf06d40/nVOst4ecUhMv6upHaUE7rxj9Vbk1E93q`, {
+    fetch(`${IPAdresse}/sessions/join/6464f4eda9764ac33bf06d40/nVOst4ecUhMv6upHaUE7rxj9Vbk1E93q`, {
 method: 'PUT',
 headers: {'Content-Type':'application/json'},
 body: JSON.stringify({
