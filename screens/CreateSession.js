@@ -32,9 +32,6 @@ export default function CreateSession({ navigation }) {
   const [limitDate, setLimitDate] = useState()
   const [showConfetti, setShowConfetti] = useState(false);
 
-
-
- 
   const user = useSelector((state) => state.user.value);
   const playgrounds = useSelector((state) => state.playground.value);
 
@@ -89,6 +86,7 @@ const timeArray = timeString.split(':');
           date: selectedDate,
           level: selectedLevel,
           mood : Mood,
+          admin: true,
           ball: bringBall,
           token : user.token,
           group : teamGroup,
@@ -109,7 +107,8 @@ const timeArray = timeString.split(':');
 
   return (
     <SafeAreaView style={styles.container} >
-   {!showConfetti && <>
+   {!showConfetti && 
+   <>
    <SearchBar 
    name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Choisis un terrain'} 
    onPress={() => {setModalVisible(true)}} />

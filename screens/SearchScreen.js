@@ -10,6 +10,8 @@ import Gamecard from '../components/GameCard';
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
+import SearchBar from '../components/SearchBar';
+
 
 export default function SessionScreen({ navigation }) {
   const [sessions, setSessions] = useState([]);
@@ -57,7 +59,7 @@ export default function SessionScreen({ navigation }) {
     <View style={styles.container}>
       <HeaderLogo />
       <View style={styles.content}>
-        <SearchList style={styles.searchList} />
+        <SearchBar/>
         <View style={styles.buttonSection}>
           <OrangeButton title='Liste' width='43%' />
           <GreyButton title='Carte' width='43%' />
