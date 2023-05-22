@@ -1,83 +1,90 @@
-import { sliderClasses } from '@mui/material';
 import React from 'react';
-import { Modal, SafeAreaView, Text, View, TouchableOpacity,Image,TextInput, StyleSheet,Keyboard } from 'react-native';
-import SearchBar from '../components/SearchBar';
-import SearchInput from './SearchInput';
-import { useState } from 'react';
+import { Text, ScrollView, Image, View, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import * as Location from 'expo-location';
+import MapView, { Marker } from 'react-native-maps';
+import { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectedPlayground } from '../reducers/playground';
 
-const SearchList = () => {
-    const [isModalVisible, setModalVisible] = useState(false);
-    const [searchText, setSearchText] = useState('');
-    const [playground, setPlayground] = useState([])
+const SearchList = (props) => {
+  const playgrounds = useSelector((state) => state.playground.value);
 
-    const handleChange = (value) => {
-    console.log(value)
-    setSearchText(value)
-    fetch(`http://192.168.10.146:3000/playgrounds/city/${value}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' }})
-    .then(res=>res.json())
-    .then(data => {
-        setPlayground([...data])})
-    }
-   
-    const playgroundList = playground.map((data, i) => {
-          const imageSource = { uri: `../assets/playgrounds/playground${data.photo}.jpg` };
+  const dispatch = useDispatch()
 
-        return (
-          <View key={i} style={styles.liste}>
-        <Image source={imageSource} style={styles.image} resizeMode="cover" />
-         <Text style={styles.name}>{data.name}</Text>
-            <Text style={styles.adresse}>{data.adresse}</Text>      
-    
-          </View>
-        );})
-      
-    return (
-        <SafeAreaView>
-        <SearchBar name="Saisis ta ville"   onFocus={() => setModalVisible(true)}/>
-        <Modal 
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!isModalVisible);
-        }}>
-        <SafeAreaView style={styles.modal} >
-            <SearchInput width={"90%"} name="Saisis ta ville" onChangeText={handleChange} value={searchText}/>
-            {playgroundList}
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => {setModalVisible(!isModalVisible)}}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </TouchableOpacity>
+  const inputRef = useRef(); // cible l'input search du modal pour pouvoir mettre un focus dessus et ouvrir le keyboard directement à l'ouverture du modal
 
-        </SafeAreaView >
-      </Modal>
-      </SafeAreaView>
-    );
+  const handleCard = (value) => {
+    dispatch(selectedPlayground({
+      id: value._id,
+      name: value.name,
+      address: value.address,
+      city: value.city
+    }));
+    props.handleMap()
+    props.handleList()
+  }
+
+
+  const images = {
+    playground1: require('../assets/playgrounds/playground1.jpg'),
+    playground2: require('../assets/playgrounds/playground2.jpg'),
+    playground3: require('../assets/playgrounds/playground3.jpg'),
+    playground4: require('../assets/playgrounds/playground4.jpg'),
+    playground5: require('../assets/playgrounds/playground5.jpg'),
+    playground6: require('../assets/playgrounds/playground6.jpg'),
   };
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex:1},
-    modal: {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-        justifyContent:"flex-start",
-        alignItems:"center",
-        flex:1,
-        backgroundColor: "white"
-    },
-    liste:{
 
-    }, image: {
-        width: 150,
-        height: 100,
-      },
-  }); 
-  
-  export default  SearchList 
+  const playgroundList = playgrounds.playgrounds && playgrounds.playgrounds.map((data, i) => {
+    const imagePath = `playground${data.photo}`;
+    const imageSource = images[imagePath];
+
+    return (
+      <TouchableOpacity key={i} style={styles.playground} onPress={() => handleCard(data)}>
+        <Image source={imageSource} style={styles.image} resizeMode="cover" />
+        <View style={styles.text}>
+          <Text style={styles.name}>{data.name}</Text>
+          <Text style={styles.adresse}>{data.address}</Text>
+          <Text style={styles.adresse}>{data.city}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  });
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.searchBarHolder}></View>
+      <View style={styles.playgroundList}>
+        <ScrollView >
+          {playgroundList}
+        </ScrollView>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  playgroundList: {
+    height: "90%",
+    justifyContent: "flex-start",
+
+  },
+  searchBarHolder: {
+    height: 120,
+    width: "100%"
+  },
+  playground: {
+    flexDirection: "row", justifyContent: "space-around", paddingBottom: 5
+  }, image: {
+    width: "30%",
+    height: 70,
+  }, name: { fontWeight: 700 },
+  text: { width: "65%" },
+  searchInput: {
+    marginBottom: 30
+  },
+});
+
+export default SearchList;

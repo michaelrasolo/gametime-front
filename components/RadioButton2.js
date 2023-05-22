@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 
 
-const RadioButtons = (props) => {
+const RadioButtons2 = (props) => {
   const [isPressedLeft, setIsPressedLeft] = useState(false);
-  const [isPressedMid, setIsPressedMid] = useState(false);
   const [isPressedRight, setIsPressedRight] = useState(false);
-
-
 
   const platformShadow = () => {
     if (Platform.OS === 'android') {
@@ -27,60 +24,27 @@ const RadioButtons = (props) => {
       };
     }
   };
-	
-
-  // (value === props.leftTitle || props.value === props.leftTitle )
-
-  useEffect(() => {
-  if (props.value == props.leftTitle) {
-    setIsPressedLeft(true);
-      setIsPressedMid(false);
-      setIsPressedRight(false)
-  } else if (props.value === props.midTitle) {
-    setIsPressedLeft(false);
-      setIsPressedMid(true);
-      setIsPressedRight(false);
-  } else if (props.value === props.rightTitle) {
-    setIsPressedLeft(false);
-      setIsPressedMid(false);
-      setIsPressedRight(true);
-  }
-      // console.log(props.value + ' ' + props.leftTitle)
-      
-           
-}, );
 
 
   const handlePress = (value) => {
     if (value === props.leftTitle  ) {
       setIsPressedLeft(true);
-      setIsPressedMid(false);
-      setIsPressedRight(false);
-    } else if (value === props.midTitle) {
-      setIsPressedLeft(false);
-      setIsPressedMid(true);
       setIsPressedRight(false);
     } else if (value === props.rightTitle) {
       setIsPressedLeft(false);
-      setIsPressedMid(false);
       setIsPressedRight(true);
     }
     props.onPress(value);
   };
 
-
-
   
   return (
     <View style={styles.container}>
-      <TouchableOpacity  onPress={() => handlePress(props.leftTitle)} style={[[styles.UnpressedButtons, isPressedLeft ? styles.pressedButton : styles.UnpressedButtons],platformShadow()]}> 
-        <Text  style={[styles.unpressedText, isPressedLeft ? styles.pressedText : styles.unpressedText]} >{props.leftTitle}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity  onPress={() => handlePress(props.midTitle)} style={[[styles.UnpressedButtons, isPressedMid ? styles.pressedButton : styles.UnpressedButtons],platformShadow()]} >
-        <Text  style={[styles.unpressedText, isPressedMid ? styles.pressedText : styles.unpressedText]} >{props.midTitle}</Text>
+      <TouchableOpacity onPress={() => handlePress(props.leftTitle)} style={[[styles.UnpressedButtons, isPressedLeft ? styles.pressedButton : styles.UnpressedButtons],platformShadow()]}> 
+        <Text style={[styles.unpressedText, isPressedLeft ? styles.pressedText : styles.unpressedText]} >{props.leftTitle}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePress(props.rightTitle)} style={[styles.UnpressedButtons, isPressedRight ? styles.pressedButton : styles.UnpressedButtons,platformShadow()]} >
-        <Text  style={[styles.unpressedText, isPressedRight ? styles.pressedText : styles.unpressedText]} >{props.rightTitle}</Text>
+        <Text style={[styles.unpressedText, isPressedRight ? styles.pressedText : styles.unpressedText]} >{props.rightTitle}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -122,4 +86,4 @@ const styles = StyleSheet.create({
       },
 });
 
-export default RadioButtons;
+export default RadioButtons2;

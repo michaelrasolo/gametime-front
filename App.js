@@ -4,6 +4,7 @@ import FavoriteScreen from './screens/FavoriteScreen';
 import ProfilScreen from './screens/ProfilScreen';
 import SearchScreen from './screens/SearchScreen';
 import SessionScreen from './screens/SessionScreen';
+import CreateSession from './screens/CreateSession';
 import HomeScreen from './screens/HomeScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import SignInScreen from './screens/SignInScreen';
@@ -21,10 +22,12 @@ import { PersistGate } from "redux-persist/integration/react";
 import asyncStorage from "@react-native-async-storage/async-storage";
 
 import user from './reducers/user';
+import playground from './reducers/playground';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import CameraScreen from './screens/CameraScreen';
 
-const reducers = combineReducers({ user });
+const reducers = combineReducers({ user, playground });
 
 const persistConfig = { key: 'GameTime', storage: asyncStorage };
 const store = configureStore({
@@ -46,7 +49,9 @@ const TabNavigator = () => {
  
         if (route.name === 'Search') {
           iconName = 'search';
-        } else if (route.name === 'Session') {
+        } else if (route.name === 'Create') {
+          iconName = 'basketball-ball';
+        }  else if (route.name === 'Session') {
           iconName = 'basketball-ball';
         } else if (route.name === 'Favorite') {
           iconName = 'heart';
@@ -61,6 +66,7 @@ const TabNavigator = () => {
       headerShown: false,
     })}>
      <Tab.Screen name="Search" component={SearchScreen} />
+     <Tab.Screen name="Create" component={CreateSession} />
      <Tab.Screen name="Session" component={SessionScreen} />
      <Tab.Screen name="Favorite" component={FavoriteScreen} />
      <Tab.Screen name="Profil" component={ProfilScreen} />
@@ -79,6 +85,8 @@ export default function App() {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="SignIn" component={SignInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="Camera" component={CameraScreen} />
+            <Stack.Screen name="Profile" component={ProfilScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>

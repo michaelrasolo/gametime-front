@@ -6,10 +6,12 @@ import {
   Image,
   StyleSheet,
   Platform,
+  Dimensions
   
 } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
+import { height } from "@mui/system";
 
 const GameCard = (props) => {
   // SHADOW FUNCTION
@@ -66,34 +68,35 @@ const GameCard = (props) => {
         break;
 
       default:
-        console.log("Invalid level");
+        // console.log("Invalid level");
         break;
     }
   };
   return (
-    <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow()]}>
+    <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow(), {height:props.height}]}>
       <Image
         style={[styles.image]}
-        source={require("../assets/images/citystade-marseille.png")}
+        // source={require(`../assets/playgrounds/playground${props.playgroundPictureNumber}.jpg`)}
+        source={props.source}
       />
-      <View style={[styles.gametype, platformShadow()]}>
-        <Text>{props.gametype}</Text>
+      <View style={[styles.sessiontype, platformShadow()]}>
+        <Text>{props.sessionType}</Text>
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.playground}>
           {props.playground}, {props.city}
         </Text>
         <Text style={styles.date}>
-          {props.date}, {props.hour}
+          {props.formattedDate}, {props.formattedTime}
         </Text>
         <View style={styles.bottomBox}>
           <View style={styles.levelBox}>
             <Text style={styles.level}>Niveau:</Text>{levelBalls()}
           </View>
-          <View style={styles.playersBox}>
+          <View style={styles.participantsBox}>
             <FontAwesome5 name={"users"} color={"#F0F0F0"} size={18} />
-            <Text style={styles.players}>
-              {props.players} / {props.maxplayers}
+            <Text style={styles.participants}>
+              {props.totalParticipants} / {props.maxParticipants}
             </Text>
           </View>
         </View>
@@ -106,11 +109,13 @@ const GameCard = (props) => {
 const styles = StyleSheet.create({
   card: {
     width: "100%",
-    height: "30%",
+    height:"40%",
+    borderWidth:1,
     justifyContent: "flex-start",
     borderRadius: 30,
     position: "relative",
     backgroundColor: "rgba(59, 59, 59, 0.8)",
+    marginBottom:"2%"
   },
   image: {
     borderTopRightRadius: 30,
@@ -124,7 +129,7 @@ const styles = StyleSheet.create({
     paddingVertical: "3%",
     justifyContent: "space-around",
   },
-  gametype: {
+  sessiontype: {
     position: "absolute",
     top: "5%",
     left: "5%",
@@ -159,7 +164,7 @@ const styles = StyleSheet.create({
         marginRight: 12,
         alignItems:"center"
   },
-  players: {
+  participants: {
     color: "#F0F0F0",
     marginTop: "3%",
   },
@@ -168,7 +173,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
   },
-  playersBox: {
+  participantsBox: {
     justifyContent: "center",
     alignItems: "center",
   },

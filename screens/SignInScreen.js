@@ -15,20 +15,20 @@ export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-    navigation.navigate('Join') // to delete
-    // fetch('http://192.168.10.163:3000/users/signin', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ email, password }),
-    // }).then(response => response.json())
-    //     .then(data => {
-    //         if (data.result) {
-    //             console.log(data.result)
-    //             dispatch(login({ email: email, token: data.token }));
-    //             navigation.navigate('TabNavigator')
-    //         } 
-    //         else {setIdError(true)}
-    //     });
+    navigation.navigate('TabNavigator')
+    fetch('http://192.168.10.151:3000/users/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+    }).then(response => response.json())
+        .then(data => {
+            if (data.result) {
+                console.log(data.result)
+                dispatch(login({ email: email, token: data.token }));
+                navigation.navigate('TabNavigator')
+            } 
+            else {setIdError(true)}
+        });
 };
 
   return (
@@ -39,41 +39,41 @@ export default function SignInScreen({ navigation }) {
           <Text style={styles.text}>Connexion</Text>
         </View>
 
-        <View style={styles.input}>
-          <Inputs
-            name="Email"
-            placeholder="Email"
-            height={50}
-            width={"70%"}
-            onChangeText={(value) => setEmail(value)}
-            value={email}
-          />
+    <View style={styles.input}>
+      <Inputs
+        name="Email"
+        placeholder="Email"
+        height={50}
+        width={"70%"}
+        onChangeText={(value) => setEmail(value)}
+        value={email}
+      />
 
-          <PasswordInput
-            name="Mot de passe"
-            placeholder="Ton mot de passe"
-            height={50}
-            width={"70%"}
-            onChangeText={(value) => setPassword(value)}
-            value={password}
-          />
-          <View style={styles.errorBox}>
-            {
-                idError &&
-              <Text style={styles.error}>Identifiants invalides</Text>
-            }
-          </View>
-        </View>
-
-        <View style={styles.button}>
-          <OrangeButton
-            title="Se connecter"
-            width={"55%"}
-            onPress={handleConnection}
-          />
-        </View>
+      <PasswordInput
+        name="Mot de passe"
+        placeholder="Ton mot de passe"
+        height={50}
+        width={"70%"}
+        onChangeText={(value) => setPassword(value)}
+        value={password}
+      />
+      <View style={styles.errorBox}>
+        {
+            idError &&
+          <Text style={styles.error}>Identifiants invalides</Text>
+        }
       </View>
     </View>
+
+    <View style={styles.button}>
+      <OrangeButton
+        title="Se connecter"
+        width={"55%"}
+        onPress={handleConnection}
+      />
+    </View>
+  </View>
+</View>
   );
 }
 
