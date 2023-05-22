@@ -33,7 +33,7 @@ export default function JoinScreen({ navigation }) {
 
 // INITIALISATION
   useEffect(() => {
-    fetch(`http://192.168.1.76:3000/sessions/game/6464f4eda9764ac33bf06d40/`) // Token + User
+    fetch(`http://192.168.10.175:3000/sessions/game/6464f4eda9764ac33bf06d40/`) // Token + User
       .then((res) => res.json())
       .then((response) => {
         setSessionInfos(response.sessionData); // Session data
