@@ -8,6 +8,7 @@ const DateSearch = (props) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
+
   LocaleConfig.locales['fr'] = {
     monthNames: [
       'janvier',
@@ -56,6 +57,7 @@ const DateSearch = (props) => {
     const formattedDate = moment(date.timestamp).format('DD MMMM YYYY');
     setSelectedDate(formattedDate);
     setIsCalendarVisible(false);
+    props.selectDate(date.dateString)
   };
 
   const toggleCalendar = () => {
@@ -63,11 +65,21 @@ const DateSearch = (props) => {
   };
 
 
+  const handleCloseCalendar = () => {
+    setIsCalendarVisible(false);
+  };
+
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Les mois sont indexés à partir de zéro
+  const year = currentDate.getFullYear();
+  const formattedcurrentDate = `${day}/${month}/${year}`
+
   return (
       <View style={[styles.container, { width: props.width }]}>
         <TouchableOpacity style={styles.calendar} onPress={toggleCalendar}>
           <Text style={styles.dateText}>
-            {selectedDate ? selectedDate : 'Sélectionner une date'}
+            {selectedDate ? selectedDate : formattedcurrentDate}
           </Text>
         </TouchableOpacity>
         {isCalendarVisible && (
@@ -103,7 +115,14 @@ const DateSearch = (props) => {
                     textDayHeaderFontSize: 14,
                   }}
                 />
-              </View>
+          
+              <TouchableOpacity
+              style={styles.closeButton}
+              onPress={handleCloseCalendar}
+            >
+              <Text style={styles.closeButtonText}>Fermer</Text>
+            </TouchableOpacity>
+            </View>
           </Modal>
         )}
       </View>
@@ -112,7 +131,7 @@ const DateSearch = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
+    height: 40,
     backgroundColor: 'rgba(56, 56, 56, 0.8)',
     paddingLeft: 10,
     justifyContent: 'center',
@@ -145,6 +164,11 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
   },
+  closeButtonText: {
+    color: "#FB724C",
+    fontSize:20,
+    textAlign:"center",
+height:50,  }
 });
 
 export default DateSearch;

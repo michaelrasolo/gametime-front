@@ -10,6 +10,8 @@ const initialState = {
         city: null,
         date: null,
         time: null}, 
+    
+    
     playgrounds: []} 
 };
 
@@ -27,9 +29,26 @@ export const playgroundSlice = createSlice({
       name: action.payload.name, 
       address: action.payload.address,
       city: action.payload.city    
-    }}
-
+    }},
+    selectDate:(state, action) => {
+      state.value.selectedPlayground = {
+        ...state.value.selectedPlayground,
+        date: action.payload,
+      }},
+      selectTime:(state, action) => {
+        state.value.selectedPlayground = {
+          ...state.value.selectedPlayground,
+          time: action.payload,
+        }},
+      emptySelected:(state, action) => {
+        state.value.selectedPlayground = {
+          playgroundId: null,
+          name:null, 
+          address: null,
+          city: null,
+          date: null,
+          time: null}},
 }});
 
-export const { setPlaygroundList,selectedPlayground } = playgroundSlice.actions;
+export const { setPlaygroundList,selectedPlayground, selectDate, selectTime,emptySelected} = playgroundSlice.actions;
 export default playgroundSlice.reducer;

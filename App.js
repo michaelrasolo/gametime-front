@@ -6,6 +6,9 @@ import SearchScreen from './screens/SearchScreen';
 import SessionScreen from './screens/SessionScreen';
 import CreateSession from './screens/CreateSession';
 import HomeScreen from './screens/HomeScreen';
+import SignUpScreen from './screens/SignUpScreen';
+import SignInScreen from './screens/SignInScreen';
+import JoinScreen from './screens/JoinScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -22,8 +25,6 @@ import user from './reducers/user';
 import playground from './reducers/playground';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import SignUpScreen from './screens/SignUpScreen';
-import SignInScreen from './screens/SignInScreen';
 import CameraScreen from './screens/CameraScreen';
 
 const reducers = combineReducers({ user, playground });
@@ -80,6 +81,7 @@ export default function App() {
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Join" component={JoinScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="SignIn" component={SignInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
@@ -90,7 +92,8 @@ export default function App() {
         </NavigationContainer>
       </PersistGate>
     </Provider>
-  );}
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

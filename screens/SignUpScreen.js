@@ -24,6 +24,7 @@ export default function SignUpScreen({ navigation }) {
     const EMAIL_REGEX = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/gi
 
     const handleSubmit = () => {
+<<<<<<< HEAD
         console.log(EMAIL_REGEX.test(email));
         console.log(emailError)
         // if (!EMAIL_REGEX.test(email)) {
@@ -32,6 +33,14 @@ export default function SignUpScreen({ navigation }) {
         //     setPasswordError(true)
         // } else {
             fetch('http://192.168.0.103:3000/users/signup', {
+=======
+        if (EMAIL_REGEX.test(email)=== false) {
+            setEmailError(true)
+        } else if (password !== confirmation) {
+            setPasswordError(true)
+        } else {
+            fetch('http://192.168.10.163:3000/sessions/game', {
+>>>>>>> e2fd5bf6f34e40252d76297018907c1f2d74b933
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password, nickname: nickname }),
@@ -41,10 +50,12 @@ export default function SignUpScreen({ navigation }) {
                         dispatch(login({email: email, password: password, nickname: nickname, token: data.token}));
                         console.log(user)
                     }
-                });
+                }
+                );
               navigation.navigate('TabNavigator');
-        // }
-      };
+        //  }
+        }
+      
 
 
 
@@ -116,6 +127,7 @@ export default function SignUpScreen({ navigation }) {
       </View>
     </View>
   );
+
 }
 
 
@@ -147,3 +159,4 @@ const styles = StyleSheet.create({
     color: '#FB724C',
   }
 })
+}
