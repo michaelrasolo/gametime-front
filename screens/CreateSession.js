@@ -16,6 +16,10 @@ import { useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPlaygroundList, emptySelected } from '../reducers/playground';
 
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
+
 export default function CreateSession({ navigation }) {
   const dispatch = useDispatch()
   const [isModalVisible, setModalVisible] = useState(false);
@@ -34,6 +38,7 @@ export default function CreateSession({ navigation }) {
  
   const user = useSelector((state) => state.user.value);
   const playgrounds = useSelector((state) => state.playground.value);
+
 
 
   const handleCloseModal = () => {
@@ -69,7 +74,7 @@ export default function CreateSession({ navigation }) {
   const handleValidation = () => {
     setShowConfetti(true)
 
-    fetch('http://192.168.10.175:3000/sessions/create', {
+    fetch(`${IPAdresse}/sessions/create`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

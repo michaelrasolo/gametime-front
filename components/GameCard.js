@@ -13,7 +13,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { height } from "@mui/system";
 
-const GameCard = (props) => {
+const GameCard = (props, {navigation}) => {
   // SHADOW FUNCTION
   const platformShadow = () => {
     if (Platform.OS === "android") {

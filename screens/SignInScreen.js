@@ -6,6 +6,9 @@ import PasswordInput from "../components/PasswordInput";
 import { useState } from "react";
 import { login } from "../reducers/user";
 import { useDispatch } from "react-redux";
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
 
 export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -15,7 +18,7 @@ export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-    fetch('http://192.168.1.18:3000/users/signin', {
+    fetch(`${IPAdresse}/users/signin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -87,8 +90,8 @@ const styles = StyleSheet.create({
 },
   input: {
     alignItems: "center",
+    justifyContent: "space-around",
     paddingVertical: "10%",
-
   },
   text: {
     fontSize: 30,

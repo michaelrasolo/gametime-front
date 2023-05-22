@@ -6,6 +6,9 @@ import PasswordInput from '../components/PasswordInput';
 import { useState, useEffect } from "react";
 import { login, logout } from '../reducers/user';
 import { useDispatch, useSelector } from "react-redux";
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
 
 
 export default function SignUpScreen({ navigation }) {
@@ -52,7 +55,7 @@ export default function SignUpScreen({ navigation }) {
           setErrorMessages((previousErrors) => [...previousErrors, "Champ confirmation vide"]);
         } 
         else if (errorMessages.length === 0) {
-            fetch('http://192.168.1.18:3000/users/signup', {
+            fetch(`${IPAdresse}/users/signup`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, password: password, nickname: nickname, city: city }),

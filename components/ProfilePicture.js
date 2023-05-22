@@ -12,6 +12,9 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import * as ImagePicker from "expo-image-picker";
 import { addPhoto, removePhoto } from "../reducers/user";
 import { BlurView } from "expo-blur";
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
 
 export default function ProfilePicture(props) {
   //   const [image, setImage] = useState(null);
@@ -42,7 +45,7 @@ export default function ProfilePicture(props) {
       });
       formData.append("token", user.token);
 
-      fetch("http://192.168.1.18:3000/users/upload", {
+      fetch(`${IPAdresse}/users/upload`, {
         method: "PUT",
         body: formData,
         headers: {
@@ -60,7 +63,7 @@ export default function ProfilePicture(props) {
   };
 
   const deletePicture = () => {
-    fetch("http://192.168.1.18:3000/users/deletePicture", {
+    fetch(`${IPAdresse}/users/deletePicture`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

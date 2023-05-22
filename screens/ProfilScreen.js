@@ -12,6 +12,10 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { addPhoto, logout } from '../reducers/user';
 
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
+
 export default function ProfilScreen({ navigation }) {
   const [birthdate, setBirthdate] = useState('');
   const [city, setCity] = useState('');
@@ -24,11 +28,11 @@ export default function ProfilScreen({ navigation }) {
   const [picture, setPicture] = useState('');
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
+ 
   
 
   useEffect(() => {
-    fetch(`http://192.168.1.18:3000/users/${user.token}`)
-    fetch(`http://192.168.10.175:3000/users/${user.token}`)
+    fetch(`${IPAdresse}/users/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setBirthdate(data.data.birthdate)
@@ -46,7 +50,7 @@ export default function ProfilScreen({ navigation }) {
 
 
 const handleValidation = () => {
-  fetch('http://192.168.1.18:3000/users/update', {
+  fetch(`${IPAdresse}/users/update`, {
     method: 'PUT',
     body: JSON.stringify({
       token: user.token,

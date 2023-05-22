@@ -11,12 +11,16 @@ import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
 
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
+
 export default function SessionScreen({ navigation }) {
   const [sessions, setSessions] = useState([]);
 
 
   useEffect(() => {
-    fetch(`http://192.168.10.175:3000/sessions/all`)
+    fetch(`${IPAdresse}/sessions/all`)
       .then(response => response.json())
       .then(data => {
         // console.log(data.data[0].playground.photo)

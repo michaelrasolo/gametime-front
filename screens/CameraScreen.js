@@ -9,6 +9,10 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { addPhoto } from "../reducers/user";
 
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
+
 export default function CameraScreen({ navigation }) {
 
   const [hasPermission, setHasPermission] = useState(false);
@@ -42,7 +46,7 @@ export default function CameraScreen({ navigation }) {
 
        console.log("photo", photo.uri);
   
-      const response = await fetch('http://192.168.1.18:3000/users/upload', {
+      const response = await fetch(`${IPAdresse}/users/upload`, {
         method: 'PUT',
         body: formData,
        })

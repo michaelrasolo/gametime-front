@@ -8,13 +8,17 @@ import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
 import { useSelector } from 'react-redux';
 
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
+
 export default function SessionScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
   const [sessions, setSessions] = useState([]);
   const [PressedButton, setPressedButton] = useState("");
 
   useEffect(() => {
-    fetch(`http://192.168.10.175:3000/sessions/futur/${user.token}`)
+    fetch(`${IPAdresse}/sessions/futur/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)
@@ -23,13 +27,13 @@ export default function SessionScreen({ navigation }) {
 
   const handleButtonPress = (value) => {
     if(value === 'A venir') {
-      fetch(`http://192.168.10.151:3000/sessions/futur/${user.token}`)
+      fetch(`${IPAdresse}/sessions/futur/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)
       });
     } else {
-      fetch(`http://192.168.10.151:3000/sessions/past/${user.token}`)
+      fetch(`${IPAdresse}/sessions/past/${user.token}`)
       .then(response => response.json())
       .then(data => {
         setSessions(data.formattedData)
@@ -61,7 +65,6 @@ export default function SessionScreen({ navigation }) {
         maxParticipants={data.maxParticipants}
         level={data.level}
         sessionType={data.sessionType}
-
       />
     );
   });
