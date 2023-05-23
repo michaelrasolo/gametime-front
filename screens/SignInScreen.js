@@ -1,4 +1,11 @@
-import { Button, StyleSheet, Text, View, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import HeaderLogo from "../components/HeaerLogo";
 import OrangeButton from "../components/OrangeButton";
 import Inputs from "../components/Inputs";
@@ -28,7 +35,7 @@ export default function SignInScreen({ navigation }) {
         if (data.result) {
           console.log(data.result);
           dispatch(login({ email: email, token: data.token }));
-          navigation.navigate('Profile');
+          navigation.navigate("TabNavigator");
         } else {
           setIdError(true);
         }
@@ -37,7 +44,9 @@ export default function SignInScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <HeaderLogo />
       <View style={styles.page}>
         <View style={styles.title}>
