@@ -39,7 +39,7 @@ const GameCard = (props,{navigation}) => {
   //   BBALLS COLORS BASED ON LEVEL
   const levelBalls = () => {
     switch (props.level) {
-      case "rookie":
+      case "Rookies":
         // Code for rookie level
         return (
           <View style={styles.ballContainer}>
@@ -50,7 +50,7 @@ const GameCard = (props,{navigation}) => {
         );
         break;
 
-      case "baller":
+      case "Ballers":
         return (
           <View style={styles.ballContainer}>
             <FontAwesome5 name={"basketball-ball"} style={styles.orangeBball} />
@@ -60,7 +60,7 @@ const GameCard = (props,{navigation}) => {
         );
         break;
 
-      case "all-star":
+      case "All-stars":
         return (
           <View style={styles.ballContainer}>
             <FontAwesome5 name={"basketball-ball"} style={styles.orangeBball} />
@@ -90,7 +90,7 @@ const GameCard = (props,{navigation}) => {
           {props.playground}, {props.city}
         </Text>
         <Text style={styles.date}>
-          {props.formattedDate}, {props.formattedTime}
+          {props.formattedDate}
         </Text>
         <View style={styles.bottomBox}>
           <View style={styles.levelBox}>

@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Button, StyleSheet, Text, View, KeyboardAvoidingView, Platform } from "react-native";
 import HeaderLogo from "../components/HeaerLogo";
 import OrangeButton from "../components/OrangeButton";
 import Inputs from "../components/Inputs";
@@ -19,63 +19,64 @@ export default function SignInScreen({ navigation }) {
 
   const handleConnection = () => {
     fetch(`${IPAdresse}/users/signin`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-    }).then(response => response.json())
-        .then(data => {
-            if (data.result) {
-                console.log(data.result)
-                dispatch(login({ email: email, token: data.token }));
-                navigation.navigate('TabNavigator')
-            } 
-            else {setIdError(true)}
-        });
-};
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          console.log(data.result);
+          dispatch(login({ email: email, token: data.token }));
+          navigation.navigate('Profile');
+        } else {
+          setIdError(true);
+        }
+      });
+  };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <HeaderLogo />
       <View style={styles.page}>
         <View style={styles.title}>
           <Text style={styles.text}>Connexion</Text>
         </View>
 
-    <View style={styles.input}>
-      <Inputs
-        name="Email"
-        placeholder="Email"
-        height={50}
-        width={"70%"}
-        onChangeText={(value) => setEmail(value)}
-        value={email}
-      />
+        <View style={styles.input}>
+          <Inputs
+            name="Email"
+            placeholder="Email"
+            height={50}
+            width={"70%"}
+            onChangeText={(value) => setEmail(value)}
+            value={email}
+          />
+          <PasswordInput
+            name="Mot de passe"
+            placeholder="Ton mot de passe"
+            height={50}
+            width={"70%"}
+            onChangeText={(value) => setPassword(value)}
+            value={password}
+          />
+          {idError && (
+            <View style={styles.errorBox}>
+              <Text style={styles.error}>Identifiants invalides</Text>
+            </View>
+          )}
+        </View>
 
-      <PasswordInput
-        name="Mot de passe"
-        placeholder="Ton mot de passe"
-        height={50}
-        width={"70%"}
-        onChangeText={(value) => setPassword(value)}
-        value={password}
-      />
-      <View style={styles.errorBox}>
-        {
-            idError &&
-          <Text style={styles.error}>Identifiants invalides</Text>
-        }
+        <View style={styles.button}>
+          <OrangeButton
+            title="Se connecter"
+            width={"55%"}
+            onPress={handleConnection}
+          />
+        </View>
       </View>
-    </View>
-
-    <View style={styles.button}>
-      <OrangeButton
-        title="Se connecter"
-        width={"55%"}
-        onPress={handleConnection}
-      />
-    </View>
-  </View>
-</View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -85,13 +86,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#242424",
   },
   page: {
-    justifyContent:"space-around",
-    height:"60%"
-},
+    justifyContent: "space-around",
+    height: "55%",
+    // borderWidth: 2,
+    // borderColor: "green",
+  },
   input: {
     alignItems: "center",
     justifyContent: "space-around",
-    paddingVertical: "10%",
+    // borderWidth: 2,
+    // borderColor: "blue",
+    height: "40%",
+    flexDirection: "column",
   },
   text: {
     fontSize: 30,
@@ -100,21 +106,23 @@ const styles = StyleSheet.create({
   },
   title: {
     alignItems: "center",
-    paddingVertical: "10%",
+    // paddingVertical: "10%",
+    // borderWidth: 2,
+    // borderColor: "red",
   },
   button: {
     alignItems: "center",
-    paddingTop: "7%",
+    // paddingTop: "7%",
+    // borderWidth: 2,
+    // borderColor: "yellow",
   },
-  errorBox:{
-    alignItems:"center",
-    justifyContent:"flex-start",
-    flexDirection:"row",
-    width:"70%",
-    marginVertical:12
+  errorBox: {
+    alignItems: "baseline",
+    justifyContent: "flex-start",
+    width: "70%",
   },
   error: {
     color: "#FB724C",
-    alignItems: "baseline",
+    // alignItems: "baseline",
   },
 });

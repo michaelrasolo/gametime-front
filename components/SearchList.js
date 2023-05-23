@@ -64,9 +64,7 @@ const SearchList = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop:100
-  },
+    flex: 1  },
   playgroundList: {
     height: "90%",
     justifyContent: "flex-start",

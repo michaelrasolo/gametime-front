@@ -1,24 +1,28 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Text,Image, View, TouchableOpacity,StyleSheet, Dimensions, Keyboard } from 'react-native';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
-import PlaygroundCard from './PlaygroundCard';
-import { selectedPlayground, setPlaygroundList } from '../reducers/playground';
+import PlaygroundCard2 from './PlaygroundCard2';
+import playground, { selectedPlayground, setPlaygroundList } from '../reducers/playground';
 import Config from "../config";
+import MapSearchBar from './MapSearchBar';
+import MapListSearchBar from './MapListSearchBar';
 
 
 const IPAdresse = Config.IPAdresse;
 
-const MapPlayground = (props ) => {
+const MapSessions = (props) => {
+    const navigation = useNavigation()
     const dispatch = useDispatch()
     const playgrounds = useSelector((state) => state.playground.value);
     const location = useSelector((state) => state.location.value);
 
     const [latitude,setLatitude] = useState(48.866667)
     const [longitude,setLongitude] = useState(2.333333)
-
+    const [joinVisible, setJoinVisible] = useState(false)
 
 
     useEffect(() => {
@@ -76,17 +80,22 @@ const MapPlayground = (props ) => {
             Keyboard.dismiss()
             }
     
-const buttonTitle = (props.sessionsNb === 0
-              ? "Créer"
-              : props.sessionsNb === 1
-              ? "Rejoindre"
-              :  "Voir")
+// const buttonTitle = (props.sessionsNb === 0
+//               ? "Créer"
+//               : props.sessionsNb === 1
+//               ? "Rejoindre"
+//               :  "Voir")
 
     const handleSelect = () => {
-
-
+      if (playgrounds.selectedPlayground.sessionsNb === 0 ) {
         props.handleCloseModal()
-
+        navigation.navigate('TabNavigator', {screen : "Create"});
+      } else if (playgrounds.selectedPlayground.sessionsNb === 1) {
+        props.handleCloseModal()
+        // setJoinVisible(true)
+      } else {
+        props.handleCloseModal()
+      }
     }
 
     const images = {
@@ -104,8 +113,8 @@ const buttonTitle = (props.sessionsNb === 0
       });
 
   return (
-    <>
-    {playgrounds.selectedPlayground.name && <PlaygroundCard name={playgrounds.selectedPlayground.name}
+<>{!joinVisible &&   <>
+    {playgrounds.selectedPlayground.name && <PlaygroundCard2 name={playgrounds.selectedPlayground.name}
     onPress={handleSelect} 
      city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
     <MapView 
@@ -122,6 +131,9 @@ const buttonTitle = (props.sessionsNb === 0
 
     </MapView>
     </>
+    }
+    {joinVisible && <MapListSearchBar/>}
+    </>
   );
 };
 
@@ -132,4 +144,4 @@ const styles = StyleSheet.create({
       }
 });
 
-export default MapPlayground;
+export default MapSessions;

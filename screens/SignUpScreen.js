@@ -1,4 +1,5 @@
-import { Button, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Button, StyleSheet, Text, View, KeyboardAvoidingView,
+} from "react-native";
 import HeaderLogo from "../components/HeaerLogo";
 import OrangeButton from "../components/OrangeButton";
 import Inputs from '../components/Inputs';
@@ -72,11 +73,12 @@ export default function SignUpScreen({ navigation }) {
 
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <HeaderLogo />
 
       <View style={styles.title}>
-        <Text style={styles.text}>S'inscrire avec l'email</Text>
+        <Text style={styles.text}>Inscription</Text>
       </View>
 
       <View style={styles.input}>
@@ -155,7 +157,7 @@ export default function SignUpScreen({ navigation }) {
           onPress={handleSubmit}
         />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 
 }
@@ -187,5 +189,7 @@ const styles = StyleSheet.create({
   },
   error: {
     color: '#FB724C',
+    alignItems: "baseline",
+
   }
 })

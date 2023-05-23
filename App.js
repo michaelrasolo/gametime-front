@@ -23,13 +23,15 @@ import asyncStorage from "@react-native-async-storage/async-storage";
 
 import user from './reducers/user';
 import playground from './reducers/playground';
+import location from './reducers/location';
+import game from './reducers/game';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CameraScreen from './screens/CameraScreen';
 
-const reducers = combineReducers({ user, playground });
+const reducers = combineReducers({ user, playground, location, game });
 
-const persistConfig = { key: 'GameTime', storage: asyncStorage };
+const persistConfig = { key: 'GameTime', blacklist: ["game"], storage: asyncStorage };
 const store = configureStore({
   reducer: persistReducer(persistConfig, reducers),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
@@ -50,12 +52,12 @@ const TabNavigator = () => {
         if (route.name === 'Search') {
           iconName = 'search';
         } else if (route.name === 'Create') {
-          iconName = 'basketball-ball';
+          iconName = 'plus';
         }  else if (route.name === 'Session') {
           iconName = 'basketball-ball';
         } else if (route.name === 'Favorite') {
           iconName = 'heart';
-        } else if (route.name === 'Profil') {
+        } else if (route.name === 'Profile') {
           iconName = 'user';
         }
  
@@ -69,7 +71,8 @@ const TabNavigator = () => {
      <Tab.Screen name="Create" component={CreateSession} />
      <Tab.Screen name="Session" component={SessionScreen} />
      <Tab.Screen name="Favorite" component={FavoriteScreen} />
-     <Tab.Screen name="Profil" component={ProfilScreen} />
+     <Tab.Screen name="Profile" component={ProfilScreen} />
+     <Tab.Screen name="Join" component={JoinScreen} />
    </Tab.Navigator>
   );
  }
@@ -82,10 +85,10 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Join" component={JoinScreen} />
             <Stack.Screen name="SignIn" component={SignInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
             <Stack.Screen name="Camera" component={CameraScreen} />
-            <Stack.Screen name="Join" component={JoinScreen} />
             <Stack.Screen name="Profile" component={ProfilScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
