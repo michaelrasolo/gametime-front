@@ -39,6 +39,9 @@ const PlaygroundCard = (props) => {
         // source={require("../assets/images/citystade-marseille.png")}
         source={props.source}
       />
+      <View style={styles.deleteIcon}>
+      <FontAwesome5 onPress={props.handleDeletePress} name={"times-circle"} style={styles.deleteIcon} />
+      </View>
       <View style={[styles.gametype, platformShadow()]}>
         <Text>Aucun game</Text>
       </View>
@@ -46,6 +49,7 @@ const PlaygroundCard = (props) => {
         <Text style={styles.playground}>
           {props.name}, {props.city}
         </Text>
+        
         <View style={styles.bottomBox}>
         <Text style={styles.address}>
           {props.address}
@@ -60,12 +64,12 @@ const PlaygroundCard = (props) => {
 // STYLE
 const styles = StyleSheet.create({
   card: {
-    width: "90%",
-    height: "30%",
+    width: "100%",
+    
+    position: "relative",
+    height: 200,
     borderRadius: 30,
-    bottom:20,
-    zIndex:1,
-    position: "absolute",
+    margin: 5,
     backgroundColor: "rgba(59, 59, 59, 1)",
   },
   image: {
@@ -79,6 +83,13 @@ const styles = StyleSheet.create({
     paddingLeft: "5%",
     paddingVertical: "3%",
     justifyContent: "space-around",
+  },
+  deleteIcon : {
+    color:'white',
+    fontSize:30,
+    position: "absolute",
+    top: "5%",
+    left: "90%",
   },
   gametype: {
     position: "absolute",

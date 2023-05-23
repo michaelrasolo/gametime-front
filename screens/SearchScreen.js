@@ -10,7 +10,7 @@ import Gamecard from '../components/GameCard';
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
-import { useDispatch } from 'react-redux';
+
 
 
 import Config from "../config";
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex:1,
-// borderWidth:3
+
   },
   buttonSection: {
     flexDirection: 'row',
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   SessionsSection: {
     padding: 10,
     borderWidth: 1,
-    // height: "auto",
+
     flex: 1, // Ensure the ScrollView expands to fill the available space
   },
 })

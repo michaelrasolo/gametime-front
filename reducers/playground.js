@@ -26,8 +26,10 @@ export const playgroundSlice = createSlice({
       playgroundId: action.payload.id,
       name: action.payload.name, 
       address: action.payload.address,
-      city: action.payload.city    
-    }},
+      city: action.payload.city   
+    }
+    // console.log(action.payload) 
+  },
     selectDate:(state, action) => {
       state.value.selectedPlayground = {
         ...state.value.selectedPlayground,
