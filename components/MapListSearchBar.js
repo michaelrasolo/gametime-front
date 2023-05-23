@@ -4,9 +4,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import OrangeButton from './OrangeButton';
 import GreyButton from './GreyButton';
 import { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setPlaygroundList } from '../reducers/playground';
+import { setLocation } from '../reducers/location';
 import Config from "../config";
+
 
 const IPAdresse = Config.IPAdresse;
 
@@ -31,6 +33,8 @@ const platformShadow = () => {
 
 const MapListSearchBar = (props) => {
   const dispatch = useDispatch();
+  const location = useSelector((state) => state.location.value);
+
   const [searchText, setSearchText] = useState('');
   const [isPressedLeft, setIsPressedLeft] = useState(true);
   const [isPressedRight, setIsPressedRight] = useState(false);
@@ -51,18 +55,6 @@ const MapListSearchBar = (props) => {
     }
     setIsPressedLeft(false);
     setIsPressedRight(true);
-    fetch('http://192.168.1.41:3000/playgrounds/nearby', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ longitude : 2.349014, latitude: 48.864716
-      }),
-  })
-    .then(res => res.json())
-    .then(data => {console.log(data)
-      dispatch(setPlaygroundList(data))
-
-    }
-    )
   }
 
   const inputRef = useRef(); // cible l'input search du modal pour pouvoir mettre un focus dessus et ouvrir le keyboard directement à l'ouverture du modal
@@ -75,9 +67,23 @@ const MapListSearchBar = (props) => {
         headers: { 'Content-Type': 'application/json' }
       })
         .then(res => res.json())
-        .then(data => {
-          dispatch(setPlaygroundList(data))
-        })
+        .then(data => { Promise.all(
+          data.map((item) =>
+            fetch(`${IPAdresse}/playgrounds/${item._id}`)
+              .then((sessionsResponse) => sessionsResponse.json())
+              .then((sessionsData) => {
+                item["sessionsNb"] = sessionsData.sessions.length;
+                return item;
+              })
+          )
+        )
+          .then((updatedData) => {
+
+          dispatch(setPlaygroundList(updatedData))
+          dispatch(setLocation({longitude : updatedData[0].location.coordinates[0],latitude : updatedData[0].location.coordinates[1]}))
+          console.log("fetch ", updatedData)
+          console.log("reducer" , location)
+        })})
     }
   }
   return (
@@ -104,11 +110,11 @@ const MapListSearchBar = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => handlePressLeft()} style={[styles.unpressedButton, isPressedLeft ? styles.pressedButton : styles.unpressedButton, platformShadow()]} >
-            <Text style={styles.Text}>Liste</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => handlePressRight()} style={[styles.unpressedButton, isPressedRight ? styles.pressedButton : styles.unpressedButton, platformShadow()]} >
+          <TouchableOpacity activeOpacity={0.8} onPress={() => handlePressLeft()} style={[styles.unpressedButton, isPressedLeft ? styles.pressedButton : styles.unpressedButton, platformShadow()]}  >
             <Text style={styles.Text}>Carte</Text>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.8} onPress={() => handlePressRight()} style={[styles.unpressedButton, isPressedRight ? styles.pressedButton : styles.unpressedButton, platformShadow()]}>
+            <Text style={styles.Text}>Liste</Text>
           </TouchableOpacity>
         </View>
       </View>

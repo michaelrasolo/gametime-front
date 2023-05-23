@@ -12,7 +12,7 @@ import { auto } from '@popperjs/core';
 import { useDispatch } from 'react-redux';
 import SessionBar from '../components/SessionBar';
 import MapSearchBar from '../components/MapSearchBar';
-import MapPlayground from '../components/MapPlayground';
+import MapSession from '../components/MapSessions';
 import { emptySelected } from '../reducers/playground'; 
 
 import Config from "../config";
@@ -96,7 +96,7 @@ const handleCloseModal = () => {
         visible={isModalVisible}>
         <SafeAreaView style={styles.modal}>
           <MapSearchBar handleCloseModal={handleCloseModal} />
-          <MapPlayground handleCloseModal={handleCloseModal}/>
+          <MapSession handleCloseModal={handleCloseModal}/>
         </SafeAreaView>
       </Modal>
       {!cardPress &&  <View style={styles.content}>

@@ -3,7 +3,6 @@ import { Modal, Button, StyleSheet, Text, View, SafeAreaView, ScrollView } from 
 import SearchBar from '../components/SearchBar';
 import MapListSearchBar from '../components/MapListSearchBar';
 import SearchList from '../components/SearchList';
-import MapPlayground from '../components/MapPlayground';
 import Checkbox from 'expo-checkbox';
 import DateSearch from '../components/DateSearch';
 import RadioButtons from '../components/RadioButtons';
@@ -11,11 +10,12 @@ import Inputs from '../components/Inputs';
 import RadioButtons2 from '../components/RadioButton2';
 import OrangeButton from '../components/OrangeButton';
 import ConfettiCannon from 'react-native-confetti-cannon';
-import SessionBar from '../components/SessionBar';
+import MapPlayground from '../components/MapPlayground';
 
 import { useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPlaygroundList, emptySelected } from '../reducers/playground';
+import { setLocation } from '../reducers/location';
 
 import Config from "../config";
 
@@ -24,8 +24,8 @@ const IPAdresse = Config.IPAdresse;
 export default function CreateSession({ navigation }) {
   const dispatch = useDispatch()
   const [isModalVisible, setModalVisible] = useState(false);
-  const [isListVisible, setListVisible] = useState(true)
-  const [isMapVisible, setMapVisible] = useState(false)
+  const [isListVisible, setListVisible] = useState(false)
+  const [isMapVisible, setMapVisible] = useState(true)
   const [isWeekly, setIsWeekly] = useState(false);
   const [bringBall, setBringBall] = useState(false);
   const [gameGroup, setGameGroup] = useState(1);
@@ -44,8 +44,10 @@ export default function CreateSession({ navigation }) {
   const handleCloseModal = () => {
     setModalVisible(!isModalVisible)
     dispatch(setPlaygroundList([]))
-    setMapVisible(false)
-    setListVisible(true)
+    dispatch(emptySelected())
+    dispatch(setLocation(null))
+    setMapVisible(true)
+    setListVisible(false)
   }
 
   const handleMap = () => {

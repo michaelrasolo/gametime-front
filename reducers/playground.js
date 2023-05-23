@@ -7,7 +7,7 @@ selectedPlayground: {
         name:null, 
         address: null,
         city: null,
-        sessionsNb:null,
+        sessionsNb:0,
         date: new Date(),
         time: new Date(0, 0, 0, 12, 0)},     
 
