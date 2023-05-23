@@ -18,22 +18,21 @@ export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-    navigation.navigate('TabNavigator');
-    // fetch(`${IPAdresse}/users/signin`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email, password }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     if (data.result) {
-    //       console.log(data.result);
-    //       dispatch(login({ email: email, token: data.token }));
-    //       navigation.navigate('Profile');
-    //     } else {
-    //       setIdError(true);
-    //     }
-    //   });
+    fetch(`${IPAdresse}/users/signin`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          console.log(data.result);
+          dispatch(login({ email: email, token: data.token }));
+          navigation.navigate('Profile');
+        } else {
+          setIdError(true);
+        }
+      });
   };
 
   return (
