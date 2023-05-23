@@ -7,16 +7,18 @@ import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import { auto } from '@popperjs/core';
 import { useDispatch, useSelector } from 'react-redux';
-
+import moment from "moment";
+import { selectGame } from '../reducers/game';
 import Config from "../config";
 
 const IPAdresse = Config.IPAdresse;
 
 export default function SessionScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
+  const game = useSelector((state) => state.game.value);
   const [sessions, setSessions] = useState([]);
   const [PressedButton, setPressedButton] = useState("");
-  
+  const dispatch = useDispatch();
   
   useEffect(() => {
     fetch(`${IPAdresse}/sessions/futur/${user.token}`)
@@ -24,7 +26,7 @@ export default function SessionScreen({ navigation }) {
       .then(data => {
         if(data.result ) {
           setSessions(data.formattedData)
-        console.log('user token:', user.token, ' data: ',data )
+        // console.log('user token:', user.token, ' data: ',data )
         
           
         }
@@ -47,6 +49,12 @@ export default function SessionScreen({ navigation }) {
     }
   }
 
+  const handleSessionCard = (gameId) => {
+    console.log("gameId", gameId);
+    dispatch(selectGame(gameId));
+    navigation.navigate('Join')
+  }
+  
   const images = {
     playground1: require('../assets/playgrounds/playground1.jpg'),
     playground2: require('../assets/playgrounds/playground2.jpg'),
@@ -59,20 +67,19 @@ export default function SessionScreen({ navigation }) {
   const gamecards = sessions && sessions.map((data, i) => {
     const imagePath = `playground${data.playground.photo}`;
     const imageSource = images[imagePath];
+    // console.log(imageSource)
     return (
       <Gamecard key={i} height={220}
-        formattedDate={data.formattedDate}
-        formattedTime={data.formattedTime}
+        formattedDate={moment(data.date).format('dddd Do MMMM, LT')}
         hour={data.hour}
         playground={data.playground.name}
-        source={imageSource}
+        // source={imageSource}
         city={data.playground.city}
         totalParticipants={data.totalParticipants}
         maxParticipants={data.maxParticipants}
         level={data.level}
         sessionType={data.sessionType}
-        onPress={() => handleCardPress(data._id)}
-
+        onPress={() => handleSessionCard(data._id)}
       />
     );
   });

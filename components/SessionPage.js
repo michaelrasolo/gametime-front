@@ -24,7 +24,7 @@ import Config from "../config";
 
 const IPAdresse = Config.IPAdresse;
 
-export default function JoinScreen({ navigation }) {
+export default function SessionPage({ navigation }) {
   const [sessionInfos, setSessionInfos] = useState(null);
   const [sessionParticipants, setSessionParticipants] = useState(null);
   const [bringBall, setBringBall] = useState(false);
