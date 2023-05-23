@@ -10,47 +10,87 @@ import {
   } from 'react-native';
   import { useEffect, useState} from 'react';
   import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+  import { useNavigation } from '@react-navigation/native';
+  import Config from "../config";
+  import { useSelector } from 'react-redux';
 
+  const IPAdresse = Config.IPAdresse;
   
-export default ChatComponent = ({navigation}) => {
+export default ChatComponent = () => {
     const [messages,setMessages] = useState([])
     const [newMessage,setNewMessage] = useState("")
+    const navigation = useNavigation()
+    const user = useSelector((state) => state.user.value)
+
+    function formatDate(date) {
+      date = new Date(date)
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+    
+      const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}`;
+      return formattedDate;
+    }
+
+    const refreshMessages = () => {
+      fetch(`${IPAdresse}/chat/646c6f0572b97f5fe06fe9ab`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(data => setMessages(data));
+
+    }
+
+    useEffect(() => {
+      refreshMessages()}, []);
   
+    const conversation = messages.map((data, i) => (
+      <View key ={i} style={[
+        styles.messageWrapper,
+        data.token === user.token ? styles.messageSent : styles.messageRecieved,
+      ]}>
+      <Text style={styles.nameText}>{data.nickname}</Text>
+      <View style={[styles.message, data.token === user.token ? styles.messageSentBg : styles.messageRecievedBg ]}>
+        <Text style={styles.messageText}>{data.message}</Text>
+      </View>
+      <Text style={styles.timeText}>{formatDate(data.date)}</Text>
+    </View>
+    ));
+
+    const handleSend = () => {
+      fetch(`${IPAdresse}/chat/message`,{
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            token :  'TZzcmZY6tRMB8jxhrlQYFzsnZLLY4iUd',
+            message : newMessage,
+            sessionId: '646c6f0572b97f5fe06fe9ab'
+        }
+        ),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+        });
+      setNewMessage('')
+      refreshMessages()
+    }
+
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                <View style={styles.banner}>
-        <MaterialIcons name="keyboard-backspace" color="#ffffff" size={24} onPress={() => navigation.goBack()} />
-        <Text style={styles.greetingText}>Welcome Wendy 👋</Text>
+        <MaterialIcons name="keyboard-backspace" color="#ffffff" size={24} onPress={() => navigation.navigate('TabNavigator', {screen : "Session"})} />
+        <Text style={styles.greetingText}>Welcome {user.nickname} 👋</Text>
       </View>
         <ScrollView style={styles.scroller}>
-        <View style={[styles.messageWrapper, styles.messageRecieved]}>
-        <View style={[styles.message, styles.messageRecievedBg]}>
-          <Text style={styles.messageText}>Welcome to ChatApp! Let's see how to send instant messages with Pusher.</Text>
-        </View>
-        <Text style={styles.timeText}>11:31</Text>
-      </View>
-      <View style={[styles.messageWrapper, styles.messageSent]}>
-        <View style={[styles.message, styles.messageSentBg]}>
-          <Text style={styles.messageText}>Your own messages should look like this.</Text>
-        </View>
-        <Text style={styles.timeText}>11:52</Text>
-      </View>
-      <View style={[styles.messageWrapper, styles.messageSent]}>
-        <View style={[styles.message, styles.messageSentBg]}>
-          <Text style={styles.messageText}>When you send a longer message, it looks like this. The text wraps around.</Text>
-        </View>
-        <Text style={styles.timeText}>11:53</Text>
-      </View>
-      <View style={[styles.messageWrapper, styles.messageRecieved]}>
-        <View style={[styles.message, styles.messageRecievedBg]}>
-          <Text style={styles.messageText}>Let's go!</Text>
-        </View>
-        <Text style={styles.timeText}>12:10</Text>
-      </View> 
+        {conversation}
       </ScrollView>
       <View style={styles.inputContainer}>
-          <TextInput  style={styles.input} />
-          <TouchableOpacity  style={styles.sendButton}>
+          <TextInput  style={styles.input} onChangeText={(value => setNewMessage(value))} value={newMessage}/>
+          <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
             <MaterialIcons name="send" color="#ffffff" size={24} />
           </TouchableOpacity>
         </View>
@@ -117,12 +157,12 @@ export default ChatComponent = ({navigation}) => {
       marginBottom: 20,
     },
     messageRecieved: {
-      alignSelf: 'flex-end',
-      alignItems: 'flex-end'
-    },
-    messageSent: {
       alignSelf: 'flex-start',
       alignItems: 'flex-start'
+    },
+    messageSent: {
+      alignSelf: 'flex-end',
+      alignItems: 'flex-end'
     },
     messageSentBg: {
       backgroundColor: '#AEAEB2',
@@ -192,6 +232,14 @@ export default ChatComponent = ({navigation}) => {
       paddingLeft: 20,
       paddingRight: 20,
     },
+    nameText: {
+      color: 'white',
+      fontWeight: '400',
+      fontSize:12,
+      margin : 4,
+      paddingLeft: 5,
+      paddingRight:5
+    }
   });
   
   
