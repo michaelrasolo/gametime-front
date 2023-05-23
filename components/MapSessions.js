@@ -88,10 +88,11 @@ const MapSessions = (props) => {
 
     const handleSelect = () => {
       if (playgrounds.selectedPlayground.sessionsNb === 0 ) {
-        
-        navigation.navigate('TabNavigator', { screen: 'Create'})
+        props.handleCloseModal()
+        navigation.navigate('TabNavigator', {screen : "Create"});
       } else if (playgrounds.selectedPlayground.sessionsNb === 1) {
-        setJoinVisible(true)
+        props.handleCloseModal()
+        // setJoinVisible(true)
       } else {
         props.handleCloseModal()
       }

@@ -39,10 +39,10 @@ const sessions =   (props.sessionsNb === 0
   : props.sessionsNb + " games")
 
 const buttonTitle = (props.sessionsNb === 0
-  ? "Créer"
+  ? "Créer ton game"
   : props.sessionsNb === 1
   ? "Rejoindre"
-  :  "Voir")
+  :  "Voir les games")
 
 
   return (
@@ -62,7 +62,7 @@ const buttonTitle = (props.sessionsNb === 0
         <Text style={styles.address}>
           {props.address}
         </Text>
-        <OrangeButton title={buttonTitle} onPress={props.onPress} width={"30%"}/>
+        <OrangeButton title={buttonTitle} onPress={props.onPress} width={"50%"}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingRight: 4
   },
   address:{
     width:"50%",
