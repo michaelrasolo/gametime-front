@@ -12,16 +12,8 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import OrangeButton from "./OrangeButton";
 
-
 const PlaygroundCard = (props) => {
   // SHADOW FUNCTION
-
-  const sessions =   (props.sessionsNb === 0
-    ? "aucun game"
-    : props.sessionsNb === 1
-    ? "1 game"
-    : props.sessionsNb + " games")
-
   const platformShadow = () => {
     if (Platform.OS === "android") {
       return {
@@ -40,7 +32,6 @@ const PlaygroundCard = (props) => {
     }
   };
 
-
   return (
     <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow()]}>
       <Image
@@ -48,18 +39,22 @@ const PlaygroundCard = (props) => {
         // source={require("../assets/images/citystade-marseille.png")}
         source={props.source}
       />
+      <View style={styles.deleteIcon}>
+      <FontAwesome5 onPress={props.handleDeletePress} name={"times-circle"} style={styles.deleteIcon} />
+      </View>
       <View style={[styles.gametype, platformShadow()]}>
-        <Text>{sessions}</Text>
+        <Text>Aucun game</Text>
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.playground}>
           {props.name}, {props.city}
         </Text>
+        
         <View style={styles.bottomBox}>
         <Text style={styles.address}>
           {props.address}
         </Text>
-        <OrangeButton title="Rejoindre" onPress={props.onPress} width={"30%"}/>
+        <OrangeButton title="Choisir" onPress={props.onPress} width={"30%"}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -69,12 +64,12 @@ const PlaygroundCard = (props) => {
 // STYLE
 const styles = StyleSheet.create({
   card: {
-    width: "90%",
-    height: "30%",
+    width: "100%",
+    
+    position: "relative",
+    height: 200,
     borderRadius: 30,
-    bottom:20,
-    zIndex:1,
-    position: "absolute",
+    margin: 5,
     backgroundColor: "rgba(59, 59, 59, 1)",
   },
   image: {
@@ -88,6 +83,13 @@ const styles = StyleSheet.create({
     paddingLeft: "5%",
     paddingVertical: "3%",
     justifyContent: "space-around",
+  },
+  deleteIcon : {
+    color:'white',
+    fontSize:30,
+    position: "absolute",
+    top: "5%",
+    left: "90%",
   },
   gametype: {
     position: "absolute",
