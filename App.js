@@ -23,12 +23,13 @@ import asyncStorage from "@react-native-async-storage/async-storage";
 
 import user from './reducers/user';
 import playground from './reducers/playground';
+import location from './reducers/location';
 import game from './reducers/game';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CameraScreen from './screens/CameraScreen';
 
-const reducers = combineReducers({ user, playground, game });
+const reducers = combineReducers({ user, playground, location, game });
 
 const persistConfig = { key: 'GameTime', blacklist: ["game"], storage: asyncStorage };
 const store = configureStore({

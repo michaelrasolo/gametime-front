@@ -12,16 +12,8 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import OrangeButton from "./OrangeButton";
 
-
-const PlaygroundCard = (props) => {
+const PlaygroundCard2 = (props) => {
   // SHADOW FUNCTION
-
-  const sessions =   (props.sessionsNb === 0
-    ? "aucun game"
-    : props.sessionsNb === 1
-    ? "1 game"
-    : props.sessionsNb + " games")
-
   const platformShadow = () => {
     if (Platform.OS === "android") {
       return {
@@ -39,6 +31,18 @@ const PlaygroundCard = (props) => {
       };
     }
   };
+
+const sessions =   (props.sessionsNb === 0
+  ? "aucun game"
+  : props.sessionsNb === 1
+  ? "1 game"
+  : props.sessionsNb + " games")
+
+const buttonTitle = (props.sessionsNb === 0
+  ? "Créer ton game"
+  : props.sessionsNb === 1
+  ? "Rejoindre"
+  :  "Voir les games")
 
 
   return (
@@ -58,7 +62,7 @@ const PlaygroundCard = (props) => {
         <Text style={styles.address}>
           {props.address}
         </Text>
-        <OrangeButton title="Rejoindre" onPress={props.onPress} width={"30%"}/>
+        <OrangeButton title={buttonTitle} onPress={props.onPress} width={"50%"}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -111,6 +115,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingRight: 4
   },
   address:{
     width:"50%",
@@ -121,4 +126,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PlaygroundCard;
+export default PlaygroundCard2;
