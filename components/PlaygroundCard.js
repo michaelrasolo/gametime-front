@@ -17,7 +17,7 @@ const PlaygroundCard = (props) => {
   // SHADOW FUNCTION
 
   const sessions =   (props.sessionsNb === 0
-    ? "aucun game"
+    ? "Aucun game"
     : props.sessionsNb === 1
     ? "1 game"
     : props.sessionsNb + " games")

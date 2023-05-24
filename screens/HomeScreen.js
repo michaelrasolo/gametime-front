@@ -31,7 +31,7 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.logoBox}>
         <Image
           style={[styles.logo]}
-          source={require("../assets/images/logo.png")}
+          source={require("../assets/images/logo_colors.png")}
         />
       </View>
       <View style={styles.btnBox}>

@@ -31,7 +31,7 @@ import CameraScreen from './screens/CameraScreen';
 
 const reducers = combineReducers({ user, playground, location, game });
 
-const persistConfig = { key: 'GameTime', blacklist: ["game"], storage: asyncStorage };
+const persistConfig = { key: 'GameTime', blacklist: ["game", "playground", "user"], storage: asyncStorage };
 const store = configureStore({
   reducer: persistReducer(persistConfig, reducers),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
@@ -72,7 +72,6 @@ const TabNavigator = () => {
      <Tab.Screen name="Session" component={SessionScreen} />
      <Tab.Screen name="Favorite" component={FavoriteScreen} />
      <Tab.Screen name="Profile" component={ProfilScreen} />
-     <Tab.Screen name="Join" component={JoinScreen} />
    </Tab.Navigator>
   );
  }

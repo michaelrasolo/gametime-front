@@ -212,7 +212,7 @@ const timeArray = timeString.split(':');
     <View style={styles.confettiContainer}>
             <View style={styles.confettiText}>
 
-      <Text style={styles.title}>Votre Session est créée !</Text>
+      <Text style={GlobalStyles.h2}>Votre game est bien créé !</Text>
       </View>
 
       <View style={styles.confettiButtons}>
@@ -280,10 +280,13 @@ const styles = StyleSheet.create({
   confettiButtons:{
     flexDirection:"row",
     width : "90%",
-    justifyContent:"space-between"
+    justifyContent:"space-between",
+
   },
   confettiText: {
-    height:100,
+    alignItems: "center",
+
+    marginVertical:"20%"
   },
   checkSection: {
     alignItems:"center"
