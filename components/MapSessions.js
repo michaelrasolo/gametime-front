@@ -19,25 +19,26 @@ const MapSessions = (props) => {
     const dispatch = useDispatch()
     const playgrounds = useSelector((state) => state.playground.value);
     const location = useSelector((state) => state.location.value);
+    const user = useSelector((state) => state.user.value);
 
     const [latitude,setLatitude] = useState(48.866667)
     const [longitude,setLongitude] = useState(2.333333)
     const [joinVisible, setJoinVisible] = useState(false)
 
-
+    
     useEffect(() => {
       (async () => {
         const { status } = await Location.requestForegroundPermissionsAsync();
    
         if (status === 'granted') {
           const location = await Location.getCurrentPositionAsync({});
-          console.log(location);
+          // console.log(location);
           setLatitude(location.coords.latitude)
           setLongitude(location.coords.longitude)
           fetch(`${IPAdresse}/playgrounds/nearby`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ longitude : longitude, latitude: latitude
+            body: JSON.stringify({ longitude : longitude, latitude: latitude, token:user.token
             }),
         })
           .then(res => res.json())
@@ -58,6 +59,7 @@ const MapSessions = (props) => {
             }));
         
             console.log("nearby",formattedData);
+
             dispatch(setPlaygroundList(formattedData))
           }
           )})
@@ -71,7 +73,8 @@ const MapSessions = (props) => {
             name: value.name,
             address: value.address,
             city: value.city,
-            sessionsNb : value.sessionsNb
+            sessionsNb : value.sessionsNb,
+            isLiked: value.isLiked
           };
 
             dispatch(selectedPlayground((playgroundData)))
@@ -87,6 +90,7 @@ const MapSessions = (props) => {
 //               :  "Voir")
 
     const handleSelect = () => {
+      
       if (playgrounds.selectedPlayground.sessionsNb === 0 ) {
         props.handleCloseModal()
         navigation.navigate('TabNavigator', {screen : "Create"});
@@ -114,8 +118,8 @@ const MapSessions = (props) => {
 
   return (
 <>{!joinVisible &&   <>
-    {playgrounds.selectedPlayground.name && <PlaygroundCard2 name={playgrounds.selectedPlayground.name}
-    onPress={handleSelect} 
+    {playgrounds.selectedPlayground.name && <PlaygroundCard2 id={playgrounds.selectedPlayground.playgroundId} name={playgrounds.selectedPlayground.name}
+    onPress={handleSelect} isLiked={playgrounds.selectedPlayground.isLiked}
      city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
     <MapView 
 

@@ -94,7 +94,7 @@ export default function SessionScreen({ navigation }) {
         </View>
         <View style={styles.SessionsSection}>
           <ScrollView>
-            {sessions && gamecards}
+            {gamecards}
           </ScrollView>
         </View>
       </View>
