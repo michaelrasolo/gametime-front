@@ -20,9 +20,9 @@ const platformShadow = () => {
   }
 };
 
-const OrangeButton = ({ title, width, height, onPress }) => {
+const OrangeSmall = ({ title, width, height, onPress }) => {
   return (
-    <TouchableOpacity activeOpacity={0.6} onPress={onPress} style={[styles.container, { width }, platformShadow()]}>
+    <TouchableOpacity activeOpacity={0.6} onPress={onPress}style={[styles.container, { width }, platformShadow()]}>
       <View style={[styles.button, platformShadow()]}>
         <LinearGradient
           colors={['#FE904B', '#FB724C']}
@@ -54,9 +54,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#FCFCFC',
-    fontWeight: '700',
-    fontSize: 20,
+    fontWeight: '600',
+    fontSize: 16,
+    textAlign:'center'
   },
 });
 
-export default OrangeButton;
+export default OrangeSmall;

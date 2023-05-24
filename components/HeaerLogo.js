@@ -12,7 +12,7 @@ const HeaderLogo = () => {
         <SafeAreaView style={styles.container}>
         <Image
           style={[styles.logo]}
-          source={require("../assets/images/logo.png")}
+          source={require("../assets/images/logo_bw.png")}
         />
         </SafeAreaView>
     </View>

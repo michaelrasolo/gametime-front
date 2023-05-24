@@ -27,7 +27,7 @@ const MapPlayground = (props ) => {
    
         if (status === 'granted') {
           const location = await Location.getCurrentPositionAsync({});
-          console.log(location);
+          // console.log(location);
           setLatitude(location.coords.latitude)
           setLongitude(location.coords.longitude)
           fetch(`${IPAdresse}/playgrounds/nearby`, {
@@ -53,7 +53,7 @@ const MapPlayground = (props ) => {
               coordinates: playground.location.coordinates, // Access the coordinates property
             }));
         
-            console.log("nearby",formattedData);
+            // console.log("nearby",formattedData);
             dispatch(setPlaygroundList(formattedData))
           }
           )})
@@ -106,8 +106,8 @@ const buttonTitle = (props.sessionsNb === 0
   return (
     <>
     {playgrounds.selectedPlayground.name && <PlaygroundCard name={playgrounds.selectedPlayground.name}
-    onPress={handleSelect} 
-     city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
+    onPress={handleSelect} id={playgrounds.selectedPlayground.playgroundId}
+    city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
     <MapView 
 
       region={{

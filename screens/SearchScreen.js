@@ -8,9 +8,10 @@ import MapSearchBar from '../components/MapSearchBar';
 import MapSession from '../components/MapSessions';
 import { emptySelected } from '../reducers/playground'; 
 import { useSelector } from 'react-redux';
-
+import moment from "moment";
 import Config from "../config";
-
+import SessionPage from '../components/SessionPage';
+import { selectGame } from '../reducers/game';
 const IPAdresse = Config.IPAdresse;
 
 export default function SessionScreen({ navigation }) {
@@ -19,22 +20,22 @@ export default function SessionScreen({ navigation }) {
   const [cardPress, setCardPress] = useState (false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [titre,setTitre] = useState('Les sessions autour de toi')
-
+  
   const playgrounds = useSelector((state) => state.playground.value);
-
+  
   useEffect(() => {
     fetch(`${IPAdresse}/sessions/all`)
       .then(response => response.json())
       .then(data => {
-        console.log(data.formattedData[0].playground)
+        // console.log(data.formattedData[0].playground)
         setSessions(data.formattedData)
       });
   }, []);
 
 
+  const game = useSelector((state) => state.game.value);
 const handleCardPress = (value) => {
-  console.log(value)
-  // navigation.navigate('Join')
+  dispatch(selectGame(value))
   setCardPress(true)
   
 }
@@ -46,6 +47,9 @@ const handleOpenModal = () => {
 
 const handleCloseModal = () => {
   setModalVisible(!isModalVisible)
+  dispatch(emptySelected())
+
+  
 }
 
 
@@ -72,8 +76,7 @@ const gamecards = games.map((data, i) => {
     <Gamecard
       key={i}
       height={220}
-      formattedDate={data.formattedDate}
-      formattedTime={data.formattedTime}
+      formattedDate={moment(data.date).format('dddd Do MMMM, LT')}
       hour={data.hour}
       playground={data.playground.name}
       source={imageSource}
@@ -89,31 +92,37 @@ const gamecards = games.map((data, i) => {
 
 
 
-  return (
-    <View style={styles.container}>
-      <HeaderLogo />
-      <View style={styles.content}>
-        <SessionBar name="Paris 17" onPress={handleOpenModal}/>
-        <Modal
-        animationType="slide"
-        statusBarTranslucent={true}
-        visible={isModalVisible}>
-        <SafeAreaView style={styles.modal}>
-          <MapSearchBar handleCloseModal={handleCloseModal} />
-          <MapSession handleCloseModal={handleCloseModal}/>
-        </SafeAreaView>
-      </Modal>
-      {!cardPress &&  <View style={styles.content}>
-       <Text style={styles.title}>{titre}</Text>
-        <View style={styles.SessionsSection}>
-          <ScrollView>
-            {sessions && gamecards}
-          </ScrollView>
-        </View> 
-      </View> }
-    </View>
-    </View>
-  );
+return (
+  <View style={styles.container}>
+    {!cardPress && (
+      <>
+        <HeaderLogo />
+        <View style={styles.content}>
+          <SessionBar name="Paris 17" onPress={handleOpenModal} />
+          <Modal
+            animationType="slide"
+            statusBarTranslucent={true}
+            visible={isModalVisible}
+          >
+            <SafeAreaView style={styles.modal}>
+              <MapSearchBar handleCloseModal={handleCloseModal} />
+              <MapSession handleCloseModal={handleCloseModal} />
+            </SafeAreaView>
+          </Modal>
+          <View style={styles.content}>
+            <Text style={styles.title}>{titre}</Text>
+            <View style={styles.SessionsSection}>
+              <ScrollView>
+                {sessions && gamecards}
+              </ScrollView>
+            </View>
+          </View>
+        </View>
+      </>
+    )}
+    {cardPress && <SessionPage/>}
+  </View>
+);
 }
 
 const styles = StyleSheet.create({

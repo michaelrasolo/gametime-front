@@ -60,7 +60,7 @@ const GameCard = (props,{navigation}) => {
         );
         break;
 
-      case "All-stars":
+      case "All-Stars":
         return (
           <View style={styles.ballContainer}>
             <FontAwesome5 name={"basketball-ball"} style={styles.orangeBball} />

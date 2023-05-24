@@ -67,13 +67,13 @@ export default function SessionScreen({ navigation }) {
   const gamecards = sessions && sessions.map((data, i) => {
     const imagePath = `playground${data.playground.photo}`;
     const imageSource = images[imagePath];
-    // console.log(imageSource)
+    console.log(imageSource)
     return (
       <Gamecard key={i} height={220}
         formattedDate={moment(data.date).format('dddd Do MMMM, LT')}
         hour={data.hour}
         playground={data.playground.name}
-        // source={imageSource}
+        source={imageSource}
         city={data.playground.city}
         totalParticipants={data.totalParticipants}
         maxParticipants={data.maxParticipants}
@@ -94,7 +94,7 @@ export default function SessionScreen({ navigation }) {
         </View>
         <View style={styles.SessionsSection}>
           <ScrollView>
-            {sessions && gamecards}
+            {gamecards}
           </ScrollView>
         </View>
       </View>
