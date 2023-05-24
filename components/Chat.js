@@ -8,19 +8,29 @@ import {
     View,
     TouchableOpacity
   } from 'react-native';
-  import { useEffect, useState} from 'react';
+  import { useLayoutEffect,useRef, useEffect, useState} from 'react';
   import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
   import { useNavigation } from '@react-navigation/native';
   import Config from "../config";
   import { useSelector } from 'react-redux';
+  import socketIOClient from "socket.io-client";
 
   const IPAdresse = Config.IPAdresse;
   
-export default ChatComponent = () => {
+  export default ChatComponent = () => {
     const [messages,setMessages] = useState([])
     const [newMessage,setNewMessage] = useState("")
     const navigation = useNavigation()
     const user = useSelector((state) => state.user.value)
+    const game = useSelector((state) => state.game.value)
+
+    const sessionId = game.gameId; // Récupérer le sessionId à partir de votre état ou de toute autre source
+
+    var socket = socketIOClient(IPAdresse, {
+      query: { sessionId: sessionId }
+    });
+
+    const scrollViewRef = useRef(null);
 
     function formatDate(date) {
       date = new Date(date)
@@ -35,7 +45,7 @@ export default ChatComponent = () => {
     }
 
     const refreshMessages = () => {
-      fetch(`${IPAdresse}/chat/646c6f0572b97f5fe06fe9ab`, {
+      fetch(`${IPAdresse}/chat/${game.gameId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' }
     })
@@ -45,8 +55,38 @@ export default ChatComponent = () => {
     }
 
     useEffect(() => {
-      refreshMessages()}, []);
-  
+      refreshMessages()
+      console.log("Socket connected: ", socket.connected);
+      socket.on("newMessage", (message)=> {
+        console.log(message)
+         setMessages(prevMessages => [...prevMessages, message])
+         scrollViewRef.current.scrollToEnd({ animated: true })
+      });}, []);
+
+      useLayoutEffect(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+      }, []);
+     
+
+    const handleSend = () => {
+      fetch(`${IPAdresse}/chat/message`,{
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            token :  user.token,
+            message : newMessage,
+            sessionId: game.gameId
+        }
+        ),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+        });
+      socket.emit("sendMessage", newMessage, user.nickname,user.token,new Date())
+      setNewMessage('')
+    }
+
     const conversation = messages.map((data, i) => (
       <View key ={i} style={[
         styles.messageWrapper,
@@ -60,32 +100,17 @@ export default ChatComponent = () => {
     </View>
     ));
 
-    const handleSend = () => {
-      fetch(`${IPAdresse}/chat/message`,{
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            token :  'TZzcmZY6tRMB8jxhrlQYFzsnZLLY4iUd',
-            message : newMessage,
-            sessionId: '646c6f0572b97f5fe06fe9ab'
-        }
-        ),
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-        });
-      setNewMessage('')
-      refreshMessages()
-    }
-
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                <View style={styles.banner}>
         <MaterialIcons name="keyboard-backspace" color="#ffffff" size={24} onPress={() => navigation.navigate('TabNavigator', {screen : "Session"})} />
         <Text style={styles.greetingText}>Welcome {user.nickname} 👋</Text>
       </View>
-        <ScrollView style={styles.scroller}>
+        <ScrollView style={styles.scroller}
+           ref={scrollViewRef}
+           onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+
+           >
         {conversation}
       </ScrollView>
       <View style={styles.inputContainer}>

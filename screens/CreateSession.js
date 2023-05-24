@@ -45,7 +45,6 @@ export default function CreateSession({ navigation }) {
   const handleCloseModal = () => {
     setModalVisible(!isModalVisible)
     dispatch(setPlaygroundList([]))
-    dispatch(emptySelected())
     dispatch(setLocation(null))
     setMapVisible(true)
     setListVisible(false)
@@ -103,8 +102,7 @@ const timeArray = timeString.split(':');
           maxParticipants : gameGroup,
           frequency: isWeekly,
           limitDate: limitDate,
-      }
-      ),
+      }),
     })
       .then(response => response.json())
       .then(data => {
@@ -126,11 +124,11 @@ const timeArray = timeString.split(':');
         animationType="slide"
         statusBarTranslucent={true}
         visible={isModalVisible}>
-        <SafeAreaView style={styles.modal}>
+        <View style={styles.modal}>
           <MapListSearchBar handleList={handleList} handleMap={handleMap} handleCloseModal={handleCloseModal} />
           {isListVisible && <SearchList handleList={handleList} handleMap={handleMap} />}
           {isMapVisible && <MapPlayground handleCloseModal={handleCloseModal} />}
-        </SafeAreaView>
+        </View>
       </Modal>
       <View style={styles.middleSection}>
         <ScrollView>

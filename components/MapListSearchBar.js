@@ -5,7 +5,7 @@ import OrangeButton from './OrangeButton';
 import GreyButton from './GreyButton';
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPlaygroundList } from '../reducers/playground';
+import { setPlaygroundList, emptySelected } from '../reducers/playground';
 import { setLocation } from '../reducers/location';
 import Config from "../config";
 
@@ -33,7 +33,6 @@ const platformShadow = () => {
 
 const MapListSearchBar = (props) => {
   const dispatch = useDispatch();
-  const location = useSelector((state) => state.location.value);
 
   const [searchText, setSearchText] = useState('');
   const [isPressedLeft, setIsPressedLeft] = useState(true);
@@ -43,6 +42,8 @@ const MapListSearchBar = (props) => {
     if (isPressedLeft === false) {
       props.handleMap()
       props.handleList()
+      inputRef.current.blur(); // Unfocus the input
+
     }
     setIsPressedLeft(true);
     setIsPressedRight(false);
@@ -52,6 +53,8 @@ const MapListSearchBar = (props) => {
     if (isPressedRight == false) {
       props.handleMap()
       props.handleList()
+      inputRef.current.focus(); // Focus the input
+
     }
     setIsPressedLeft(false);
     setIsPressedRight(true);
@@ -61,6 +64,8 @@ const MapListSearchBar = (props) => {
 
   const handleChange = (value) => {
     setSearchText(value)
+    if (value.length==1)  {dispatch(emptySelected())}
+    if (value.length < 2) {dispatch(setLocation(null))}
     if (value.length > 2) {
       fetch(`${IPAdresse}/playgrounds/city/${value}`, {
         method: 'PUT',
@@ -81,8 +86,6 @@ const MapListSearchBar = (props) => {
 
           dispatch(setPlaygroundList(updatedData))
           dispatch(setLocation({longitude : updatedData[0].location.coordinates[0],latitude : updatedData[0].location.coordinates[1]}))
-          console.log("fetch ", updatedData)
-          console.log("reducer" , location)
         })})
     }
   }
@@ -95,8 +98,8 @@ const MapListSearchBar = (props) => {
           <TextInput
             style={styles.input}
             ref={inputRef}
-            onLayout={() => { inputRef.current.focus() }
-            }
+            // onLayout={() => { inputRef.current.focus() }
+            // }
             placeholder="Saisis ta ville"
             onChangeText={handleChange}
             placeholderTextColor="#242424"
@@ -146,7 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 3,
-    paddingLeft: 15
+    paddingLeft: 15,
   },
   header: {
     width: "100%",

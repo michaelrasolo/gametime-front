@@ -8,8 +8,6 @@ import {
   Platform,
   
 } from "react-native";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Icon from "react-native-ionicons";
 import OrangeButton from "./OrangeButton";
 import { useSelector } from 'react-redux';
 import Config from "../config";
