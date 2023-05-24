@@ -34,7 +34,7 @@ export default function SessionScreen({ navigation }) {
 
 const handleCardPress = (value) => {
   console.log(value)
-  // navigation.navigate('Join')
+  navigation.navigate('Join')
   setCardPress(true)
   
 }

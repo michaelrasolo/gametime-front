@@ -96,12 +96,12 @@ const handleValidation = () => {
  return (
    <View style={styles.container}>
      <HeaderLogo />
-         <FontAwesome5 name={"sign-out-alt"} style={styles.signOut} />
      <ScrollView contentContainerStyle={{margin:"8%"}}>
        <View style={styles.titleSection}>
          <Text style={styles.title}>Mon profil joueur</Text>
          <TouchableOpacity style={styles.signOutSection} onPress={() => handleLogoutPress()}>
-          {/* <Text style={styles.signOutText}>Se déconnecter</Text> */}
+         <FontAwesome5 name={"sign-out-alt"} style={styles.signOut} />
+          <Text style={styles.signOutText}>Se déconnecter</Text>
          </TouchableOpacity>
          
        </View>
