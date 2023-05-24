@@ -5,23 +5,23 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  Platform,
-  
+  Platform
 } from "react-native";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Icon from "react-native-ionicons";
 import OrangeButton from "./OrangeButton";
+
 
 
 const PlaygroundCard = (props) => {
   // SHADOW FUNCTION
 
-  const sessions =   (props.sessionsNb === 0
+  const sessions =   (props.sessionsNb === 0 
     ? "aucun game"
     : props.sessionsNb === 1
-    ? "1 game"
+    ? "1 game déjà prévu"
     : props.sessionsNb + " games")
 
+
+  
   const platformShadow = () => {
     if (Platform.OS === "android") {
       return {
@@ -48,7 +48,9 @@ const PlaygroundCard = (props) => {
         source={require("../assets/images/citystade-marseille.png")}
       />
       <View style={[styles.gametype, platformShadow()]}>
+        <TouchableOpacity onPress={props.onPressGame}>
         <Text>{sessions}</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.playground}>
@@ -58,7 +60,7 @@ const PlaygroundCard = (props) => {
         <Text style={styles.address}>
           {props.address}
         </Text>
-        <OrangeButton title="Rejoindre" onPress={props.onPress} width={"30%"}/>
+        <OrangeButton title="Choisir ce terrain" onPress={props.onPress} width={"50%"}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -111,6 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingRight: 6
   },
   address:{
     width:"50%",

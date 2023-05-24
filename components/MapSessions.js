@@ -6,11 +6,10 @@ import MapView, { Marker } from 'react-native-maps';
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import PlaygroundCard2 from './PlaygroundCard2';
-import playground, { selectedPlayground, setPlaygroundList } from '../reducers/playground';
+import  { selectedPlayground, setPlaygroundList } from '../reducers/playground';
 import Config from "../config";
-import MapSearchBar from './MapSearchBar';
 import MapListSearchBar from './MapListSearchBar';
-
+import SessionPage from './SessionPage'
 
 const IPAdresse = Config.IPAdresse;
 
@@ -18,11 +17,10 @@ const MapSessions = (props) => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const playgrounds = useSelector((state) => state.playground.value);
-    const location = useSelector((state) => state.location.value);
+    const textLocation = useSelector((state) => state.location.value);
 
     const [latitude,setLatitude] = useState(48.866667)
     const [longitude,setLongitude] = useState(2.333333)
-    const [joinVisible, setJoinVisible] = useState(false)
 
 
     useEffect(() => {
@@ -31,7 +29,6 @@ const MapSessions = (props) => {
    
         if (status === 'granted') {
           const location = await Location.getCurrentPositionAsync({});
-          console.log(location);
           setLatitude(location.coords.latitude)
           setLongitude(location.coords.longitude)
           fetch(`${IPAdresse}/playgrounds/nearby`, {
@@ -56,14 +53,12 @@ const MapSessions = (props) => {
               ...playground,
               coordinates: playground.location.coordinates, // Access the coordinates property
             }));
-        
-            console.log("nearby",formattedData);
-            dispatch(setPlaygroundList(formattedData))
+            if (textLocation == null) {dispatch(setPlaygroundList(formattedData))}
           }
           )})
         }
       })();
-    }, []);
+    }, [textLocation]);
 
     const handleMarker = (value) => {
         const playgroundData = {
@@ -80,20 +75,14 @@ const MapSessions = (props) => {
             Keyboard.dismiss()
             }
     
-// const buttonTitle = (props.sessionsNb === 0
-//               ? "Créer"
-//               : props.sessionsNb === 1
-//               ? "Rejoindre"
-//               :  "Voir")
-
     const handleSelect = () => {
       if (playgrounds.selectedPlayground.sessionsNb === 0 ) {
         props.handleCloseModal()
         navigation.navigate('TabNavigator', {screen : "Create"});
       } else if (playgrounds.selectedPlayground.sessionsNb === 1) {
-        props.handleCloseModal()
-        // setJoinVisible(true)
+        props.handleJoin()
       } else {
+        dispatch()
         props.handleCloseModal()
       }
     }
@@ -113,15 +102,11 @@ const MapSessions = (props) => {
       });
 
   return (
-<>{!joinVisible &&   <>
-    {playgrounds.selectedPlayground.name && <PlaygroundCard2 name={playgrounds.selectedPlayground.name}
-    onPress={handleSelect} 
-     city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
+<>
     <MapView 
-
       region={{
-        latitude: location ? location.latitude : latitude,
-        longitude: location ? location.longitude : longitude,
+        latitude: textLocation ? textLocation.latitude : latitude,
+        longitude: textLocation ? textLocation.longitude : longitude,
         latitudeDelta: 0.05,
         longitudeDelta: 0.05,
       }}
@@ -130,9 +115,9 @@ const MapSessions = (props) => {
      {playgrounds.playgrounds && markers}
 
     </MapView>
-    </>
-    }
-    {joinVisible && <MapListSearchBar/>}
+    {playgrounds.selectedPlayground.name && <PlaygroundCard2 name={playgrounds.selectedPlayground.name}
+    onPress={handleSelect} 
+     city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
     </>
   );
 };
@@ -140,7 +125,7 @@ const MapSessions = (props) => {
 const styles = StyleSheet.create({
     map: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height*1.2,
+        height: Dimensions.get('window').height,
       }
 });
 

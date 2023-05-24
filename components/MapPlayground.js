@@ -7,6 +7,7 @@ import { useSelector, useDispatch} from 'react-redux';
 import PlaygroundCard from './PlaygroundCard';
 import { selectedPlayground, setPlaygroundList } from '../reducers/playground';
 import Config from "../config";
+import { useNavigation } from '@react-navigation/native';
 
 
 const IPAdresse = Config.IPAdresse;
@@ -14,11 +15,11 @@ const IPAdresse = Config.IPAdresse;
 const MapPlayground = (props ) => {
     const dispatch = useDispatch()
     const playgrounds = useSelector((state) => state.playground.value);
-    const location = useSelector((state) => state.location.value);
-
+    const textLocation = useSelector((state) => state.location.value);
     const [latitude,setLatitude] = useState(48.866667)
     const [longitude,setLongitude] = useState(2.333333)
 
+    const navigation = useNavigation()
 
 
     useEffect(() => {
@@ -27,7 +28,6 @@ const MapPlayground = (props ) => {
    
         if (status === 'granted') {
           const location = await Location.getCurrentPositionAsync({});
-          console.log(location);
           setLatitude(location.coords.latitude)
           setLongitude(location.coords.longitude)
           fetch(`${IPAdresse}/playgrounds/nearby`, {
@@ -52,14 +52,18 @@ const MapPlayground = (props ) => {
               ...playground,
               coordinates: playground.location.coordinates, // Access the coordinates property
             }));
-        
-            console.log("nearby",formattedData);
-            dispatch(setPlaygroundList(formattedData))
+              if (textLocation == null) {dispatch(setPlaygroundList(formattedData))}
           }
           )})
         }
       })();
-    }, []);
+    }, [textLocation]);
+
+    const handleGames = () => {
+      props.handleCloseModal()
+      navigation.navigate('TabNavigator', {screen : "Search"})}
+
+
 
     const handleMarker = (value) => {
         const playgroundData = {
@@ -71,6 +75,7 @@ const MapPlayground = (props ) => {
           };
 
             dispatch(selectedPlayground((playgroundData)))
+            console.log("heeeeeleeeeellllooo" , playgrounds.selectedPlayground)
             setLatitude(value.location.coordinates[1])
             setLongitude(value.location.coordinates[0])
             Keyboard.dismiss()
@@ -83,10 +88,7 @@ const buttonTitle = (props.sessionsNb === 0
               :  "Voir")
 
     const handleSelect = () => {
-
-
         props.handleCloseModal()
-
     }
 
     const images = {
@@ -106,13 +108,13 @@ const buttonTitle = (props.sessionsNb === 0
   return (
     <>
     {playgrounds.selectedPlayground.name && <PlaygroundCard name={playgrounds.selectedPlayground.name}
-    onPress={handleSelect} 
+    onPress={handleSelect} onPressGame={handleGames}
      city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
     <MapView 
 
       region={{
-        latitude: location ? location.latitude : latitude,
-        longitude: location ? location.longitude : longitude,
+        latitude: textLocation ? textLocation.latitude : latitude,
+        longitude: textLocation ? textLocation.longitude : longitude,
         latitudeDelta: 0.05,
         longitudeDelta: 0.05,
       }}
