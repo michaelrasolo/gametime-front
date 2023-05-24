@@ -74,7 +74,7 @@ export default function CreateSession({ navigation }) {
   }
 
 const selectedDate = new Date(playgrounds.selectedPlayground.date);
-const timeString = playgrounds.selectedPlayground.time ? playgrounds.selectedPlayground.time : "12:00"
+const timeString = playgrounds.selectedPlayground.time.toString()
 
     // Convert time from string to Date object
 const timeArray = timeString.split(':');

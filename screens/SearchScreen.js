@@ -8,9 +8,9 @@ import MapSearchBar from '../components/MapSearchBar';
 import MapSession from '../components/MapSessions';
 import { emptySelected, setPlaygroundList } from '../reducers/playground'; 
 import { setLocation } from '../reducers/location';
-import SessionPage from '../components/SessionPage';import moment from "moment";
-import Config from "../config";
 import SessionPage from '../components/SessionPage';
+import moment from "moment";
+import Config from "../config";
 import { selectGame } from '../reducers/game';
 const IPAdresse = Config.IPAdresse;
 

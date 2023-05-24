@@ -10,7 +10,9 @@ selectedPlayground: {
         isLiked : false,
         sessionsNb:0,
         date: new Date(),
-        time: new Date(0, 0, 0, 12, 0)},     
+      
+         time: new Date().setHours(12, 0, 0, 0)
+      },     
 
     playgrounds: []
   } 
