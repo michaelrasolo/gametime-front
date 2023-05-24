@@ -48,7 +48,6 @@ const handleOpenModal = () => {
 const handleCloseModal = () => {
   setModalVisible(false)
   dispatch(setPlaygroundList([]))
-  dispatch(emptySelected())
   dispatch(setLocation(null))
 }
 

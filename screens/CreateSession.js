@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Modal, Button, StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
+import { Modal,Image, Button, StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import MapListSearchBar from '../components/MapListSearchBar';
 import SearchList from '../components/SearchList';
@@ -13,7 +13,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 import MapPlayground from '../components/MapPlayground';
 import NumericInput from "react-native-numeric-input";
 import HeaderLogo from '../components/HeaerLogo';
-
+import { GlobalStyles } from '../components/GlobalStyles';
 import { useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPlaygroundList, emptySelected } from '../reducers/playground';
@@ -45,9 +45,9 @@ export default function CreateSession({ navigation }) {
 
   const handleCloseModal = () => {
     setModalVisible(false)
-    dispatch(setLocation(null))
-    setMapVisible(true)
-    setListVisible(false)
+    // dispatch(setLocation(null))
+    // setMapVisible(true)
+    // setListVisible(false)
   }
 
   const handleMap = () => {
@@ -210,6 +210,12 @@ const timeArray = timeString.split(':');
       }
       {showConfetti && (
     <View style={styles.confettiContainer}>
+                  <View style={styles.logoBox}>
+                    <Image
+                      source={require("../assets/images/logo_colors.png")}
+                      style={styles.logo}
+                    />
+                  </View>
             <View style={styles.confettiText}>
 
       <Text style={GlobalStyles.h2}>Votre game est bien créé !</Text>
@@ -290,7 +296,15 @@ const styles = StyleSheet.create({
 
     marginVertical:"20%"
   },
-  checkSection: {
-    alignItems:"center"
+  logoBox: {
+    width: "85%",
+    height: "30%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logo: {
+    flex: 1,
+    aspectRatio: 1.5,
+    resizeMode: "contain",
   }
 })

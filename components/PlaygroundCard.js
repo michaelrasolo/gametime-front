@@ -84,7 +84,7 @@ const PlaygroundCard = (props) => {
         <Text style={styles.address}>
           {props.address}
         </Text>
-        <OrangeButton title="Choisir ce terrain" onPress={props.onPress} width={"50%"}/>
+        <OrangeButton title="Choisir ce terrain" onPress={props.handleSelect} width={"50%"}/>
         </View>
       </View>
     </TouchableOpacity>
