@@ -51,8 +51,8 @@ export const playgroundSlice = createSlice({
           name:null, 
           address: null,
           city: null,
-          date: null,
-          time: null}},
+          date: new Date(),
+          time: new Date().setHours(12, 0, 0, 0)}},
 }});
 
 export const { setPlaygroundList,selectedPlayground, selectDate, selectTime,emptySelected} = playgroundSlice.actions;
