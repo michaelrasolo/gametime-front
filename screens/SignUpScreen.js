@@ -68,7 +68,8 @@ export default function SignUpScreen({ navigation }) {
         //             }
         //         });
                 dispatch(login({city: "Rouen", nickname: "Toto", token: "Gp2nNlZz6AVJqR1PerpDdgy_hnMu8qas"}));
-                navigation.navigate('TabNavigator');    
+                navigation.navigate('TabNavigator'); 
+                console.log(user)
         // }
       };
 

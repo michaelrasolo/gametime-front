@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         width: "90%",
         alignItems: "center",
         justifyContent: "space-between",
-        
+        marginTop: 30,
         
     },
     topContainer: {

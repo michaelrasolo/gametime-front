@@ -12,6 +12,7 @@ import OrangeButton from '../components/OrangeButton';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import MapPlayground from '../components/MapPlayground';
 import NumericInput from "react-native-numeric-input";
+import HeaderLogo from '../components/HeaerLogo';
 
 import { useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -43,8 +44,7 @@ export default function CreateSession({ navigation }) {
 
 
   const handleCloseModal = () => {
-    setModalVisible(!isModalVisible)
-    dispatch(setPlaygroundList([]))
+    setModalVisible(false)
     dispatch(setLocation(null))
     setMapVisible(true)
     setListVisible(false)
@@ -114,9 +114,11 @@ const timeArray = timeString.split(':');
   }
 
   return (
-    <SafeAreaView style={styles.container} >
+    <View style={styles.container} >
+      
    {!showConfetti && 
    <>
+    <HeaderLogo />
    <SearchBar 
    name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Choisis un terrain'} 
    onPress={() => {setModalVisible(true)}} />
@@ -222,7 +224,7 @@ const timeArray = timeString.split(':');
   </View>
   
   )}
-    </SafeAreaView>
+    </View>
 
   )
 }
@@ -230,10 +232,10 @@ const timeArray = timeString.split(':');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom : 20,
     backgroundColor: "#242424",
     alignItems: "center",
     justifyContent: "space-around",
-    paddingTop:30,
   },
   modal: {
     flex: 1,
@@ -241,8 +243,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   middleSection: {
-    paddingTop: 40,
-    height: "75%",
+    paddingTop: 20,
+    height: "65%",
+    paddingBottom: 20,
+
   },
   title: {
     alignItems: 'center',

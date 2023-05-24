@@ -12,7 +12,7 @@ import Inputs from "../components/Inputs";
 import PasswordInput from "../components/PasswordInput";
 import { useState } from "react";
 import { login } from "../reducers/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import Config from "../config";
 
 const IPAdresse = Config.IPAdresse;
@@ -21,6 +21,7 @@ export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [idError, setIdError] = useState(false);
   const [password, setPassword] = useState("");
+  const user = useSelector((state) => state.user.value)
 
   const dispatch = useDispatch();
 
@@ -35,7 +36,9 @@ export default function SignInScreen({ navigation }) {
         if (data.result) {
           console.log(data.result);
           dispatch(login({ email: email, token: data.token, nickname: data.nickname }));
+          console.log("user",user)
           navigation.navigate('TabNavigator');
+   
         } else {
           setIdError(true);
         }
