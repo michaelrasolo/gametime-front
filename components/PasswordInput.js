@@ -51,7 +51,9 @@ const styles = StyleSheet.create({
         borderBottomColor: '#B0B0B0',
         width: 200,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom:'4%'
+
       },
       left: {
         justifyContent: 'center',

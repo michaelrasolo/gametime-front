@@ -11,6 +11,7 @@ import RadioButtons2 from '../components/RadioButton2';
 import OrangeButton from '../components/OrangeButton';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import MapPlayground from '../components/MapPlayground';
+import NumericInput from "react-native-numeric-input";
 
 import { useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -151,29 +152,47 @@ const timeArray = timeString.split(':');
             </View>
           </View>
           <View style={styles.titleSection}>
-            <Text style={styles.title}>Type de Game</Text>
+            <Text style={styles.title}>Type de game</Text>
             <RadioButtons  onPress={handleSessionPress} leftTitle={"3X3"} midTitle={"5X5"} rightTitle={"Freestyle"} />
           </View>
           <View style={styles.titleSection}>
-            <Text style={styles.title}>Niveau du Game</Text>
+            <Text style={styles.title}>Niveau du game</Text>
             <RadioButtons onPress={handleLevelPress} leftTitle={"Rookies"} midTitle={"Ballers"} rightTitle={"All-Stars"} />
           </View>
           <View style={styles.titleSection}>
             <Text style={styles.title}>Nombre de joueurs</Text>
             <View style={styles.fieldSection}>
               <View style={styles.SubfieldSection}>
-                <Text style={styles.fieldName}>Le Game</Text>
-                <Inputs name="Nombre maxium" width={"50%"} height={50} onChangeText={(value) => setGameGroup(value)} value={gameGroup} />
+                <Text style={styles.fieldName}>Nombre maximum</Text>
+                <NumericInput
+                  totalHeight={35}
+                  minValue={1}
+                  valueType="integer"
+                  rightButtonBackgroundColor="rgba(59, 59, 59, 0.8)"
+                  iconStyle={{ color: "#FB724C" }}
+                  leftButtonBackgroundColor="rgba(59, 59, 59, 0.8)"
+                  textColor="#F0F0F0"
+                  onChange={(value) => setGameGroup(value)} value={gameGroup}
+                />
               </View>
               <View style={styles.SubfieldSection}>
                 <Text style={styles.fieldName}>Ma team</Text>
-                <Inputs  name="Moi et mes potes" width={"50%"} height={50} onChangeText={(value) => setTeamGroup(value)} value={teamGroup} />
+                <NumericInput
+                  totalHeight={35}
+                  minValue={1}
+                  valueType="integer"
+                  rightButtonBackgroundColor="rgba(59, 59, 59, 0.8)"
+                  iconStyle={{ color: "#FB724C" }}
+                  leftButtonBackgroundColor="rgba(59, 59, 59, 0.8)"
+                  textColor="#F0F0F0"
+                  onChange={(value) => setTeamGroup(value)} value={teamGroup}
+                />
               </View>
             </View>
           </View>
           <View style={styles.titleSection}>
             <Text style={styles.title}>Intensité du game</Text>
-            <RadioButtons2 onPress={handleMoodPress} leftTitle={"Pour le fun"} rightTitle={"Pour la gagne"} />
+            <RadioButtons2 onPress={handleMoodPress} leftTitle={"Fun"} rightTitle={"Compétitif"} />
             <Text style={styles.fieldName}>J'apporte un ballon</Text>
 
             <Checkbox

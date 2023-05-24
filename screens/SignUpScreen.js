@@ -1,4 +1,5 @@
-import { Button, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Button, StyleSheet, Text, View, KeyboardAvoidingView,
+} from "react-native";
 import HeaderLogo from "../components/HeaerLogo";
 import OrangeButton from "../components/OrangeButton";
 import Inputs from '../components/Inputs';
@@ -33,50 +34,52 @@ export default function SignUpScreen({ navigation }) {
 
         console.log(isEmailValid);
 
-        if (!isEmailValid) {
-          setErrorMessages((previousErrors) => [...previousErrors, "Adresse mail invalide"]);
-        }
-        if (password !== confirmation) {
-          setErrorMessages((previousErrors) => [...previousErrors, "Mot de passe invalide"]);
-        }
-        if (email === '') {
-          setErrorMessages((previousErrors) => [...previousErrors, "Champ email vide"]);
-        }
-        if (city === '') {
-          setErrorMessages((previousErrors) => [...previousErrors, "Champ ville vide"]);
-        }
-        if (password === '') {
-          setErrorMessages((previousErrors) => [...previousErrors, "Champ mot de passe vide"]);
-        }
-        if (nickname === '') {
-          setErrorMessages((previousErrors) => [...previousErrors, "Champ pseudo vide"]);
-        }
-        if (confirmation === '') {
-          setErrorMessages((previousErrors) => [...previousErrors, "Champ confirmation vide"]);
-        } 
-        else if (errorMessages.length === 0) {
-            fetch(`${IPAdresse}/users/signup`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, password: password, nickname: nickname, city: city }),
-            }).then(response => response.json())
-                .then(data => {
-                    if (data.result) {
-                        dispatch(login({city: city, nickname: nickname, token: data.token}));
-                        console.log(user)
-                    }
-                });
+        // if (!isEmailValid) {
+        //   setErrorMessages((previousErrors) => [...previousErrors, "Adresse mail invalide"]);
+        // }
+        // if (password !== confirmation) {
+        //   setErrorMessages((previousErrors) => [...previousErrors, "Mot de passe invalide"]);
+        // }
+        // if (email === '') {
+        //   setErrorMessages((previousErrors) => [...previousErrors, "Champ email vide"]);
+        // }
+        // if (city === '') {
+        //   setErrorMessages((previousErrors) => [...previousErrors, "Champ ville vide"]);
+        // }
+        // if (password === '') {
+        //   setErrorMessages((previousErrors) => [...previousErrors, "Champ mot de passe vide"]);
+        // }
+        // if (nickname === '') {
+        //   setErrorMessages((previousErrors) => [...previousErrors, "Champ pseudo vide"]);
+        // }
+        // if (confirmation === '') {
+        //   setErrorMessages((previousErrors) => [...previousErrors, "Champ confirmation vide"]);
+        // } 
+        // else if (errorMessages.length === 0) {
+        //     fetch(`${IPAdresse}/users/signup`, {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify({ email: email, password: password, nickname: nickname, city: city }),
+        //     }).then(response => response.json())
+        //         .then(data => {
+        //             if (data.result) {
+        //                 dispatch(login({city: city, nickname: nickname, token: data.token}));
+        //                 console.log(user)
+        //             }
+        //         });
+                dispatch(login({city: "Rouen", nickname: "Toto", token: "Gp2nNlZz6AVJqR1PerpDdgy_hnMu8qas"}));
                 navigation.navigate('TabNavigator');    
-        }
+        // }
       };
 
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <HeaderLogo />
 
       <View style={styles.title}>
-        <Text style={styles.text}>S'inscrire avec l'email</Text>
+        <Text style={styles.text}>Inscription</Text>
       </View>
 
       <View style={styles.input}>
@@ -155,7 +158,7 @@ export default function SignUpScreen({ navigation }) {
           onPress={handleSubmit}
         />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 
 }
@@ -187,5 +190,7 @@ const styles = StyleSheet.create({
   },
   error: {
     color: '#FB724C',
+    alignItems: "baseline",
+
   }
 })
