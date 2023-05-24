@@ -28,7 +28,7 @@ export default function SignInScreen({ navigation }) {
         if (data.result) {
           console.log(data.result);
           dispatch(login({ email: email, token: data.token }));
-          navigation.navigate('Profile');
+          navigation.navigate('TabNavigator');
         } else {
           setIdError(true);
         }

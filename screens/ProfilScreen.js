@@ -101,7 +101,7 @@ const handleValidation = () => {
        <View style={styles.titleSection}>
          <Text style={styles.title}>Mon profil joueur</Text>
          <TouchableOpacity style={styles.signOutSection} onPress={() => handleLogoutPress()}>
-          {/* <Text style={styles.signOutText}>Se déconnecter</Text> */}
+          <Text style={styles.signOutText}>Se déconnecter</Text>
          </TouchableOpacity>
          
        </View>

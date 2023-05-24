@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -11,8 +11,25 @@ import {
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-ionicons";
 import OrangeButton from "./OrangeButton";
+import { useSelector } from 'react-redux';
+import Config from "../config";
+
+const IPAdresse = Config.IPAdresse;
 
 const PlaygroundCard2 = (props) => {
+  const user = useSelector((state) => state.user.value);;
+  const [isFavorite, setIsFavorite] = useState(false);
+
+
+  useEffect(() => {
+    if (props.isLiked) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }
+  }, [props.isLiked]);
+ 
+
   // SHADOW FUNCTION
   const platformShadow = () => {
     if (Platform.OS === "android") {
@@ -32,6 +49,9 @@ const PlaygroundCard2 = (props) => {
     }
   };
 
+
+
+
 const sessions =   (props.sessionsNb === 0
   ? "aucun game"
   : props.sessionsNb === 1
@@ -44,6 +64,59 @@ const buttonTitle = (props.sessionsNb === 0
   ? "Rejoindre"
   :  "Voir les games")
 
+  const handlePressFavorite = () => {
+    // console.log(props.id)
+    // console.log(user.token)
+    console.log(isFavorite)
+         if (!isFavorite) {
+       fetch(`${IPAdresse}/playgrounds/addFavorite/`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playgroundId: props.id,
+        token: user.token
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // Handle the response data
+          setIsFavorite(true);
+      })
+    } else {
+      fetch(`${IPAdresse}/playgrounds/removeFavorite/`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          playgroundId: props.id,
+          token: user.token
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data); // Handle the response data
+            setIsFavorite(false);
+        })
+    }
+  }
+
+const handlePress2Favorite = () => {
+  fetch(`${IPAdresse}/playgrounds/removeFavorite/`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      playgroundId: props.id,
+      token: user.token
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data); // Handle the response data
+      if (data.result) {
+        setIsFavorite(data.result);
+      }
+    })
+}
+
 
   return (
     <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow()]}>
@@ -51,6 +124,15 @@ const buttonTitle = (props.sessionsNb === 0
         style={[styles.image]}
         source={require("../assets/images/citystade-marseille.png")}
       />
+      <View style={styles.favoriteIcon}>
+        {isFavorite===true ? (
+      <FontAwesome5 style={styles.favoriteIcon} name={"heart-broken"}
+      onPress={() => handlePressFavorite()} />
+      ) : (
+      <FontAwesome5 style={styles.favoriteIcon} name={"heartbeat"}
+      onPress={() => handlePressFavorite()} />
+      )}
+      </View>
       <View style={[styles.gametype, platformShadow()]}>
         <Text>{sessions}</Text>
       </View>
@@ -91,6 +173,13 @@ const styles = StyleSheet.create({
     paddingLeft: "5%",
     paddingVertical: "3%",
     justifyContent: "space-around",
+  },
+  favoriteIcon : {
+    color:'white',
+    fontSize:30,
+    position: "absolute",
+    top: "5%",
+    left: "85%",
   },
   gametype: {
     position: "absolute",

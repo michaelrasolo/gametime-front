@@ -40,7 +40,7 @@ const PlaygroundCard = (props) => {
         source={props.source}
       />
       <View style={styles.deleteIcon}>
-      <FontAwesome5 onPress={props.handleDeletePress} name={"times-circle"} style={styles.deleteIcon} />
+      <FontAwesome5 onPress={props.handleDeletePress} name={"heart-broken"} style={styles.deleteIcon} />
       </View>
       <View style={[styles.gametype, platformShadow()]}>
         <Text>Aucun game</Text>

@@ -46,6 +46,9 @@ const handleOpenModal = () => {
 
 const handleCloseModal = () => {
   setModalVisible(!isModalVisible)
+  dispatch(emptySelected())
+
+  
 }
 
 

@@ -26,7 +26,7 @@ export default function FavoriteScreen({ navigation }) {
       setPlaygrounds(data.favoritePlaygrounds)
     }
   });
-  }, []);
+  }, [playground.selectedPlayground.name]);
  
   const handleChoosePress = (value) => {
     navigation.navigate('Search')
@@ -40,18 +40,17 @@ export default function FavoriteScreen({ navigation }) {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-    playgroundId: value._id,
-  token: user.token})
-})
-  .then(response => response.json())
-  .then(data => {
-    if(data.result) {
-      console.log(data); // Handle the response data
-      setPlaygrounds(playgrounds.filter((playground) => playground._id !== value._id))
-    }
-    
-  })
-  
+        playgroundId: value._id,
+        token: user.token
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.result) {
+          console.log(data); // Handle the response data
+          setPlaygrounds(playgrounds.filter((playground) => playground._id !== value._id))
+        }
+      })
   }
 
   const images = {

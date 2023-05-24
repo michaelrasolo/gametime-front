@@ -72,7 +72,6 @@ const TabNavigator = () => {
      <Tab.Screen name="Session" component={SessionScreen} />
      <Tab.Screen name="Favorite" component={FavoriteScreen} />
      <Tab.Screen name="Profile" component={ProfilScreen} />
-     <Tab.Screen name="Join" component={JoinScreen} />
    </Tab.Navigator>
   );
  }

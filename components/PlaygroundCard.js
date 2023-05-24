@@ -40,6 +40,9 @@ const PlaygroundCard = (props) => {
     }
   };
 
+  const handleFavorite = () => {
+    console.log('favoris')
+  }
 
   return (
     <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow()]}>
@@ -48,6 +51,10 @@ const PlaygroundCard = (props) => {
         // source={require("../assets/images/citystade-marseille.png")}
         source={props.source}
       />
+      <View style={styles.favoriteIcon}>
+      <FontAwesome5 onPress={() => handleFavorite()} name={"heart"} style={styles.favoriteIcon} />
+      
+      </View>
       <View style={[styles.gametype, platformShadow()]}>
         <Text>{sessions}</Text>
       </View>
@@ -88,6 +95,13 @@ const styles = StyleSheet.create({
     paddingLeft: "5%",
     paddingVertical: "3%",
     justifyContent: "space-around",
+  },
+  favoriteIcon : {
+    color:'white',
+    fontSize:30,
+    position: "absolute",
+    top: "5%",
+    left: "85%",
   },
   gametype: {
     position: "absolute",
