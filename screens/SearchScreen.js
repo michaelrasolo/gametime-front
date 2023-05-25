@@ -163,12 +163,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     backgroundColor: '#242424',
-    
+  
   },
   content: {
     flex:1,
     alignItems:"center",
-    paddingTop:20,
 
   },
   buttonSection: {
@@ -186,7 +185,8 @@ const styles = StyleSheet.create({
   title: {
     alignItems: 'center',
     color: 'white',
-    fontSize: 25,
+    fontSize: 20,
+    marginTop:"3%"
   },
   modal: {
     flex:1,

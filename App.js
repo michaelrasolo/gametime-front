@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import FavoriteScreen from './screens/FavoriteScreen';
+import FavoriteScreen from './screens/FavoriteScreen'
 import ProfilScreen from './screens/ProfilScreen';
 import SearchScreen from './screens/SearchScreen';
 import SessionScreen from './screens/SessionScreen';
@@ -28,6 +28,7 @@ import game from './reducers/game';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CameraScreen from './screens/CameraScreen';
+import ViewProfileScreen from './components/ViewProfile';
 
 const reducers = combineReducers({ user, playground, location, game });
 

@@ -8,6 +8,9 @@ import {
   View,
   Dimensions,
   ImageBackground,
+  TouchableOpacity,
+  Modal,
+  Button
 } from "react-native";
 import Inputs from "../components/Inputs";
 import HeaderNoLogo from "../components/HeaderNoLogo";
@@ -15,6 +18,7 @@ import RadioButtons from "../components/RadioButtons";
 import GreyButton from "../components/GreyButton";
 import OrangeButton from "../components/OrangeButton";
 import DateSearch from "../components/DateSearch";
+import PlayersComponent from "../components/PlayersComponent";
 import { GlobalStyles } from "../components/GlobalStyles";
 import Checkbox from "expo-checkbox";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -30,6 +34,8 @@ export default function JoinScreen({ navigation }) {
   const [bringBall, setBringBall] = useState(false);
   const [group, setGroup] = useState(1);
   const [hasJoined, setHasJoined] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [participants, setParticipants] = useState([]);
   const user = useSelector((state) => state.user.value);
   const game = useSelector((state) => state.game.value);
   const dispatch = useDispatch();
@@ -40,15 +46,24 @@ export default function JoinScreen({ navigation }) {
 
 // INITIALISATION
   useEffect(() => {
-    fetch(`${IPAdresse}/sessions/game/646c7dc1c0e482bd17f67fc2/`) // Game ID
+    fetch(`${IPAdresse}/sessions/game/${game.gameId}`) // Game ID
       .then((res) => res.json())
       .then((response) => {
         response && setSessionInfos(response.sessionData); // Session data
         response && setSessionParticipants(response.totalParticipants); // Count of session members
 
+        fetch(`${IPAdresse}/sessions/participants/infos/${game.gameId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log('participants', data.participantsNames);
+          setParticipants(data.participantsNames);
+        })
+        .catch((error) => {
+          console.log("Error fetching participant names:", error);
+        });
+    })
 
         // console.log(selectedGame.gameId)
-      })
       .catch((error) => {
         console.log("Error fetching session data:", error);
       });
@@ -58,6 +73,7 @@ export default function JoinScreen({ navigation }) {
         response && setHasJoined(response.result)
       })
   }, []);
+
 // console.log(sessionInfos)
   // FUNCTION JOIN THE GAME
 
@@ -91,7 +107,7 @@ body: JSON.stringify({
     imagePath = `playground${sessionInfos.playground.photo}`;
   }
   
-  const imageSource = images[imagePath];
+  const imageSource = images[imagePath];  
 
   return (
     <>
@@ -145,13 +161,25 @@ body: JSON.stringify({
                 </Text>
               </View>
               <View style={styles.participantsBox}>
+                <TouchableOpacity onPress={() => setModalVisible(true)}>
                 <FontAwesome5 name={"users"} color={"#F0F0F0"} size={18} />
                 <Text style={GlobalStyles.text}>
                   {sessionParticipants} / {sessionInfos.maxParticipants}
                 </Text>
+                </TouchableOpacity>
               </View>
             </View>
-
+            <Modal visible={modalVisible} animationType="slide" transparent={true}>
+              <View style={styles.modal}>
+                    <Text style={styles.modalText}>Participants</Text>
+                {participants.length > 0 ? (
+                      <PlayersComponent/>
+                ) : (
+                  <Text style={styles.modalText}>Aucun participant</Text>
+                )}
+                    <OrangeButton title="Fermer" onPress={() => setModalVisible(false)} width={'50%'} />
+              </View>
+            </Modal>
             <View style={styles.inputBox}>
               <View style={styles.ballSection}>
                 <Text style={[GlobalStyles.text, { marginBottom: "8%" }]}>
@@ -262,4 +290,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
   },
-});
+    modal: {
+      height: "45%",
+      marginTop: "auto",
+      backgroundColor: "rgba(59, 59, 59, 1)",
+      alignItems:"center",
+      paddingBottom: 20
+  },
+    modalText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      color: '#FB724C',
+      marginTop: 5
+    },
+  });

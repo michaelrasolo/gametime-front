@@ -26,21 +26,21 @@ export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-    // fetch(`${IPAdresse}/users/signin`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email, password }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     if (data.result) {
-    //       dispatch(login({ nickname: data.nickname, token: data.token, city: data.city }));
+    fetch(`${IPAdresse}/users/signin`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          dispatch(login({ nickname: data.nickname, token: data.token, city: data.city }));
           navigation.navigate('TabNavigator');
    
-      //   } else {
-      //     setIdError(true);
-      //   }
-      // });
+        } else {
+          setIdError(true);
+        }
+      });
   };
 
   return (

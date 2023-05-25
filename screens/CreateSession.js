@@ -256,9 +256,12 @@ const styles = StyleSheet.create({
 
   },
   title: {
-    alignItems: 'center',
+    alignItems: 'baseline',
     color: 'white',
-    fontSize: 25,
+    // fontSize: 25,
+    color: 'white',
+    fontSize: 18,
+    margin: '2%',
   },
   fieldSection: {
     width: "100%",
@@ -274,7 +277,9 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   titleSection: {
-    alignItems: 'center',
+    alignItems: 'baseline',
+    marginHorizontal:"3%"
+    
   },
   confettiContainer: {
     flex: 1,
