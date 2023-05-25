@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     fontSize:30,
     position: "absolute",
     top: "5%",
-    left: "90%",
+    left: "87%",
   },
   gametype: {
     position: "absolute",

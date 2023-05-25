@@ -101,7 +101,7 @@ const handleValidation = () => {
 
  return (
    <View style={styles.container}>
-     <HeaderNoLogo />
+     <HeaderNoLogo text={'Mon profil'}/>
      <ScrollView contentContainerStyle={styles.scrollview}>
        <View style={styles.picture}>
          <ProfilePicture camera={camera} picture={picture} setPicture={setPicture} />
