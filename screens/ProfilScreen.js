@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, StyleSheet, Text, View , ScrollView, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View , ScrollView, KeyboardAvoidingView } from 'react-native';
 import Inputs from '../components/Inputs';
 import HeaderNoLogo from '../components/HeaderNoLogo';
 import RadioButtons from '../components/RadioButtons';
@@ -100,7 +100,8 @@ const handleValidation = () => {
   const logoutText = (<Text style={styles.signOutText}> Se déconnecter</Text>)
 
  return (
-   <View style={styles.container}>
+   <KeyboardAvoidingView
+   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}  style={styles.container}>
      <HeaderNoLogo text={'Mon profil'}/>
      <ScrollView contentContainerStyle={styles.scrollview}>
        <View style={styles.picture}>
@@ -149,7 +150,7 @@ const handleValidation = () => {
         <GreyButton title={[logoutIcon, logoutText]} width='60%' onPress={handleLogoutPress} />
        </View>
      </ScrollView>
-   </View>
+   </KeyboardAvoidingView>
  );
 }
 

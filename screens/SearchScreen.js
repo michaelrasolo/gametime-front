@@ -133,7 +133,7 @@ const gamecards = games.map((data, i) => {
     <View style={styles.container}>
       {!cardPress &&  <View style={styles.content}>
       <HeaderLogo />
-        <SessionBar name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Trouve une session'}  onPress={handleOpenModal}/>
+        <SessionBar name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Recherche une session'}  onPress={handleOpenModal}/>
         <Modal
         animationType="slide"
         statusBarTranslucent={true}

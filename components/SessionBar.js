@@ -94,13 +94,13 @@ const SessionBar = (props) => {
     return (
         <View style={styles.container}>
                 <TouchableOpacity  style={styles.topContainer} onPress={props.onPress} >
-                <FontAwesome style={styles.icon} name="search" size={30} color="white" />
+                <FontAwesome style={styles.icon} name="search" size={24} color="#F0F0F0" />
                 <Text style={styles.input}>{props.name}</Text>
                 {/* <TextInput style={styles.input} placeholder={props.name}  placeholderTextColor="#242424"></TextInput> */}
                 </TouchableOpacity>
             <View style={styles.bottomContainer}>
                 <View style={styles.bottomLeftContainer}>
-                    <FontAwesome style={styles.icon} name="calendar" size={30} color="white" />
+                    <FontAwesome style={styles.icon} name="calendar" size={24} color="white" />
                     <TouchableOpacity style={styles.calendar} onPress={toggleCalendar}>
                         <Text style={styles.dateText}>
                             {selectedDate ? selectedDate : 'Sélectionner une date'}
@@ -175,16 +175,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 3,
         width: "100%",
-        paddingLeft: 15
+        paddingLeft: 20
     },
     input: {
         flex: 1,
-        fontSize: 20,
-        color: "white"
+        fontSize: 18,
+        color: "#F0F0F0"
     },
     timeInput: {
-        fontSize: 20,
-        color: "white"
+        fontSize: 18,
+        color: "#F0F0F0"
     },
     icon: {
         marginRight: 10
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
         marginRight: 3,
-        paddingLeft: 15
+        paddingLeft: 20
     },
     bottomRightContainer: {
         flexDirection: "row",
@@ -219,8 +219,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     dateText: {
-        color: "white",
-        fontSize: 20
+        color: "#F0F0F0",
+        fontSize: 18
     },
     calendarContainer: {
         position: 'absolute',
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
       },
       closeButtonText: {
         color: "#FB724C",
-        fontSize:20,
+        fontSize:18,
         textAlign:"center",
     height:50,  }
 });
