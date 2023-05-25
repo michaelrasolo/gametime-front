@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Config from "../config";
@@ -24,7 +24,6 @@ function ViewProfile({selectedUser}) {
     return (
         <View>
             <Image style={styles.image} source={{ uri: selectedUser.picture }}/>
-
             {/* <View style={styles.birthdate}>
                 <Text>Date de naissance</Text>
                 <Text></Text>

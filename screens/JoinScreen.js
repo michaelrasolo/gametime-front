@@ -171,13 +171,13 @@ body: JSON.stringify({
             </View>
             <Modal visible={modalVisible} animationType="slide" transparent={true}>
               <View style={styles.modal}>
-                <Text style={styles.modalText}>Participants:</Text>
+                    <Text style={styles.modalText}>Participants:</Text>
                 {participants.length > 0 ? (
                       <PlayersComponent/>
                 ) : (
                   <Text style={styles.modalText}>Aucun participant</Text>
                 )}
-                <OrangeButton title="Fermer" onPress={() => setModalVisible(false)} width={'50%'} />
+                    <OrangeButton title="Fermer" onPress={() => setModalVisible(false)} width={'50%'} />
               </View>
             </Modal>
             <View style={styles.inputBox}>
@@ -290,12 +290,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
   },
-  modal: {
-    flex:1,
-    marginTop: "auto",
-    backgroundColor: "#242424",
-  },
-  modalText: {
-    color : "white"
-  }
-});
+    modal: {
+      height: "45%",
+      marginTop: "auto",
+      backgroundColor: "#515153",  
+    alignItems:"center"  },
+    modalText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      color: '#FB724C',
+      marginTop: 5
+    },
+  });
