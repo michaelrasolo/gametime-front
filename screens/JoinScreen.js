@@ -171,7 +171,7 @@ body: JSON.stringify({
             </View>
             <Modal visible={modalVisible} animationType="slide" transparent={true}>
               <View style={styles.modal}>
-                    <Text style={styles.modalText}>Participants:</Text>
+                    <Text style={styles.modalText}>Participants</Text>
                 {participants.length > 0 ? (
                       <PlayersComponent/>
                 ) : (
@@ -293,8 +293,10 @@ const styles = StyleSheet.create({
     modal: {
       height: "45%",
       marginTop: "auto",
-      backgroundColor: "#515153",  
-    alignItems:"center"  },
+      backgroundColor: "rgba(59, 59, 59, 1)",
+      alignItems:"center",
+      paddingBottom: 20
+  },
     modalText: {
       fontSize: 20,
       fontWeight: 'bold',

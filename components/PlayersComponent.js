@@ -48,7 +48,7 @@ function PlayersComponent() {
               </View>
 
               <View style={styles.infoBox}>
-                <View>
+                <View style={{marginBottom:18}}>
                   <Text style={styles.title}>Joueur Préféré</Text>
                   <Text style={styles.text}>{participant.favoritePlayer}</Text>
                 </View>
@@ -87,8 +87,8 @@ container: {
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
-  paddingLeft : 8,
-  paddingRight : 8
+  padding : '5%',
+  // paddingRight : 8
 },
 name: {
   justifyContent: "center",
@@ -96,7 +96,7 @@ name: {
 },
 infoBox: {
   justifyContent: "space-around",
-  alignItems: "center",
+  alignItems: "baseline",
   paddingRight: 8,
   width : "40%"
   // alignItems: "flex-end"
@@ -111,7 +111,7 @@ userBox: {
 global: {
   height: "65%",
   width: "100%",
-  marginBottom: 20
+  // marginBottom: 20
 },
 scroll: {
   height:"80%",
