@@ -6,38 +6,35 @@ import MapView, { Marker } from 'react-native-maps';
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import PlaygroundCard2 from './PlaygroundCard2';
-import playground, { selectedPlayground, setPlaygroundList } from '../reducers/playground';
+import  { selectedPlayground, setPlaygroundList } from '../reducers/playground';
 import Config from "../config";
-import MapSearchBar from './MapSearchBar';
-import MapListSearchBar from './MapListSearchBar';
 
 
 const IPAdresse = Config.IPAdresse;
 
-const MapSessions = (props) => {
+const MapSession = (props) => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const playgrounds = useSelector((state) => state.playground.value);
-    const location = useSelector((state) => state.location.value);
+    const textLocation = useSelector((state) => state.location.value);
+    const user = useSelector((state) => state.user.value);
 
     const [latitude,setLatitude] = useState(48.866667)
     const [longitude,setLongitude] = useState(2.333333)
-    const [joinVisible, setJoinVisible] = useState(false)
 
-
+    
     useEffect(() => {
       (async () => {
         const { status } = await Location.requestForegroundPermissionsAsync();
    
         if (status === 'granted') {
           const location = await Location.getCurrentPositionAsync({});
-          console.log(location);
           setLatitude(location.coords.latitude)
           setLongitude(location.coords.longitude)
           fetch(`${IPAdresse}/playgrounds/nearby`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ longitude : longitude, latitude: latitude
+            body: JSON.stringify({ longitude : longitude, latitude: latitude, token:user.token
             }),
         })
           .then(res => res.json())
@@ -56,9 +53,7 @@ const MapSessions = (props) => {
               ...playground,
               coordinates: playground.location.coordinates, // Access the coordinates property
             }));
-        
-            console.log("nearby",formattedData);
-            dispatch(setPlaygroundList(formattedData))
+            if (textLocation == null) {dispatch(setPlaygroundList(formattedData))}
           }
           )})
         }
@@ -68,10 +63,12 @@ const MapSessions = (props) => {
     const handleMarker = (value) => {
         const playgroundData = {
             id: value._id,
+            source: value.photo,
             name: value.name,
             address: value.address,
             city: value.city,
-            sessionsNb : value.sessionsNb
+            sessionsNb : value.sessionsNb,
+            isLiked: value.isLiked
           };
 
             dispatch(selectedPlayground((playgroundData)))
@@ -80,19 +77,13 @@ const MapSessions = (props) => {
             Keyboard.dismiss()
             }
     
-// const buttonTitle = (props.sessionsNb === 0
-//               ? "Créer"
-//               : props.sessionsNb === 1
-//               ? "Rejoindre"
-//               :  "Voir")
-
     const handleSelect = () => {
+      console.log(playgrounds.selectedPlayground.sessionsNb)
       if (playgrounds.selectedPlayground.sessionsNb === 0 ) {
         props.handleCloseModal()
         navigation.navigate('TabNavigator', {screen : "Create"});
       } else if (playgrounds.selectedPlayground.sessionsNb === 1) {
-        props.handleCloseModal()
-        // setJoinVisible(true)
+        props.handleJoin(true)
       } else {
         props.handleCloseModal()
       }
@@ -104,24 +95,25 @@ const MapSessions = (props) => {
     };
     
     const markers = playgrounds.playgrounds.length > 0 && playgrounds.playgrounds.map((data, i) => {
-        return <Marker key={i} coordinate={{ latitude: data.location.coordinates[1], longitude: data.location.coordinates[0] }} title={data.name} 
+        return <Marker 
+        key={i} 
+        coordinate={{ latitude: data.location.coordinates[1], longitude: data.location.coordinates[0] }} 
+        title={data.name} 
         onPress={() => handleMarker(data)} 
         >
-          <Image source={data.sessionsNb===0 ? images.playgroundWithoutSession : images.playgroundWithSessions} style={{ width: 30, height: 30 }} />
+          <Image 
+          source={data.sessionsNb===0 ? images.playgroundWithoutSession : images.playgroundWithSessions} 
+          style={{ width: 30, height: 30 }} />
         </Marker>
           ;
       });
 
   return (
-<>{!joinVisible &&   <>
-    {playgrounds.selectedPlayground.name && <PlaygroundCard2 name={playgrounds.selectedPlayground.name}
-    onPress={handleSelect} 
-     city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
+<>
     <MapView 
-
       region={{
-        latitude: location ? location.latitude : latitude,
-        longitude: location ? location.longitude : longitude,
+        latitude: textLocation ? textLocation.latitude : latitude,
+        longitude: textLocation ? textLocation.longitude : longitude,
         latitudeDelta: 0.05,
         longitudeDelta: 0.05,
       }}
@@ -130,9 +122,9 @@ const MapSessions = (props) => {
      {playgrounds.playgrounds && markers}
 
     </MapView>
-    </>
-    }
-    {joinVisible && <MapListSearchBar/>}
+    {playgrounds.selectedPlayground.name &&
+     <PlaygroundCard2 
+      onPress={handleSelect} />}
     </>
   );
 };
@@ -140,8 +132,8 @@ const MapSessions = (props) => {
 const styles = StyleSheet.create({
     map: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height*1.2,
+        height: Dimensions.get('window').height,
       }
 });
 
-export default MapSessions;
+export default MapSession;

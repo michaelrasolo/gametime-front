@@ -5,23 +5,23 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  Platform,
-  
+  Platform
 } from "react-native";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Icon from "react-native-ionicons";
 import OrangeButton from "./OrangeButton";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 
 const PlaygroundCard = (props) => {
   // SHADOW FUNCTION
 
-  const sessions =   (props.sessionsNb === 0
-    ? "aucun game"
+  const sessions =   (props.sessionsNb === 0 
+    ? "Aucun game"
     : props.sessionsNb === 1
-    ? "1 game"
-    : props.sessionsNb + " games")
+    ? "1 game déjà prévu"
+    : props.sessionsNb + " games déjà prévus")
 
+    
+   
   const platformShadow = () => {
     if (Platform.OS === "android") {
       return {
@@ -40,15 +40,74 @@ const PlaygroundCard = (props) => {
     }
   };
 
+  const handlePressFavorite = () => {
+    // console.log(props.id)
+    // console.log(user.token)
+    console.log(isFavorite)
+         if (!isFavorite) {
+       fetch(`${IPAdresse}/playgrounds/addFavorite/`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playgroundId: playgrounds.selectedPlayground.id,
+        token: user.token
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // Handle the response data
+          setIsFavorite(true);
+      })
+    } else {
+      fetch(`${IPAdresse}/playgrounds/removeFavorite/`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          playgroundId: props.id,
+          token: user.token
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data); // Handle the response data
+            setIsFavorite(false);
+        })
+    }
+  }
+
+  const images = {
+    playground1: require('../assets/playgrounds/playground1.jpg'),
+    playground2: require('../assets/playgrounds/playground2.jpg'),
+    playground3: require('../assets/playgrounds/playground3.jpg'),
+    playground4: require('../assets/playgrounds/playground4.jpg'),
+    playground5: require('../assets/playgrounds/playground5.jpg'),
+    playground6: require('../assets/playgrounds/playground6.jpg'),
+  };
+  
+  const imagePath = `playground${playgrounds.selectedPlayground.source}`;
+  const imageSource = images[imagePath];
+  
 
   return (
     <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow()]}>
       <Image
         style={[styles.image]}
-        source={require("../assets/images/citystade-marseille.png")}
+        source={imageSource}
       />
+      {isFavorite===true ? (
+      <FontAwesome5 style={styles.favoriteIcon} name={"heart-broken"}
+      onPress={() => handlePressFavorite()} />
+      ) : (
+      <FontAwesome5 style={styles.favoriteIcon} name={"heartbeat"}
+      onPress={() => handlePressFavorite()} />
+      )}      
       <View style={[styles.gametype, platformShadow()]}>
+        {props.sessionsNb !== 0 && 
+        <TouchableOpacity onPress={props.onPressGame}>
         <Text>{sessions}</Text>
+        </TouchableOpacity>}
+        {props.sessionsNb === 0 &&
+        <Text>{sessions}</Text>}
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.playground}>
@@ -58,7 +117,7 @@ const PlaygroundCard = (props) => {
         <Text style={styles.address}>
           {props.address}
         </Text>
-        <OrangeButton title="Rejoindre" onPress={props.onPress} width={"30%"}/>
+        <OrangeButton title="Choisir ce terrain" onPress={props.handleSelect} width={"50%"}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -88,6 +147,13 @@ const styles = StyleSheet.create({
     paddingVertical: "3%",
     justifyContent: "space-around",
   },
+  favoriteIcon : {
+    color:'white',
+    fontSize:30,
+    position: "absolute",
+    top: "5%",
+    left: "85%",
+  },
   gametype: {
     position: "absolute",
     top: "5%",
@@ -111,6 +177,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingRight: 6
   },
   address:{
     width:"50%",

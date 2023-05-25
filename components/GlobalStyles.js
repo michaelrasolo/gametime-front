@@ -12,7 +12,8 @@ export const GlobalStyles = StyleSheet.create({
   h3: {
     fontSize: 18,
     color: "#F0F0F0",
-    marginVertical: 12,
+    // marginTop: 12,
+    // marginBottom: 6
   },
   text: {
     fontSize: 16,

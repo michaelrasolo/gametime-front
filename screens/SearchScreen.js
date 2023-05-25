@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Modal,SafeAreaView, Button, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Modal,SafeAreaView, Button, StyleSheet, Text, View, ScrollView,Dimensions } from 'react-native';
 import HeaderLogo from '../components/HeaerLogo';
 import Gamecard from '../components/GameCard';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import SessionBar from '../components/SessionBar';
 import MapSearchBar from '../components/MapSearchBar';
 import MapSession from '../components/MapSessions';
-import { emptySelected } from '../reducers/playground'; 
-import { useSelector } from 'react-redux';
-
+import { emptySelected, setPlaygroundList } from '../reducers/playground'; 
+import { setLocation } from '../reducers/location';
+import SessionPage from '../components/SessionPage';
+import moment from "moment";
 import Config from "../config";
-
+import { selectGame } from '../reducers/game';
 const IPAdresse = Config.IPAdresse;
-
+import { GlobalStyles } from '../components/GlobalStyles';
 export default function SessionScreen({ navigation }) {
   const dispatch = useDispatch()
   const [sessions, setSessions] = useState([]);
   const [cardPress, setCardPress] = useState (false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [titre,setTitre] = useState('Les sessions autour de toi')
-
-  const playgrounds = useSelector((state) => state.playground.value);
-
+  const [isJoinVisible, setIsJoinVisible] = useState(false)
+  
+   const playgrounds = useSelector((state) => state.playground.value);
+  
   useEffect(() => {
     fetch(`${IPAdresse}/sessions/all`)
       .then(response => response.json())
@@ -29,27 +31,34 @@ export default function SessionScreen({ navigation }) {
         console.log(data.formattedData[0].playground)
         setSessions(data.formattedData)
       });
+    dispatch(emptySelected())
   }, []);
 
 
+const game = useSelector((state) => state.game.value);
+
 const handleCardPress = (value) => {
-  console.log(value)
-  // navigation.navigate('Join')
+  dispatch(selectGame(value))
   setCardPress(true)
   
 }
 
 const handleOpenModal = () => {
-  dispatch(emptySelected())
   setModalVisible(true)
 }
 
 const handleCloseModal = () => {
-  setModalVisible(!isModalVisible)
+  setModalVisible(false)
+  dispatch(setPlaygroundList([]))
+  dispatch(setLocation(null))
 }
 
 
-
+const handleJoin = () => {
+  setModalVisible(false)
+  dispatch(selectGame(filteredPlayground[0]._id))
+  setIsJoinVisible(true)
+}
 
 
   const images = {
@@ -61,9 +70,10 @@ const handleCloseModal = () => {
     playground6: require('../assets/playgrounds/playground6.jpg'),
   };
 
-const filteredGamecards = playgrounds.selectedPlayground.playgroundId && sessions.filter(data => data.playground._id === playgrounds.selectedPlayground.playgroundId)
+const filteredPlayground = playgrounds.selectedPlayground.playgroundId && sessions.filter(data => data.playground._id === playgrounds.selectedPlayground.playgroundId)
+const filteredDate = playgrounds.selectedPlayground.playgroundId && filteredPlayground .filter(data => data.date === playgrounds.selectedPlayground.date)
 
-const games = (filteredGamecards ? filteredGamecards : sessions)
+const games = ( filteredDate  ?  filteredDate  : sessions)
 
 const gamecards = games.map((data, i) => {
   const imagePath = `playground${data.playground.photo}`;
@@ -72,8 +82,7 @@ const gamecards = games.map((data, i) => {
     <Gamecard
       key={i}
       height={220}
-      formattedDate={data.formattedDate}
-      formattedTime={data.formattedTime}
+      formattedDate={moment(data.date).format('dddd Do MMMM, LT')}
       hour={data.hour}
       playground={data.playground.name}
       source={imageSource}
@@ -91,27 +100,31 @@ const gamecards = games.map((data, i) => {
 
   return (
     <View style={styles.container}>
+      {!cardPress &&  <View style={styles.content}>
       <HeaderLogo />
-      <View style={styles.content}>
-        <SessionBar name="Paris 17" onPress={handleOpenModal}/>
+        <SessionBar name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Trouve une session'}  onPress={handleOpenModal}/>
         <Modal
         animationType="slide"
         statusBarTranslucent={true}
-        visible={isModalVisible}>
-        <SafeAreaView style={styles.modal}>
-          <MapSearchBar handleCloseModal={handleCloseModal} />
-          <MapSession handleCloseModal={handleCloseModal}/>
-        </SafeAreaView>
+        visible={isModalVisible}
+        >
+        <View style={styles.modal}>
+          <MapSearchBar handleCloseModal={() => { setModalVisible(false)
+          dispatch(emptySelected())}} />
+          <MapSession handleJoin={handleJoin} handleCloseModal={handleCloseModal}/>
+        </View>
       </Modal>
-      {!cardPress &&  <View style={styles.content}>
+      <View style={styles.content}>
        <Text style={styles.title}>{titre}</Text>
         <View style={styles.SessionsSection}>
           <ScrollView>
             {sessions && gamecards}
           </ScrollView>
         </View> 
-      </View> }
-    </View>
+      </View> 
+    </View>}
+    {cardPress && <SessionPage/>}
+
     </View>
   );
 }
@@ -121,12 +134,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     backgroundColor: '#242424',
+    
   },
   content: {
     flex:1,
     alignItems:"center",
     paddingTop:20,
-// borderWidth:3
+
   },
   buttonSection: {
     flexDirection: 'row',
@@ -137,7 +151,8 @@ const styles = StyleSheet.create({
   SessionsSection: {
     padding: 10,
     // height: "auto",
-    flex: 1, // Ensure the ScrollView expands to fill the available space
+    width: Dimensions.get('window').width,
+    // flex: 1, // Ensure the ScrollView expands to fill the available space
   },
   title: {
     alignItems: 'center',
@@ -145,8 +160,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   modal: {
-    flex: 1,
+    flex:1,
     justifyContent: "space-between",
-    alignItems: "center",
-  },
+    alignItems: "center",  },
 })

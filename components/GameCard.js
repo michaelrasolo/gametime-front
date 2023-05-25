@@ -60,7 +60,7 @@ const GameCard = (props,{navigation}) => {
         );
         break;
 
-      case "All-stars":
+      case "All-Stars":
         return (
           <View style={styles.ballContainer}>
             <FontAwesome5 name={"basketball-ball"} style={styles.orangeBball} />
@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
   card: {
     width: "100%",
     height:"40%",
-    borderWidth:1,
     justifyContent: "flex-start",
     borderRadius: 30,
     position: "relative",

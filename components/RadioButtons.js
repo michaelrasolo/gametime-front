@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         padding: 10,
-        backgroundColor:'#242424'
+        backgroundColor:'#242424',
+        // borderWidth:2
       },
       UnpressedButtons : {
         borderRadius: 30,

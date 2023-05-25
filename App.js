@@ -8,7 +8,7 @@ import CreateSession from './screens/CreateSession';
 import HomeScreen from './screens/HomeScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import SignInScreen from './screens/SignInScreen';
-import JoinScreen from './screens/JoinScreen';
+import ChatScreen from './screens/ChatScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -31,7 +31,7 @@ import CameraScreen from './screens/CameraScreen';
 
 const reducers = combineReducers({ user, playground, location, game });
 
-const persistConfig = { key: 'GameTime', blacklist: ["game"], storage: asyncStorage };
+const persistConfig = { key: 'GameTime', blacklist: ["game", "playground"], storage: asyncStorage };
 const store = configureStore({
   reducer: persistReducer(persistConfig, reducers),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
@@ -67,12 +67,11 @@ const TabNavigator = () => {
       tabBarInactiveTintColor: 'gray',
       headerShown: false,
     })}>
-     <Tab.Screen name="Search" component={SearchScreen} />
-     <Tab.Screen name="Create" component={CreateSession} />
-     <Tab.Screen name="Session" component={SessionScreen} />
-     <Tab.Screen name="Favorite" component={FavoriteScreen} />
+     <Tab.Screen name="Search" component={SearchScreen} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
+     <Tab.Screen name="Session" component={SessionScreen} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
+     <Tab.Screen name="Create" component={CreateSession} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
+     <Tab.Screen name="Favorite" component={FavoriteScreen} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
      <Tab.Screen name="Profile" component={ProfilScreen} />
-     <Tab.Screen name="Join" component={JoinScreen} />
    </Tab.Navigator>
   );
  }
@@ -85,11 +84,10 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Join" component={JoinScreen} />
             <Stack.Screen name="SignIn" component={SignInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
             <Stack.Screen name="Camera" component={CameraScreen} />
-            <Stack.Screen name="Profile" component={ProfilScreen} />
+            <Stack.Screen name="Chat" component={ChatScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>

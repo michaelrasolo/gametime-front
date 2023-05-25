@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, StyleSheet, Text, View, ScrollView } from 'react-native';
-import HeaderLogo from '../components/HeaerLogo';
+import HeaderNoLogo from '../components/HeaderNoLogo';
 import RadioButtons3 from '../components/RadioButton3';
 import Gamecard from '../components/GameCard';
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from "moment";
 import { selectGame } from '../reducers/game';
 import Config from "../config";
+import SessionPage from '../components/SessionPage';
 
 const IPAdresse = Config.IPAdresse;
 
@@ -19,8 +20,10 @@ export default function SessionScreen({ navigation }) {
   const [sessions, setSessions] = useState([]);
   const [PressedButton, setPressedButton] = useState("");
   const dispatch = useDispatch();
-  
+  const [cardPress, setCardPress] = useState (false);
+
   useEffect(() => {
+
     fetch(`${IPAdresse}/sessions/futur/${user.token}`)
       .then(response => response.json())
       .then(data => {
@@ -49,10 +52,9 @@ export default function SessionScreen({ navigation }) {
     }
   }
 
-  const handleSessionCard = (gameId) => {
-    console.log("gameId", gameId);
+  const handleCardPress = (gameId) => {
     dispatch(selectGame(gameId));
-    navigation.navigate('Join')
+    setCardPress(true)
   }
   
   const images = {
@@ -67,19 +69,18 @@ export default function SessionScreen({ navigation }) {
   const gamecards = sessions && sessions.map((data, i) => {
     const imagePath = `playground${data.playground.photo}`;
     const imageSource = images[imagePath];
-    // console.log(imageSource)
     return (
       <Gamecard key={i} height={220}
         formattedDate={moment(data.date).format('dddd Do MMMM, LT')}
         hour={data.hour}
         playground={data.playground.name}
-        // source={imageSource}
+        source={imageSource}
         city={data.playground.city}
         totalParticipants={data.totalParticipants}
         maxParticipants={data.maxParticipants}
         level={data.level}
         sessionType={data.sessionType}
-        onPress={() => handleSessionCard(data._id)}
+        onPress={() => handleCardPress(data._id)}
       />
     );
   });
@@ -87,17 +88,22 @@ export default function SessionScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <HeaderLogo />
+      {!cardPress && (
+      <>
+      <HeaderNoLogo text={'Mes Sessions'}/>
       <View style={styles.content}>
         <View style={styles.buttonSection}>
           <RadioButtons3 onPress={handleButtonPress} leftTitle='A venir' rightTitle='Passées' value={PressedButton}/>
         </View>
         <View style={styles.SessionsSection}>
           <ScrollView>
-            {sessions && gamecards}
+            {gamecards}
           </ScrollView>
         </View>
       </View>
+      </>
+      )}
+          {cardPress && <SessionPage/>}
     </View>
   );
 }
