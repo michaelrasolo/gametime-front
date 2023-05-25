@@ -9,6 +9,7 @@ selectedPlayground: {
         city: null,
         isLiked : false,
         sessionsNb:0,
+        source: 1,
         date: new Date(),
       
          time: new Date().setHours(12, 0, 0, 0)
@@ -33,6 +34,7 @@ export const playgroundSlice = createSlice({
       address: action.payload.address,
       city: action.payload.city,
       sessionsNb : action.payload.sessionsNb,
+      source: action.payload.source,
       isLiked : action.payload.isLiked
     }},
     selectDate:(state, action) => {
@@ -52,6 +54,7 @@ export const playgroundSlice = createSlice({
           address: null,
           city: null,
           date: new Date(),
+          source: 1,
           time: new Date().setHours(12, 0, 0, 0)}},
 }});
 

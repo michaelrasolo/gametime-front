@@ -28,13 +28,15 @@ export default function SessionScreen({ navigation }) {
     fetch(`${IPAdresse}/sessions/all`)
       .then(response => response.json())
       .then(data => {
-        // console.log(data.formattedData[0].playground)
+        console.log(data.formattedData[0].playground)
         setSessions(data.formattedData)
       });
+    dispatch(emptySelected())
   }, []);
 
 
-  const game = useSelector((state) => state.game.value);
+const game = useSelector((state) => state.game.value);
+
 const handleCardPress = (value) => {
   dispatch(selectGame(value))
   setCardPress(true)
@@ -52,7 +54,11 @@ const handleCloseModal = () => {
 }
 
 
-
+const handleJoin = () => {
+  setModalVisible(false)
+  dispatch(selectGame(filteredPlayground[0]._id))
+  setIsJoinVisible(true)
+}
 
 
   const images = {
@@ -60,8 +66,6 @@ const handleCloseModal = () => {
     playground2: require('../assets/playgrounds/playground2.jpg'),
     playground3: require('../assets/playgrounds/playground3.jpg'),
     playground4: require('../assets/playgrounds/playground4.jpg'),
-    
-    
     playground5: require('../assets/playgrounds/playground5.jpg'),
     playground6: require('../assets/playgrounds/playground6.jpg'),
   };
@@ -69,7 +73,7 @@ const handleCloseModal = () => {
 const filteredPlayground = playgrounds.selectedPlayground.playgroundId && sessions.filter(data => data.playground._id === playgrounds.selectedPlayground.playgroundId)
 const filteredDate = playgrounds.selectedPlayground.playgroundId && filteredPlayground .filter(data => data.date === playgrounds.selectedPlayground.date)
 
-const games = (filteredPlayground  ? filteredPlayground  : sessions)
+const games = ( filteredDate  ?  filteredDate  : sessions)
 
 const gamecards = games.map((data, i) => {
   const imagePath = `playground${data.playground.photo}`;
@@ -98,17 +102,19 @@ const gamecards = games.map((data, i) => {
     <View style={styles.container}>
       <HeaderLogo />
       <View style={styles.content}>
-        <SessionBar name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Trouve une session'}  onPress={handleOpenModal}/>
-        <Modal
+      {!isJoinVisible && <>
+        <SessionBar name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Trouve une session'} 
+         onPress={(handleOpenModal)}/> 
+      <Modal
         animationType="slide"
         statusBarTranslucent={true}
         visible={isModalVisible}
-        >{!isJoinVisible &&
+        >
         <View style={styles.modal}>
-          <MapSearchBar handleCloseModal={handleCloseModal} />
-          <MapSession handleJoin={() => setIsJoinVisible(true)} handleCloseModal={handleCloseModal}/>
-        </View>}
-        {isJoinVisible && <SessionPage/>}
+          <MapSearchBar handleCloseModal={() => { setModalVisible(false)
+          dispatch(emptySelected())}} />
+          <MapSession handleJoin={handleJoin} handleCloseModal={handleCloseModal}/>
+        </View>
       </Modal>
       {!cardPress &&  <View style={styles.content}>
        <Text style={styles.title}>{titre}</Text>
@@ -117,7 +123,10 @@ const gamecards = games.map((data, i) => {
             {sessions && gamecards}
           </ScrollView>
         </View> 
-      </View> }
+      </View> }</>}
+
+      {isJoinVisible && <SessionPage/>}
+
     </View>
     </View>
   );

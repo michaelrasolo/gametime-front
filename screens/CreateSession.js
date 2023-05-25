@@ -134,23 +134,7 @@ const timeArray = timeString.split(':');
       </Modal>
       <View style={styles.middleSection}>
         <ScrollView>
-          <View style={styles.titleSection}>
-            <Text style={styles.title}>Récurrence</Text>
-            <View style={styles.fieldSection}>
-              <View style={styles.checkSection}>
-                <Text style={styles.fieldName}>Hebdomadaire</Text>
-                <Checkbox
-                  value={isWeekly}
-                  onValueChange={() => setIsWeekly(!isWeekly)}
-                  color={isWeekly ? '#4630EB' : undefined} />
-                  </View>
-              <View>
-                <Text style={styles.fieldName}>Date limite</Text>
-                <DateSearch selectDate={handleLimitDate}/>
-              </View>
 
-            </View>
-          </View>
           <View style={styles.titleSection}>
             <Text style={styles.title}>Type de game</Text>
             <RadioButtons  onPress={handleSessionPress} leftTitle={"3X3"} midTitle={"5X5"} rightTitle={"Freestyle"} />
@@ -193,6 +177,23 @@ const timeArray = timeString.split(':');
           <View style={styles.titleSection}>
             <Text style={styles.title}>Intensité du game</Text>
             <RadioButtons2 onPress={handleMoodPress} leftTitle={"Fun"} rightTitle={"Compétitif"} />
+            <View style={styles.titleSection}>
+            <Text style={styles.title}>Récurrence</Text>
+            <View style={styles.fieldSection}>
+              <View style={styles.checkSection}>
+                <Text style={styles.fieldName}>Hebdomadaire</Text>
+                <Checkbox
+                  value={isWeekly}
+                  onValueChange={() => setIsWeekly(!isWeekly)}
+                  color={isWeekly ? '#4630EB' : undefined} />
+                  </View>
+              <View>
+                <Text style={styles.fieldName}>Date limite</Text>
+                <DateSearch selectDate={handleLimitDate}/>
+              </View>
+            </View>
+          </View>
+  
             <Text style={styles.fieldName}>J'apporte un ballon</Text>
 
             <Checkbox
