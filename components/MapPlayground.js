@@ -12,13 +12,13 @@ import { useNavigation } from '@react-navigation/native';
 
 const IPAdresse = Config.IPAdresse;
 
-const MapPlayground = (props ) => {
+const MapPlayground = (props) => {
     const dispatch = useDispatch()
     const playgrounds = useSelector((state) => state.playground.value);
     const textLocation = useSelector((state) => state.location.value);
     const [latitude,setLatitude] = useState(48.866667)
     const [longitude,setLongitude] = useState(2.333333)
-
+    const user = useSelector((state) => state.user.value);
     const navigation = useNavigation()
 
 
@@ -33,7 +33,7 @@ const MapPlayground = (props ) => {
           fetch(`${IPAdresse}/playgrounds/nearby`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ longitude : longitude, latitude: latitude
+            body: JSON.stringify({ longitude : longitude, latitude: latitude, token:user.token
             }),
         })
           .then(res => res.json())
@@ -61,9 +61,8 @@ const MapPlayground = (props ) => {
 
     const handleGames = () => {
       props.handleCloseModal()
-      navigation.navigate('TabNavigator', {screen : "Search"})}
-
-
+      navigation.navigate('TabNavigator', {screen : "Search"})
+    }
 
     const handleMarker = (value) => {
         const playgroundData = {
@@ -75,7 +74,6 @@ const MapPlayground = (props ) => {
           };
 
             dispatch(selectedPlayground((playgroundData)))
-            console.log("heeeeeleeeeellllooo" , playgrounds.selectedPlayground)
             setLatitude(value.location.coordinates[1])
             setLongitude(value.location.coordinates[0])
             Keyboard.dismiss()
@@ -104,9 +102,14 @@ const buttonTitle = (props.sessionsNb === 0
 
   return (
     <>
-    {playgrounds.selectedPlayground.name && <PlaygroundCard name={playgrounds.selectedPlayground.name}
-     id={playgrounds.selectedPlayground.playgroundId} onPressGame={handleGames}
-    city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
+    {playgrounds.selectedPlayground.name && <PlaygroundCard 
+    name={playgrounds.selectedPlayground.name}
+    id={playgrounds.selectedPlayground.playgroundId}
+    onPressGame={handleGames} 
+    handleSelect={() => props.handleCloseModal()}
+    city={playgrounds.selectedPlayground.city} 
+    address={playgrounds.selectedPlayground.address} 
+    sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
     <MapView 
 
       region={{

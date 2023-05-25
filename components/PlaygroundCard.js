@@ -40,8 +40,39 @@ const PlaygroundCard = (props) => {
     }
   };
 
-  const handleFavorite = () => {
-    console.log('favoris')
+  const handlePressFavorite = () => {
+    // console.log(props.id)
+    // console.log(user.token)
+    console.log(isFavorite)
+         if (!isFavorite) {
+       fetch(`${IPAdresse}/playgrounds/addFavorite/`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playgroundId: playgrounds.selectedPlayground.id,
+        token: user.token
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // Handle the response data
+          setIsFavorite(true);
+      })
+    } else {
+      fetch(`${IPAdresse}/playgrounds/removeFavorite/`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          playgroundId: props.id,
+          token: user.token
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data); // Handle the response data
+            setIsFavorite(false);
+        })
+    }
   }
 
   const images = {
@@ -52,22 +83,24 @@ const PlaygroundCard = (props) => {
     playground5: require('../assets/playgrounds/playground5.jpg'),
     playground6: require('../assets/playgrounds/playground6.jpg'),
   };
-
-  const randomNumber = Math.floor(Math.random() * 6) + 1
-  const imagePath = `playground${randomNumber}`;
+  
+  const imagePath = `playground${playgrounds.selectedPlayground.source}`;
   const imageSource = images[imagePath];
+  
 
   return (
     <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow()]}>
       <Image
         style={[styles.image]}
         source={imageSource}
-                // source={props.source}
       />
-      <View style={styles.favoriteIcon}>
-      <FontAwesome5 onPress={() => handleFavorite()} name={"heart"} style={styles.favoriteIcon} />
-      
-      </View>
+      {isFavorite===true ? (
+      <FontAwesome5 style={styles.favoriteIcon} name={"heart-broken"}
+      onPress={() => handlePressFavorite()} />
+      ) : (
+      <FontAwesome5 style={styles.favoriteIcon} name={"heartbeat"}
+      onPress={() => handlePressFavorite()} />
+      )}      
       <View style={[styles.gametype, platformShadow()]}>
         {props.sessionsNb !== 0 && 
         <TouchableOpacity onPress={props.onPressGame}>
@@ -84,7 +117,7 @@ const PlaygroundCard = (props) => {
         <Text style={styles.address}>
           {props.address}
         </Text>
-        <OrangeButton title="Choisir ce terrain" onPress={props.onPress} width={"50%"}/>
+        <OrangeButton title="Choisir ce terrain" onPress={props.handleSelect} width={"50%"}/>
         </View>
       </View>
     </TouchableOpacity>
