@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { login, logout } from '../reducers/user';
 import { useDispatch, useSelector } from "react-redux";
 import Config from "../config";
+import { setLocation } from "../reducers/location";
 
 const IPAdresse = Config.IPAdresse;
 
@@ -67,7 +68,8 @@ export default function SignUpScreen({ navigation }) {
                         console.log(user)
                     }
                 });
-                navigation.navigate('TabNavigator', {screen:'Profile'});    
+                navigation.navigate('TabNavigator', {screen:'Profile'});
+                dispatch(setLocation(null))    
         }
       };
 

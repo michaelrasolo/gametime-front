@@ -14,6 +14,7 @@ import { useState } from "react";
 import { login } from "../reducers/user";
 import { useDispatch, useSelector} from "react-redux";
 import Config from "../config";
+import { setLocation } from "../reducers/location";
 
 const IPAdresse = Config.IPAdresse;
 
@@ -36,7 +37,7 @@ export default function SignInScreen({ navigation }) {
         if (data.result) {
           dispatch(login({ nickname: data.nickname, token: data.token, city: data.city }));
           navigation.navigate('TabNavigator');
-   
+          dispatch(setLocation(null))    
         } else {
           setIdError(true);
         }

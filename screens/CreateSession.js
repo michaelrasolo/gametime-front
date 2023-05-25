@@ -45,7 +45,7 @@ export default function CreateSession({ navigation }) {
 
   const handleCloseModal = () => {
     setModalVisible(false)
-    // dispatch(setLocation(null))
+    dispatch(setLocation(null))
     // setMapVisible(true)
     // setListVisible(false)
   }
@@ -192,7 +192,7 @@ const timeArray = timeString.split(':');
                 <DateSearch selectDate={handleLimitDate}/>
               </View>
             </View>
-          </View>
+          </View >
   
             <Text style={styles.fieldName}>J'apporte un ballon</Text>
 

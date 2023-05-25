@@ -10,7 +10,7 @@ export const locationSlice = createSlice({
   reducers: {
     setLocation: (state, action) => {
      state.value = action.payload
-  },
+  }
 }});
 
 export const { setLocation} = locationSlice.actions;

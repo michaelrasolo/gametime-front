@@ -6,7 +6,7 @@ import OrangeButton from "./OrangeButton";
 
 const IPAdresse = Config.IPAdresse;
 
-function PlayersComponent() {
+function PlayersComponent(props) {
   const [participantsInfos, setParticipantsInfos] = useState([]);
   const game = useSelector((state) => state.game.value);
   
@@ -90,7 +90,7 @@ function PlayersComponent() {
       </ScrollView>
 
       <View style={{alignItems: "center", marginTop: 25}}>
-        <OrangeButton title="Fermer" onPress={() => setModalVisible(false)} width={'50%'} />
+        <OrangeButton title="Fermer" onPress={props.onPress} width={'50%'} />
       </View>
     </View>
   );

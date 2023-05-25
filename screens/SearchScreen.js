@@ -49,6 +49,7 @@ const handleOpenModal = () => {
 const handleCloseModal = () => {
   setModalVisible(false)
   dispatch(setPlaygroundList([]))
+  dispatch(emptySelected())
   dispatch(setLocation(null))
 }
 
@@ -57,6 +58,7 @@ const handleJoin = () => {
   setModalVisible(false)
   dispatch(selectGame(filteredPlayground[0]._id))
   setCardPress(true)
+  dispatch(emptySelected())
 }
 
 

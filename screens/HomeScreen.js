@@ -10,6 +10,7 @@ import {
 import Video from "react-native-video";
 import OrangeButton from "../components/OrangeButton";
 import GreyButton from "../components/GreyButton";
+import { useDispatch } from "react-redux"; 
 
 export default function HomeScreen({ navigation }) {
     // FUNCTION GO TO SIGN UP

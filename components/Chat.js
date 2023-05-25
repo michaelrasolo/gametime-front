@@ -45,30 +45,30 @@ import {
     }
 
 
-//     const refreshMessages = () => {
-//       fetch(`${IPAdresse}/chat/${game.gameId}`, {
-//       method: 'PUT',
-//       headers: { 'Content-Type': 'application/json' }
-//     })
-//       .then(res => res.json())
-//       .then(data => {
-// setMessages(data)});
-//     }
+    const refreshMessages = () => {
+      fetch(`${IPAdresse}/chat/${game.gameId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(data => {
+setMessages(data)});
+    }
 
-const refreshMessages = () => {
-  fetch(`${IPAdresse}/chat/${game.gameId}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' }
-  })
-    .then(res => res.json())
-    .then(data => {
-      setMessages(data);
-    });
+// const refreshMessages = () => {
+//   fetch(`${IPAdresse}/chat/${game.gameId}`, {
+//     method: 'PUT',
+//     headers: { 'Content-Type': 'application/json' }
+//   })
+//     .then(res => res.json())
+//     .then(data => {
+//       setMessages(data);
+//     });
 
-  setTimeout(refreshMessages, 3000);
-};
+//   setTimeout(refreshMessages, 3000);
+// };
 
-refreshMessages();
+// refreshMessages();
 
     // setInterval(refreshMessages, 2000);
 

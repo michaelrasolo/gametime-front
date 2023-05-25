@@ -157,6 +157,7 @@ const SessionBar = (props) => {
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop:10,
         height: 100,
         width: "90%",
         alignItems: "center",

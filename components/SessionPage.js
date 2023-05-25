@@ -212,7 +212,7 @@ export default function SessionPage(props) {
 
                 <Modal visible={modalVisible} animationType="slide" transparent={true}>
                   <View style={styles.modal}>
-                          <PlayersComponent/>
+                          <PlayersComponent onPress={() => setModalVisible(false)}/>
                   </View>
                 </Modal>
 
