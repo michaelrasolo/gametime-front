@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
   card: {
     width: "100%",
     height:"40%",
-    borderWidth:1,
     justifyContent: "flex-start",
     borderRadius: 30,
     position: "relative",

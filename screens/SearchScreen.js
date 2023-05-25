@@ -13,7 +13,7 @@ import Config from "../config";
 import SessionPage from '../components/SessionPage';
 import { selectGame } from '../reducers/game';
 const IPAdresse = Config.IPAdresse;
-
+import { GlobalStyles } from '../components/GlobalStyles';
 export default function SessionScreen({ navigation }) {
   const dispatch = useDispatch()
   const [sessions, setSessions] = useState([]);
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems:"center",
     paddingTop:20,
-// borderWidth:3
+
   },
   buttonSection: {
     flexDirection: 'row',

@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 18,
   },
   calendarContainer: {
     position: 'absolute',

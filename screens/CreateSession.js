@@ -192,7 +192,7 @@ const timeArray = timeString.split(':');
           </View>
           <View style={styles.titleSection}>
             <Text style={styles.title}>Intensité du game</Text>
-            <RadioButtons2 onPress={handleMoodPress} leftTitle={"Fun"} rightTitle={"Compétitif"} />
+            <RadioButtons2 onPress={handleMoodPress} leftTitle={"Chill"} rightTitle={"Déter"} />
             <Text style={styles.fieldName}>J'apporte un ballon</Text>
 
             <Checkbox

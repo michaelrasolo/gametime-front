@@ -67,7 +67,7 @@ export default function SignUpScreen({ navigation }) {
                         console.log(user)
                     }
                 });
-                navigation.navigate('TabNavigator');    
+                navigation.navigate('TabNavigator', {screen:'Profile'});    
         }
       };
 

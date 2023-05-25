@@ -8,7 +8,6 @@ import CreateSession from './screens/CreateSession';
 import HomeScreen from './screens/HomeScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import SignInScreen from './screens/SignInScreen';
-import JoinScreen from './screens/JoinScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -31,7 +30,7 @@ import CameraScreen from './screens/CameraScreen';
 
 const reducers = combineReducers({ user, playground, location, game });
 
-const persistConfig = { key: 'GameTime', blacklist: ["game", "playground", "user"], storage: asyncStorage };
+const persistConfig = { key: 'GameTime', blacklist: ["game", "playground"], storage: asyncStorage };
 const store = configureStore({
   reducer: persistReducer(persistConfig, reducers),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
@@ -67,9 +66,9 @@ const TabNavigator = () => {
       tabBarInactiveTintColor: 'gray',
       headerShown: false,
     })}>
-     <Tab.Screen name="Search" component={SearchScreen} />
-     <Tab.Screen name="Create" component={CreateSession} />
-     <Tab.Screen name="Session" component={SessionScreen} />
+     <Tab.Screen name="Search" component={SearchScreen} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
+     <Tab.Screen name="Session" component={SessionScreen} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
+     <Tab.Screen name="Create" component={CreateSession} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
      <Tab.Screen name="Favorite" component={FavoriteScreen} />
      <Tab.Screen name="Profile" component={ProfilScreen} />
    </Tab.Navigator>

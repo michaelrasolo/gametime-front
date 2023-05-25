@@ -30,6 +30,7 @@ export default function SessionPage({ navigation }) {
   const [group, setGroup] = useState(1);
   const [hasJoined, setHasJoined] = useState("");
   const [confirmation, setConfirmation] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const user = useSelector((state) => state.user.value);
   const game = useSelector((state) => state.game.value);
   const dispatch = useDispatch();
@@ -49,23 +50,26 @@ export default function SessionPage({ navigation }) {
     fetch(`${IPAdresse}/sessions/check/${game.gameId}/${user.token}`)
       .then((res) => res.json())
       .then((response) => {
-        console.log('=============================');
-        console.log('INITIALISATION');
-        console.log('user in the game ?',response);
-        console.log('token:',user.token);
-        console.log('game id:',game.gameId);
-        response && setHasJoined(response.result);
-          if (response.result == true) {
-            setGroup(response.userGroup);
-            setBringBall(response.ball);
-          }
+        if (response.result == true) {
+          setHasJoined(response.result);
+          setGroup(response.userGroup);
+          setBringBall(response.ball);
+        } else {
+          setHasJoined(false);
+        }
       });
-  }, [hasJoined]);
+    if (sessionInfos && moment(sessionInfos.date).isBefore(moment())) {
+      setGameOver(true);
+      console.log("moment", moment());
+      console.log("date", sessionInfos.date);
+      console.log("State:", gameOver);
+    }
+  }, [hasJoined, gameOver]);
 
   // FUNCTION JOIN THE GAME
 
   const handleJoin = () => {
-    console.log('game:',game.gameId, 'user:',user.token)
+    console.log("game:", game.gameId, "user:", user.token);
     fetch(`${IPAdresse}/sessions/join/${game.gameId}/${user.token}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -96,6 +100,7 @@ export default function SessionPage({ navigation }) {
       .then((gameUpdate) => {
         if (gameUpdate.result) console.log("You left the game.");
         setHasJoined(false);
+        navigation.navigate('TabNavigator', {screen:'Search'});    
       });
   };
   // FUNCTION EDIT PARTICIPATION
@@ -114,7 +119,7 @@ export default function SessionPage({ navigation }) {
         if (gameUpdate.result) console.log("You updated your participation");
         setConfirmation(true);
       });
-    }
+  };
 
   const images = {
     playground1: require("../assets/playgrounds/playground1.jpg"),
@@ -136,7 +141,7 @@ export default function SessionPage({ navigation }) {
     <>
       {sessionInfos ? ( // Control if sessionInfos fetch to state is defined
         <View style={styles.container}>
-          <HeaderNoLogo />
+          <HeaderNoLogo onPress={() => navigation.navigate('TabNavigator', { screen: 'Search' })} />
           {!confirmation && ( // Session Page before validation
             <>
               <View style={styles.photoContainer}>
@@ -152,7 +157,7 @@ export default function SessionPage({ navigation }) {
               </View>
               <View style={styles.infoContainer}>
                 <View>
-                  <Text style={GlobalStyles.h2}>Game Time</Text>
+                  <Text style={GlobalStyles.h3}>Game Time:</Text>
                   <Text style={styles.time}>
                     {moment(sessionInfos.date)
                       .format("dddd")
@@ -201,7 +206,7 @@ export default function SessionPage({ navigation }) {
                     </Text>
                     <NumericInput
                       totalHeight={35}
-                      minValue={1}
+                      minValue={hasJoined ? undefined : 1}
                       valueType="integer"
                       rightButtonBackgroundColor="rgba(59, 59, 59, 0.8)"
                       iconStyle={{ color: "#FB724C" }}
@@ -226,12 +231,12 @@ export default function SessionPage({ navigation }) {
                     />
                   </View>
                 </View>
-                {hasJoined ? (
+                {hasJoined && !gameOver ? (
                   <Text style={styles.time}>Tu participes déjà à ce game</Text>
                 ) : (
                   <></>
                 )}
-                {hasJoined ? ( // If already joined, modification only, not new joiner
+                {hasJoined && !gameOver ? ( // If already joined, modification only, not new joiner
                   <View
                     style={{
                       alignItems: "center",
@@ -244,7 +249,11 @@ export default function SessionPage({ navigation }) {
                       width={"45%"}
                       onPress={handleQuit}
                     />
-                    <OrangeButton title={"Enregistrer"} width={"45%"} onPress={handleEdit}/>
+                    <OrangeButton
+                      title={"Enregistrer"}
+                      width={"45%"}
+                      onPress={handleEdit}
+                    />
                   </View>
                 ) : (
                   <View
@@ -254,16 +263,23 @@ export default function SessionPage({ navigation }) {
                       justifyContent: "center",
                     }}
                   >
-                    <OrangeButton
-                      title={"Participer au game"}
-                      width={"80%"}
-                      onPress={handleJoin}
-                    />
+                    {gameOver ? (
+                      <Text style={styles.time}>
+                        Ce game est maintenant terminé.
+                      </Text>
+                    ) : (
+                      <OrangeButton
+                        title={"Participer au game"}
+                        width={"80%"}
+                        onPress={handleJoin}
+                      />
+                    )}
                   </View>
                 )}
               </View>
             </>
           )}
+
           {/* CONFETTI RECAP PAGE IF CONFIRMATION */}
           {confirmation && (
             <>
@@ -301,7 +317,7 @@ export default function SessionPage({ navigation }) {
                           screen: "Session",
                         })
                       }
-                      title="Voir sessions"
+                      title="Mes sessions"
                       width={"45%"}
                     />
                     <OrangeButton
@@ -331,7 +347,7 @@ const styles = StyleSheet.create({
   },
   photoContainer: {
     width: Dimensions.get("window").width,
-    height: (Dimensions.get("window").width * 2) / 3,
+    height: (Dimensions.get("window").width * 3) / 5,
   },
   playgroundPhoto: {
     flex: 1,
@@ -354,10 +370,10 @@ const styles = StyleSheet.create({
   infoContainer: {
     flex: 1,
 
+    marginVertical: "5%",
     marginHorizontal: "8%",
     height: "100%",
     justifyContent: "space-between",
-    marginBottom: "8%",
   },
   time: {
     fontSize: 16,

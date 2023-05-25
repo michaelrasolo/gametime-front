@@ -33,8 +33,7 @@ export default function SignInScreen({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log(data.result);
-          dispatch(login({ email: email, token: data.token }));
+          dispatch(login({ nickname: data.nickname, token: data.token, city: data.city }));
           navigation.navigate('TabNavigator');
         } else {
           setIdError(true);
