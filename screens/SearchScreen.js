@@ -35,6 +35,7 @@ export default function SessionScreen({ navigation }) {
 
 
   const game = useSelector((state) => state.game.value);
+  
 const handleCardPress = (value) => {
   dispatch(selectGame(value))
   setCardPress(true)
@@ -97,8 +98,8 @@ const gamecards = games.map((data, i) => {
 
   return (
     <View style={styles.container}>
+      {!cardPress &&  <View style={styles.content}>
       <HeaderLogo />
-      <View style={styles.content}>
         <SessionBar name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Trouve une session'}  onPress={handleOpenModal}/>
         <Modal
         animationType="slide"
@@ -111,15 +112,17 @@ const gamecards = games.map((data, i) => {
         </View>}
         {isJoinVisible && <SessionPage/>}
       </Modal>
-      {!cardPress &&  <View style={styles.content}>
+      <View style={styles.content}>
        <Text style={styles.title}>{titre}</Text>
         <View style={styles.SessionsSection}>
           <ScrollView>
             {sessions && gamecards}
           </ScrollView>
         </View> 
-      </View> }
-    </View>
+      </View> 
+    </View>}
+    {cardPress && <SessionPage/>}
+
     </View>
   );
 }

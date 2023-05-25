@@ -69,7 +69,7 @@ const TabNavigator = () => {
      <Tab.Screen name="Search" component={SearchScreen} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
      <Tab.Screen name="Session" component={SessionScreen} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
      <Tab.Screen name="Create" component={CreateSession} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
-     <Tab.Screen name="Favorite" component={FavoriteScreen} />
+     <Tab.Screen name="Favorite" component={FavoriteScreen} options={{unmountOnBlur: true}} listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}/>
      <Tab.Screen name="Profile" component={ProfilScreen} />
    </Tab.Navigator>
   );

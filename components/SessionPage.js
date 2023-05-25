@@ -9,6 +9,7 @@ import {
   Dimensions,
   ImageBackground,
   Image,
+  TouchableOpacity
 } from "react-native";
 import HeaderNoLogo from "../components/HeaderNoLogo";
 import GreyButton from "../components/GreyButton";
@@ -87,8 +88,6 @@ export default function SessionPage({ navigation }) {
 
   // FUNCTION QUIT THE GAME
   const handleQuit = () => {
-    // console.log("gameID", game.gameId);
-    // console.log("token", user.token);
     fetch(`${IPAdresse}/sessions/quit/${game.gameId}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -144,11 +143,15 @@ export default function SessionPage({ navigation }) {
           <HeaderNoLogo onPress={() => navigation.navigate('TabNavigator', { screen: 'Search' })} />
           {!confirmation && ( // Session Page before validation
             <>
-              <View style={styles.photoContainer}>
+              <View style={styles.photoContainer }>
                 <ImageBackground
                   style={styles.playgroundPhoto}
                   source={imageSource}
                 >
+                  <TouchableOpacity style={styles.chatIcon}>
+                  <FontAwesome5 name={'comments'} color={"#F0F0F0"} size={26}/>
+                  <Text style={styles.chatText}>Game chat</Text>
+                  </TouchableOpacity>
                   <Text style={styles.playgroundTextTitle}>
                     {sessionInfos.playground.name},{" "}
                     {sessionInfos.playground.city}
@@ -348,12 +351,31 @@ const styles = StyleSheet.create({
   photoContainer: {
     width: Dimensions.get("window").width,
     height: (Dimensions.get("window").width * 3) / 5,
+    position:"relative"
+  },
+  chatIcon:{
+    position:"absolute",
+    top:16,
+    right:16,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    alignItems:"center",
+borderRadius:30,
+padding:8
   },
   playgroundPhoto: {
     flex: 1,
     justifyContent: "flex-end",
     resizeMode: "cover",
     paddingBottom: "10%",
+  },
+  chatText:{
+    color: "#F0F0F0",
+    textShadowColor: "rgba(0, 0, 0, 1)",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 4,
+    fontSize: 11,
+    fontWeight: "700",
   },
   playgroundTextTitle: {
     color: "#F0F0F0",
