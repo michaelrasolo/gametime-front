@@ -144,7 +144,7 @@ export default function SessionPage() {
     <>
       {sessionInfos ? ( // Control if sessionInfos fetch to state is defined
         <View style={styles.container}>
-          <HeaderNoLogo onPress={() => navigation.navigate('TabNavigator', { screen: 'Search' })} />
+          <HeaderNoLogo  />
           {!confirmation && ( // Session Page before validation
             <>
               <View style={styles.photoContainer }>

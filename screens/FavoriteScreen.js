@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, View, ScrollView } from 'react-native';
-import HeaderLogo from '../components/HeaerLogo';
+import HeaderNoLogo from '../components/HeaderNoLogo';
 import PlaygroundCard from '../components/PlaygroundCardFavorite';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -80,11 +80,8 @@ export default function FavoriteScreen({ navigation }) {
 
  return (
    <View style={styles.container}>
-     <HeaderLogo />
+     <HeaderNoLogo text={'Mes terrains favoris'}/>
      <View style={styles.content}>
-       <View style={styles.titleContainer}>
-         <Text style={styles.title}>Mes terrains favoris</Text>
-       </View>
        <View Style={styles.playgroundsSection}>
          <ScrollView>
            {playgroundCards}
@@ -112,23 +109,14 @@ const styles = StyleSheet.create({
   },
   content: {
     flex:1,
-
-  },
-  titleContainer : {
-    flexDirection: 'row',
-    justifyContent: "center",
     padding:10,
-    
   },
-  title: {
-    color: 'white',
-    fontSize: 30,
-    
-  },
+
   playgroundsSection: {
     paddingLeft:10,
     paddingRight:10,
     flex: 1, 
+    
   },
 
 })
