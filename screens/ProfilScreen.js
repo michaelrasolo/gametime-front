@@ -45,7 +45,7 @@ export default function ProfilScreen({ navigation }) {
         setFavoritePlayer(data.data.favoritePlayer)
         setFavoriteShoes(data.data.favoriteShoes)
         setPicture(data.data.picture)
-        console.log(user)
+        // console.log(user)
       });
   }, []);
 
@@ -54,6 +54,7 @@ export default function ProfilScreen({ navigation }) {
 const handleValidation = () => {
   fetch(`${IPAdresse}/users/update`, {
     method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       token: user.token,
       picture: picture,
@@ -70,10 +71,11 @@ const handleValidation = () => {
     .then(response => response.json())
     .then(data => {
       if (data.result){
-        dispatch(addPhoto(data.url))
-      }
-      console.log(data.result)
         navigation.navigate('Search');
+        // dispatch(addPhoto(data.url))
+      } else {
+        console.log(data)
+      }
     });
 }
 
