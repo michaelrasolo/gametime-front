@@ -57,6 +57,7 @@ export default function SessionScreen({ navigation }) {
     setCardPress(true)
   }
   
+
   const images = {
     playground1: require('../assets/playgrounds/playground1.jpg'),
     playground2: require('../assets/playgrounds/playground2.jpg'),
@@ -103,7 +104,7 @@ export default function SessionScreen({ navigation }) {
       </View>
       </>
       )}
-          {cardPress && <SessionPage/>}
+          {cardPress && <SessionPage onPress={() => setCardPress(false)}/>}
     </View>
   );
 }

@@ -44,15 +44,33 @@ import {
       return formattedDate;
     }
 
-    const refreshMessages = () => {
-      fetch(`${IPAdresse}/chat/${game.gameId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .then(res => res.json())
-      .then(data => setMessages(data));
 
-    }
+//     const refreshMessages = () => {
+//       fetch(`${IPAdresse}/chat/${game.gameId}`, {
+//       method: 'PUT',
+//       headers: { 'Content-Type': 'application/json' }
+//     })
+//       .then(res => res.json())
+//       .then(data => {
+// setMessages(data)});
+//     }
+
+const refreshMessages = () => {
+  fetch(`${IPAdresse}/chat/${game.gameId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(data => {
+      setMessages(data);
+    });
+
+  setTimeout(refreshMessages, 3000);
+};
+
+refreshMessages();
+
+    // setInterval(refreshMessages, 2000);
 
     useEffect(() => {
       refreshMessages()
@@ -87,7 +105,7 @@ import {
       setNewMessage('')
     }
 
-    const conversation = messages.map((data, i) => (
+    const conversation = messages.length>0 && messages.map((data, i) => (
       <View key ={i} style={[
         styles.messageWrapper,
         data.token === user.token ? styles.messageSent : styles.messageRecieved,
@@ -111,7 +129,7 @@ import {
            onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
 
            >
-        {conversation}
+        {conversation && conversation}
       </ScrollView>
       <View style={styles.inputContainer}>
           <TextInput  style={styles.input} onChangeText={(value => setNewMessage(value))} value={newMessage}/>

@@ -22,7 +22,7 @@ const PlaygroundCard2 = (props) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const refreshData = () => {
-    fetch(`${IPAdresse}/playgrounds/isLiked/${user.token}/${playgrounds.selectedPlayground.id}`)
+    fetch(`${IPAdresse}/playgrounds/isLiked/${user.token}/${playgrounds.selectedPlayground.playgroundId}`)
     .then(res => res.json())
     .then(data => {
   if (data.isLiked) {
@@ -33,9 +33,8 @@ const PlaygroundCard2 = (props) => {
   }
 
   useEffect(() => {
-    console.log("hello")
     refreshData()
-  }, [playgrounds.selectedPlayground.id]);
+  }, [playgrounds.selectedPlayground.playgroundId]);
  
 
   // SHADOW FUNCTION
@@ -73,15 +72,13 @@ const buttonTitle = (playgrounds.selectedPlayground.sessionsNb === 0
   :  "Voir les games")
 
   const handlePressFavorite = () => {
-    // console.log(props.id)
-    // console.log(user.token)
     console.log(isFavorite)
          if (!isFavorite) {
        fetch(`${IPAdresse}/playgrounds/addFavorite/`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        playgroundId: playgrounds.selectedPlayground.id,
+        playgroundId: playgrounds.selectedPlayground.playgroundId,
         token: user.token
       })
     })
@@ -95,7 +92,7 @@ const buttonTitle = (playgrounds.selectedPlayground.sessionsNb === 0
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          playgroundId: props.id,
+          playgroundId: playgrounds.selectedPlayground.playgroundId,
           token: user.token
         })
       })
@@ -129,10 +126,10 @@ const imageSource = images[imagePath];
       />
       <View style={styles.favoriteIcon}>
         {isFavorite===true ? (
-      <FontAwesome5 style={styles.favoriteIcon} name={"heart-broken"}
+      <FontAwesome5 style={[styles.favoriteIcon, { color: "#FB724C" }]} name={"heart-broken"}
       onPress={() => handlePressFavorite()} />
       ) : (
-      <FontAwesome5 style={styles.favoriteIcon} name={"heartbeat"}
+<FontAwesome5 style={styles.favoriteIcon}  name={"heartbeat"} 
       onPress={() => handlePressFavorite()} />
       )}
       </View>

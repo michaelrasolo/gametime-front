@@ -14,25 +14,24 @@ import Config from "../config";
 import { selectGame } from '../reducers/game';
 const IPAdresse = Config.IPAdresse;
 import { GlobalStyles } from '../components/GlobalStyles';
+
 export default function SessionScreen({ navigation }) {
   const dispatch = useDispatch()
   const [sessions, setSessions] = useState([]);
   const [cardPress, setCardPress] = useState (false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [titre,setTitre] = useState('Les sessions autour de toi')
-  const [isJoinVisible, setIsJoinVisible] = useState(false)
-  
    const playgrounds = useSelector((state) => state.playground.value);
-  
+
   useEffect(() => {
     fetch(`${IPAdresse}/sessions/all`)
       .then(response => response.json())
       .then(data => {
-        console.log(data.formattedData[0].playground)
+        console.log("hello", data.formattedData)
         setSessions(data.formattedData)
       });
-    dispatch(emptySelected())
   }, []);
+
 
 
 const game = useSelector((state) => state.game.value);
@@ -57,7 +56,7 @@ const handleCloseModal = () => {
 const handleJoin = () => {
   setModalVisible(false)
   dispatch(selectGame(filteredPlayground[0]._id))
-  setIsJoinVisible(true)
+  setCardPress(true)
 }
 
 
@@ -70,10 +69,40 @@ const handleJoin = () => {
     playground6: require('../assets/playgrounds/playground6.jpg'),
   };
 
-const filteredPlayground = playgrounds.selectedPlayground.playgroundId && sessions.filter(data => data.playground._id === playgrounds.selectedPlayground.playgroundId)
-const filteredDate = playgrounds.selectedPlayground.playgroundId && filteredPlayground .filter(data => data.date === playgrounds.selectedPlayground.date)
+  const selectedPlayground = playgrounds.selectedPlayground;
+  const filteredPlayground = selectedPlayground.playgroundId && sessions.filter(data => data.playground._id === selectedPlayground.playgroundId);
+  // const filteredPlaygroundDate = selectedPlayground.playgroundId && filteredPlayground.filter(data => {
+  //   const selectedDate = new Date(selectedPlayground.date);
+  //   if (selectedDate) {
+  //     const selectedDay = selectedDate.getDate();
+  //     const itemDay = new Date(data.date).getDate();
+  //     return itemDay === selectedDay;
+  //   }
+  //   return true;
+  // });
 
-const games = ( filteredDate  ?  filteredDate  : sessions)
+  // const filteredDate = selectedPlayground.playgroundId && sessions.filter(data => {
+  //   const selectedDate = new Date(selectedPlayground.date);
+  //   if (selectedDate) {
+  //     const selectedDay = selectedDate.getDate();
+  //     const itemDay = new Date(data.date).getDate();
+  //     return itemDay === selectedDay;
+  //   }
+  //   return false;
+  // });
+  
+  // let games;
+
+  // if (filteredPlayground && filteredDate) {
+  //   games = filteredPlaygroundDate;
+  // } else if (filteredPlayground) {
+  //   games = filteredPlayground;
+  // } else if (filteredDate) {
+  //   games = filteredDate;
+  // } else {
+  //   games = sessions;
+  // }  
+const games = ( filteredPlayground ?  filteredPlayground : sessions)
 
 const gamecards = games.map((data, i) => {
   const imagePath = `playground${data.playground.photo}`;
@@ -123,7 +152,7 @@ const gamecards = games.map((data, i) => {
         </View> 
       </View> 
     </View>}
-    {cardPress && <SessionPage/>}
+    {cardPress && <SessionPage onPress={() => setCardPress(false)}/>}
 
     </View>
   );

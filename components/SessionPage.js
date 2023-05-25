@@ -24,7 +24,7 @@ import Config from "../config";
 import { useNavigation } from "@react-navigation/native";
 const IPAdresse = Config.IPAdresse;
 
-export default function SessionPage() {
+export default function SessionPage(props) {
   const navigation = useNavigation()
   const [sessionInfos, setSessionInfos] = useState(null);
   const [sessionParticipants, setSessionParticipants] = useState(null);
@@ -144,7 +144,7 @@ export default function SessionPage() {
     <>
       {sessionInfos ? ( // Control if sessionInfos fetch to state is defined
         <View style={styles.container}>
-          <HeaderNoLogo  />
+          <HeaderNoLogo onPress={props.onPress} />
           {!confirmation && ( // Session Page before validation
             <>
               <View style={styles.photoContainer }>

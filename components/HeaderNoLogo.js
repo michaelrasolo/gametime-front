@@ -10,7 +10,7 @@ const HeaderNoLogo = (props) => {
     <View style={styles.header}>
       <View style={styles.container}>
       <TouchableOpacity onPress={props.onPress}>
-          <FontAwesome5 name={"arrow-left"} size={20} color={"#F0F0F0"} onPress={() => navigation.navigate('TabNavigator', { screen: 'Search' })}/>
+          <FontAwesome5 name={"arrow-left"} size={20} color={"#F0F0F0"} onPress={props.onPress}/>
         </TouchableOpacity>
         <Text style={styles.text}>{props.text}</Text>
         <Text></Text>

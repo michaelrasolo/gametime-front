@@ -31,7 +31,7 @@ import CameraScreen from './screens/CameraScreen';
 
 const reducers = combineReducers({ user, playground, location, game });
 
-const persistConfig = { key: 'GameTime', blacklist: ["game", "playground"], storage: asyncStorage };
+const persistConfig = { key: 'GameTime', blacklist: ["game"], storage: asyncStorage };
 const store = configureStore({
   reducer: persistReducer(persistConfig, reducers),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),

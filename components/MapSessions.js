@@ -86,6 +86,7 @@ const MapSession = (props) => {
         props.handleJoin(true)
       } else {
         props.handleCloseModal()
+        console.log("test",playgrounds.selectedPlayground.id)
       }
     }
 

@@ -58,7 +58,7 @@ const handleValidation = () => {
     body: JSON.stringify({
       token: user.token,
       picture: picture,
-      // birthdate: birthdate,
+      birthdate: birthdate,
       city: city,
       gender: gender,
       level: level,
@@ -113,7 +113,7 @@ const handleValidation = () => {
        <View style={styles.topFields}>
          <View style={styles.fieldSection} width='48%'>
            <Text style={styles.fieldName}>Date de naissance </Text>
-           <DateSearch onChangeText={(value) => setBirthdate(value)} value={birthdate}/>
+           <DateSearch selectDate={(value) => setBirthdate(value)} value={birthdate}/>
          </View>
          <View style={styles.fieldSection} width='48%'>
          <Text style={styles.fieldName}>Ville</Text>

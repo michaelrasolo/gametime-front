@@ -37,7 +37,8 @@ const MapPlayground = (props) => {
             }),
         })
           .then(res => res.json())
-          .then(data => { Promise.all(
+          .then(data => { console.log("playgrounds", data)
+            Promise.all(
             data.map((item) =>
               fetch(`${IPAdresse}/playgrounds/${item._id}`)
                 .then((sessionsResponse) => sessionsResponse.json())
@@ -52,7 +53,9 @@ const MapPlayground = (props) => {
               ...playground,
               coordinates: playground.location.coordinates, // Access the coordinates property
             }));
-              if (textLocation == null) {dispatch(setPlaygroundList(formattedData))}
+              if (textLocation === null) {
+                dispatch(setPlaygroundList(formattedData))}
+              // }
           }
           )})
         }
@@ -68,6 +71,7 @@ const MapPlayground = (props) => {
         const playgroundData = {
             id: value._id,
             name: value.name,
+            source: value.photo,
             address: value.address,
             city: value.city,
             sessionsNb : value.sessionsNb
@@ -92,7 +96,10 @@ const buttonTitle = (props.sessionsNb === 0
     };
     
     const markers = playgrounds.playgrounds.length > 0 && playgrounds.playgrounds.map((data, i) => {
-        return <Marker key={i} coordinate={{ latitude: data.location.coordinates[1], longitude: data.location.coordinates[0] }} title={data.name} 
+        return <Marker 
+        key={i} 
+        coordinate={{ latitude: data.location.coordinates[1], longitude: data.location.coordinates[0] }}
+        title={data.name} 
         onPress={() => handleMarker(data)} 
         >
           <Image source={data.sessionsNb===0 ? images.playgroundWithoutSession : images.playgroundWithSessions} style={{ width: 30, height: 30 }} />

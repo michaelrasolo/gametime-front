@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -7,20 +7,27 @@ import {
   StyleSheet,
   Platform
 } from "react-native";
+import { useSelector } from "react-redux";
 import OrangeButton from "./OrangeButton";
+import Config from "../config";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+
+const IPAdresse = Config.IPAdresse;
 
 
 const PlaygroundCard = (props) => {
-  // SHADOW FUNCTION
+  const user = useSelector((state) => state.user.value);
+  const playgrounds = useSelector((state) => state.playground.value);
+  
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const sessions =   (props.sessionsNb === 0 
+  const sessions =   (playgrounds.selectedPlayground.sessionsNb === 0 
     ? "Aucun game"
-    : props.sessionsNb === 1
+    : playgrounds.selectedPlayground.sessionsNb === 1
     ? "1 game déjà prévu"
-    : props.sessionsNb + " games déjà prévus")
+    : playgrounds.selectedPlayground.sessionsNb + " games déjà prévus")
 
-    
+
    
   const platformShadow = () => {
     if (Platform.OS === "android") {
@@ -40,16 +47,30 @@ const PlaygroundCard = (props) => {
     }
   };
 
+  const refreshData = () => {
+    fetch(`${IPAdresse}/playgrounds/isLiked/${user.token}/${playgrounds.selectedPlayground.playgroundId}`)
+    .then(res => res.json())
+    .then(data => {
+  if (data.isLiked) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }})
+  }
+
+  useEffect(() => {
+    refreshData()
+  }, [playgrounds.selectedPlayground.name]);
+
+  
   const handlePressFavorite = () => {
-    // console.log(props.id)
-    // console.log(user.token)
     console.log(isFavorite)
          if (!isFavorite) {
        fetch(`${IPAdresse}/playgrounds/addFavorite/`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        playgroundId: playgrounds.selectedPlayground.id,
+        playgroundId: playgrounds.selectedPlayground.playgroundId,
         token: user.token
       })
     })
@@ -63,7 +84,7 @@ const PlaygroundCard = (props) => {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          playgroundId: props.id,
+          playgroundId: playgrounds.selectedPlayground.playgroundId,
           token: user.token
         })
       })
@@ -94,28 +115,30 @@ const PlaygroundCard = (props) => {
         style={[styles.image]}
         source={imageSource}
       />
-      {isFavorite===true ? (
-      <FontAwesome5 style={styles.favoriteIcon} name={"heart-broken"}
+      <View style={styles.favoriteIcon}>
+        {isFavorite===true ? (
+      <FontAwesome5 style={[styles.favoriteIcon, { color: "#FB724C" }]} name={"heart-broken"}
       onPress={() => handlePressFavorite()} />
       ) : (
-      <FontAwesome5 style={styles.favoriteIcon} name={"heartbeat"}
+<FontAwesome5 style={styles.favoriteIcon}  name={"heartbeat"} 
       onPress={() => handlePressFavorite()} />
-      )}      
+      )}
+      </View>
       <View style={[styles.gametype, platformShadow()]}>
-        {props.sessionsNb !== 0 && 
+        {playgrounds.selectedPlayground.sessionsNb !== 0 && 
         <TouchableOpacity onPress={props.onPressGame}>
         <Text>{sessions}</Text>
         </TouchableOpacity>}
-        {props.sessionsNb === 0 &&
+        {playgrounds.selectedPlayground.sessionsNb === 0 &&
         <Text>{sessions}</Text>}
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.playground}>
-          {props.name}, {props.city}
+          {playgrounds.selectedPlayground.name}, {props.city}
         </Text>
         <View style={styles.bottomBox}>
         <Text style={styles.address}>
-          {props.address}
+          {playgrounds.selectedPlayground.address}
         </Text>
         <OrangeButton title="Choisir ce terrain" onPress={props.handleSelect} width={"50%"}/>
         </View>
