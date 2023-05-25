@@ -8,11 +8,10 @@ import {
   Platform,
   
 } from "react-native";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Icon from "react-native-ionicons";
 import OrangeButton from "./OrangeButton";
 import { useSelector } from 'react-redux';
 import Config from "../config";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const IPAdresse = Config.IPAdresse;
 
@@ -117,12 +116,25 @@ const handlePress2Favorite = () => {
     })
 }
 
+const images = {
+  playground1: require('../assets/playgrounds/playground1.jpg'),
+  playground2: require('../assets/playgrounds/playground2.jpg'),
+  playground3: require('../assets/playgrounds/playground3.jpg'),
+  playground4: require('../assets/playgrounds/playground4.jpg'),
+  playground5: require('../assets/playgrounds/playground5.jpg'),
+  playground6: require('../assets/playgrounds/playground6.jpg'),
+};
+
+const randomNumber = Math.floor(Math.random() * 6) + 1
+const imagePath = `playground${randomNumber}`;
+const imageSource = images[imagePath];
+
 
   return (
     <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow()]}>
       <Image
         style={[styles.image]}
-        source={require("../assets/images/citystade-marseille.png")}
+        source={imageSource}
       />
       <View style={styles.favoriteIcon}>
         {isFavorite===true ? (

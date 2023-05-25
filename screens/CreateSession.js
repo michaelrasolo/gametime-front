@@ -12,6 +12,7 @@ import OrangeButton from '../components/OrangeButton';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import MapPlayground from '../components/MapPlayground';
 import NumericInput from "react-native-numeric-input";
+import HeaderLogo from '../components/HeaerLogo';
 
 import { useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -43,9 +44,7 @@ export default function CreateSession({ navigation }) {
 
 
   const handleCloseModal = () => {
-    setModalVisible(!isModalVisible)
-    dispatch(setPlaygroundList([]))
-    dispatch(emptySelected())
+    setModalVisible(false)
     dispatch(setLocation(null))
     setMapVisible(true)
     setListVisible(false)
@@ -75,7 +74,7 @@ export default function CreateSession({ navigation }) {
   }
 
 const selectedDate = new Date(playgrounds.selectedPlayground.date);
-const timeString = playgrounds.selectedPlayground.time ? playgrounds.selectedPlayground.time : "12:00"
+const timeString = playgrounds.selectedPlayground.time.toString()
 
     // Convert time from string to Date object
 const timeArray = timeString.split(':');
@@ -103,8 +102,7 @@ const timeArray = timeString.split(':');
           maxParticipants : gameGroup,
           frequency: isWeekly,
           limitDate: limitDate,
-      }
-      ),
+      }),
     })
       .then(response => response.json())
       .then(data => {
@@ -116,9 +114,11 @@ const timeArray = timeString.split(':');
   }
 
   return (
-    <SafeAreaView style={styles.container} >
+    <View style={styles.container} >
+      
    {!showConfetti && 
    <>
+    <HeaderLogo />
    <SearchBar 
    name={playgrounds.selectedPlayground.name ? playgrounds.selectedPlayground.name : 'Choisis un terrain'} 
    onPress={() => {setModalVisible(true)}} />
@@ -126,11 +126,11 @@ const timeArray = timeString.split(':');
         animationType="slide"
         statusBarTranslucent={true}
         visible={isModalVisible}>
-        <SafeAreaView style={styles.modal}>
+        <View style={styles.modal}>
           <MapListSearchBar handleList={handleList} handleMap={handleMap} handleCloseModal={handleCloseModal} />
           {isListVisible && <SearchList handleList={handleList} handleMap={handleMap} />}
           {isMapVisible && <MapPlayground handleCloseModal={handleCloseModal} />}
-        </SafeAreaView>
+        </View>
       </Modal>
       <View style={styles.middleSection}>
         <ScrollView>
@@ -224,7 +224,7 @@ const timeArray = timeString.split(':');
   </View>
   
   )}
-    </SafeAreaView>
+    </View>
 
   )
 }
@@ -232,10 +232,10 @@ const timeArray = timeString.split(':');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom : 20,
     backgroundColor: "#242424",
     alignItems: "center",
     justifyContent: "space-around",
-    paddingTop:30,
   },
   modal: {
     flex: 1,
@@ -243,8 +243,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   middleSection: {
-    paddingTop: 40,
-    height: "75%",
+    paddingTop: 20,
+    height: "65%",
+    paddingBottom: 20,
+
   },
   title: {
     alignItems: 'center',

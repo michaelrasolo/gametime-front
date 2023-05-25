@@ -5,23 +5,23 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  Platform,
-  
+  Platform
 } from "react-native";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Icon from "react-native-ionicons";
 import OrangeButton from "./OrangeButton";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 
 const PlaygroundCard = (props) => {
   // SHADOW FUNCTION
 
-  const sessions =   (props.sessionsNb === 0
+  const sessions =   (props.sessionsNb === 0 
     ? "Aucun game"
     : props.sessionsNb === 1
-    ? "1 game"
-    : props.sessionsNb + " games")
+    ? "1 game déjà prévu"
+    : props.sessionsNb + " games déjà prévus")
 
+    
+   
   const platformShadow = () => {
     if (Platform.OS === "android") {
       return {
@@ -44,19 +44,37 @@ const PlaygroundCard = (props) => {
     console.log('favoris')
   }
 
+  const images = {
+    playground1: require('../assets/playgrounds/playground1.jpg'),
+    playground2: require('../assets/playgrounds/playground2.jpg'),
+    playground3: require('../assets/playgrounds/playground3.jpg'),
+    playground4: require('../assets/playgrounds/playground4.jpg'),
+    playground5: require('../assets/playgrounds/playground5.jpg'),
+    playground6: require('../assets/playgrounds/playground6.jpg'),
+  };
+
+  const randomNumber = Math.floor(Math.random() * 6) + 1
+  const imagePath = `playground${randomNumber}`;
+  const imageSource = images[imagePath];
+
   return (
     <TouchableOpacity activeOpacity={0.8} style={[styles.card, platformShadow()]}>
       <Image
         style={[styles.image]}
-        // source={require("../assets/images/citystade-marseille.png")}
-        source={props.source}
+        source={imageSource}
+                // source={props.source}
       />
       <View style={styles.favoriteIcon}>
       <FontAwesome5 onPress={() => handleFavorite()} name={"heart"} style={styles.favoriteIcon} />
       
       </View>
       <View style={[styles.gametype, platformShadow()]}>
+        {props.sessionsNb !== 0 && 
+        <TouchableOpacity onPress={props.onPressGame}>
         <Text>{sessions}</Text>
+        </TouchableOpacity>}
+        {props.sessionsNb === 0 &&
+        <Text>{sessions}</Text>}
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.playground}>
@@ -66,7 +84,7 @@ const PlaygroundCard = (props) => {
         <Text style={styles.address}>
           {props.address}
         </Text>
-        <OrangeButton title="Rejoindre" onPress={props.onPress} width={"30%"}/>
+        <OrangeButton title="Choisir ce terrain" onPress={props.onPress} width={"50%"}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -126,6 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingRight: 6
   },
   address:{
     width:"50%",
