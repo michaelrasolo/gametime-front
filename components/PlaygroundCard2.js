@@ -16,17 +16,26 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 const IPAdresse = Config.IPAdresse;
 
 const PlaygroundCard2 = (props) => {
-  const user = useSelector((state) => state.user.value);;
+  const user = useSelector((state) => state.user.value);
+  const playgrounds = useSelector((state) => state.playground.value);
+  
   const [isFavorite, setIsFavorite] = useState(false);
 
-
-  useEffect(() => {
-    if (props.isLiked) {
+  const refreshData = () => {
+    fetch(`${IPAdresse}/playgrounds/isLiked/${user.token}/${playgrounds.selectedPlayground.id}`)
+    .then(res => res.json())
+    .then(data => {
+  if (data.isLiked) {
       setIsFavorite(true);
     } else {
       setIsFavorite(false);
-    }
-  }, [props.isLiked]);
+    }})
+  }
+
+  useEffect(() => {
+    console.log("hello")
+    refreshData()
+  }, [playgrounds.selectedPlayground.id]);
  
 
   // SHADOW FUNCTION
@@ -51,15 +60,15 @@ const PlaygroundCard2 = (props) => {
 
 
 
-const sessions =   (props.sessionsNb === 0
+const sessions =   (playgrounds.selectedPlayground.sessionsNb === 0
   ? "aucun game"
-  : props.sessionsNb === 1
+  : playgrounds.selectedPlayground.sessionsNb === 1
   ? "1 game"
-  : props.sessionsNb + " games")
+  : playgrounds.selectedPlayground.sessionsNb + " games")
 
-const buttonTitle = (props.sessionsNb === 0
+const buttonTitle = (playgrounds.selectedPlayground.sessionsNb === 0
   ? "Créer ton game"
-  : props.sessionsNb === 1
+  : playgrounds.selectedPlayground.sessionsNb === 1
   ? "Rejoindre"
   :  "Voir les games")
 
@@ -72,7 +81,7 @@ const buttonTitle = (props.sessionsNb === 0
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        playgroundId: props.id,
+        playgroundId: playgrounds.selectedPlayground.id,
         token: user.token
       })
     })
@@ -98,23 +107,6 @@ const buttonTitle = (props.sessionsNb === 0
     }
   }
 
-const handlePress2Favorite = () => {
-  fetch(`${IPAdresse}/playgrounds/removeFavorite/`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      playgroundId: props.id,
-      token: user.token
-    })
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data); // Handle the response data
-      if (data.result) {
-        setIsFavorite(data.result);
-      }
-    })
-}
 
 const images = {
   playground1: require('../assets/playgrounds/playground1.jpg'),
@@ -125,8 +117,7 @@ const images = {
   playground6: require('../assets/playgrounds/playground6.jpg'),
 };
 
-const randomNumber = Math.floor(Math.random() * 6) + 1
-const imagePath = `playground${randomNumber}`;
+const imagePath = `playground${playgrounds.selectedPlayground.source}`;
 const imageSource = images[imagePath];
 
 
@@ -150,11 +141,11 @@ const imageSource = images[imagePath];
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.playground}>
-          {props.name}, {props.city}
+          {playgrounds.selectedPlayground.name}, {playgrounds.selectedPlayground.city}
         </Text>
         <View style={styles.bottomBox}>
         <Text style={styles.address}>
-          {props.address}
+          {playgrounds.selectedPlayground.address}
         </Text>
         <OrangeButton title={buttonTitle} onPress={props.onPress} width={"50%"}/>
         </View>

@@ -8,12 +8,11 @@ import { useSelector, useDispatch} from 'react-redux';
 import PlaygroundCard2 from './PlaygroundCard2';
 import  { selectedPlayground, setPlaygroundList } from '../reducers/playground';
 import Config from "../config";
-import MapListSearchBar from './MapListSearchBar';
-import SessionPage from './SessionPage'
+
 
 const IPAdresse = Config.IPAdresse;
 
-const MapSessions = (props) => {
+const MapSession = (props) => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const playgrounds = useSelector((state) => state.playground.value);
@@ -59,11 +58,12 @@ const MapSessions = (props) => {
           )})
         }
       })();
-    }, [textLocation]);
+    }, []);
 
     const handleMarker = (value) => {
         const playgroundData = {
             id: value._id,
+            source: value.photo,
             name: value.name,
             address: value.address,
             city: value.city,
@@ -78,14 +78,13 @@ const MapSessions = (props) => {
             }
     
     const handleSelect = () => {
-      
+      console.log(playgrounds.selectedPlayground.sessionsNb)
       if (playgrounds.selectedPlayground.sessionsNb === 0 ) {
         props.handleCloseModal()
         navigation.navigate('TabNavigator', {screen : "Create"});
       } else if (playgrounds.selectedPlayground.sessionsNb === 1) {
-        props.handleJoin()
+        props.handleJoin(true)
       } else {
-        dispatch()
         props.handleCloseModal()
       }
     }
@@ -96,10 +95,15 @@ const MapSessions = (props) => {
     };
     
     const markers = playgrounds.playgrounds.length > 0 && playgrounds.playgrounds.map((data, i) => {
-        return <Marker key={i} coordinate={{ latitude: data.location.coordinates[1], longitude: data.location.coordinates[0] }} title={data.name} 
+        return <Marker 
+        key={i} 
+        coordinate={{ latitude: data.location.coordinates[1], longitude: data.location.coordinates[0] }} 
+        title={data.name} 
         onPress={() => handleMarker(data)} 
         >
-          <Image source={data.sessionsNb===0 ? images.playgroundWithoutSession : images.playgroundWithSessions} style={{ width: 30, height: 30 }} />
+          <Image 
+          source={data.sessionsNb===0 ? images.playgroundWithoutSession : images.playgroundWithSessions} 
+          style={{ width: 30, height: 30 }} />
         </Marker>
           ;
       });
@@ -118,9 +122,9 @@ const MapSessions = (props) => {
      {playgrounds.playgrounds && markers}
 
     </MapView>
-    {playgrounds.selectedPlayground.name && <PlaygroundCard2 name={playgrounds.selectedPlayground.name}
-    onPress={handleSelect} 
-     city={playgrounds.selectedPlayground.city} address={playgrounds.selectedPlayground.address} sessionsNb={playgrounds.selectedPlayground.sessionsNb}/>}
+    {playgrounds.selectedPlayground.name &&
+     <PlaygroundCard2 
+      onPress={handleSelect} />}
     </>
   );
 };
@@ -132,4 +136,4 @@ const styles = StyleSheet.create({
       }
 });
 
-export default MapSessions;
+export default MapSession;
