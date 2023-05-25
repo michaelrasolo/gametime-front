@@ -21,10 +21,11 @@ import NumericInput from "react-native-numeric-input";
 import ConfettiCannon from "react-native-confetti-cannon";
 import { useIsFocused } from "@react-navigation/native";
 import Config from "../config";
-
+import { useNavigation } from "@react-navigation/native";
 const IPAdresse = Config.IPAdresse;
 
-export default function SessionPage({ navigation }) {
+export default function SessionPage() {
+  const navigation = useNavigation()
   const [sessionInfos, setSessionInfos] = useState(null);
   const [sessionParticipants, setSessionParticipants] = useState(null);
   const [bringBall, setBringBall] = useState(false);
@@ -120,6 +121,9 @@ export default function SessionPage({ navigation }) {
       });
   };
 
+  const handleChat = () => {
+    navigation.navigate('Chat');
+  }
   const images = {
     playground1: require("../assets/playgrounds/playground1.jpg"),
     playground2: require("../assets/playgrounds/playground2.jpg"),
@@ -148,7 +152,7 @@ export default function SessionPage({ navigation }) {
                   style={styles.playgroundPhoto}
                   source={imageSource}
                 >
-                  <TouchableOpacity style={styles.chatIcon}>
+                  <TouchableOpacity style={styles.chatIcon} onPress={() => handleChat()}>
                   <FontAwesome5 name={'comments'} color={"#F0F0F0"} size={26}/>
                   <Text style={styles.chatText}>Game chat</Text>
                   </TouchableOpacity>

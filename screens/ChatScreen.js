@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import ChatComponent from '../components/Chat';
 
-export default function FavoriteScreen({ navigation }) {
+export default function ChatScreen({ navigation }) {
  return (
     <ChatComponent/>
  );
