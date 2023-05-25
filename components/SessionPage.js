@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import moment from "moment";
 
 import {
@@ -9,17 +9,18 @@ import {
   Dimensions,
   ImageBackground,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Modal
 } from "react-native";
 import HeaderNoLogo from "../components/HeaderNoLogo";
 import GreyButton from "../components/GreyButton";
 import OrangeButton from "../components/OrangeButton";
+import PlayersComponent from "./PlayersComponent";
 import { GlobalStyles } from "../components/GlobalStyles";
 import Checkbox from "expo-checkbox";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import NumericInput from "react-native-numeric-input";
 import ConfettiCannon from "react-native-confetti-cannon";
-import { useIsFocused } from "@react-navigation/native";
 import Config from "../config";
 import { useNavigation } from "@react-navigation/native";
 const IPAdresse = Config.IPAdresse;
@@ -33,10 +34,9 @@ export default function SessionPage() {
   const [hasJoined, setHasJoined] = useState("");
   const [confirmation, setConfirmation] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const user = useSelector((state) => state.user.value);
   const game = useSelector((state) => state.game.value);
-  const dispatch = useDispatch();
-  const isFocused = useIsFocused();
 
   // INITIALISATION: Game information and check for user in the game
   useEffect(() => {
@@ -198,13 +198,23 @@ export default function SessionPage() {
                       Intensité du game: {sessionInfos.mood}
                     </Text>
                   </View>
-                  <View style={styles.participantsBox}>
-                    <FontAwesome5 name={"users"} color={"#F0F0F0"} size={18} />
-                    <Text style={GlobalStyles.text}>
-                      {sessionParticipants} / {sessionInfos.maxParticipants}
-                    </Text>
-                  </View>
+                  <TouchableOpacity onPress={() => setModalVisible(true)}>
+                    <View style={styles.participantsBox}>
+                      <FontAwesome5 name={"users"} color={"#F0F0F0"} size={18} />
+                      <Text style={GlobalStyles.text}>
+                        {sessionParticipants} / {sessionInfos.maxParticipants}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
+
+                {/* Modal participants infos */}
+
+                <Modal visible={modalVisible} animationType="slide" transparent={true}>
+                  <View style={styles.modal}>
+                          <PlayersComponent/>
+                  </View>
+                </Modal>
 
                 <View style={styles.inputBox}>
                   <View style={styles.ballSection}>
@@ -469,5 +479,12 @@ padding:8
   confirmText: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  modal: {
+    height: "50%",
+    marginTop: "auto",
+    backgroundColor: "rgba(59, 59, 59, 1)",
+    alignItems:"center",
+    paddingBottom: 20
   },
 });
