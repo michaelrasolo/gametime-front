@@ -18,6 +18,7 @@ const MapSession = (props) => {
     const playgrounds = useSelector((state) => state.playground.value);
     const textLocation = useSelector((state) => state.location.value);
     const user = useSelector((state) => state.user.value);
+    const [selectedMarkerKey, setSelectedMarkerKey] = useState(null); // Added state to track selected marker key
 
     const [latitude,setLatitude] = useState(48.866667)
     const [longitude,setLongitude] = useState(2.333333)
@@ -58,9 +59,11 @@ const MapSession = (props) => {
           )})
         }
       })();
-    }, []);
+    },[textLocation]);
 
-    const handleMarker = (value) => {
+  
+
+    const handleMarker = (value,markerKey) => {
         const playgroundData = {
             id: value._id,
             source: value.photo,
@@ -70,7 +73,7 @@ const MapSession = (props) => {
             sessionsNb : value.sessionsNb,
             isLiked: value.isLiked
           };
-
+            setSelectedMarkerKey(markerKey); // Set the selected marker key
             dispatch(selectedPlayground((playgroundData)))
             setLatitude(value.location.coordinates[1])
             setLongitude(value.location.coordinates[0])
@@ -85,8 +88,8 @@ const MapSession = (props) => {
       } else if (playgrounds.selectedPlayground.sessionsNb === 1) {
         props.handleJoin(true)
       } else {
-        props.handleCloseModal()
-        console.log("test",playgrounds.selectedPlayground.id)
+        props.handleCloseModalWithoutEmpty()
+        console.log("test",playgrounds.selectedPlayground.playgroundId)
       }
     }
 
@@ -96,8 +99,9 @@ const MapSession = (props) => {
     };
     
     const markers = playgrounds.playgrounds.length > 0 && playgrounds.playgrounds.map((data, i) => {
+      const markerKey = `marker_${i}`; // Generate a unique key for each marker
         return <Marker 
-        key={i} 
+        key={markerKey} 
         coordinate={{ latitude: data.location.coordinates[1], longitude: data.location.coordinates[0] }} 
         title={data.name} 
         onPress={() => handleMarker(data)} 
@@ -125,6 +129,7 @@ const MapSession = (props) => {
     </MapView>
     {playgrounds.selectedPlayground.name &&
      <PlaygroundCard2 
+       key = {selectedMarkerKey}
       onPress={handleSelect} />}
     </>
   );

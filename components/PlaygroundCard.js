@@ -60,7 +60,7 @@ const PlaygroundCard = (props) => {
 
   useEffect(() => {
     refreshData()
-  }, [playgrounds.selectedPlayground.name]);
+  }, [playgrounds.selectedPlayground.name, playgrounds.selectedPlayground.playgroundId]);
 
   
   const handlePressFavorite = () => {

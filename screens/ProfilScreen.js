@@ -47,7 +47,7 @@ export default function ProfilScreen({ navigation }) {
         setPicture(data.data.picture)
         // console.log(user)
       });
-  }, []);
+  }, [user.picture]);
 
 
 
@@ -102,7 +102,7 @@ const handleValidation = () => {
  return (
    <KeyboardAvoidingView
    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}  style={styles.container}>
-     <HeaderNoLogo text={'Mon profil'}/>
+     <HeaderNoLogo onPress={()=> navigation.navigate('Search')} text={'Mon profil'}/>
      <ScrollView contentContainerStyle={styles.scrollview}>
        <View style={styles.picture}>
          <ProfilePicture camera={camera} picture={picture} setPicture={setPicture} />

@@ -1,5 +1,5 @@
 const Config = {
-    IPAdresse: "http://192.168.1.76:3000",
+    IPAdresse: "http://192.168.10.162:3000",
   };
   
   export default Config;

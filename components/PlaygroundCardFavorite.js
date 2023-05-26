@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "5%",
     left: "87%",
+    color: "#FB724C"
   },
   gametype: {
     position: "absolute",

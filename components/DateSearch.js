@@ -48,6 +48,7 @@ const DateSearch = (props) => {
       'samedi',
     ],
     dayNamesShort: ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'],
+    year: 'année', // Add the 'year' property
   };
 
   LocaleConfig.defaultLocale = 'fr';

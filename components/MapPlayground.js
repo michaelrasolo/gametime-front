@@ -59,7 +59,7 @@ const MapPlayground = (props) => {
           )})
         }
       })();
-    }, []);
+    }, [textLocation]);
 
     const handleGames = () => {
       props.handleCloseModal()
@@ -121,8 +121,6 @@ const buttonTitle = (props.sessionsNb === 0
       region={{
         latitude: textLocation ? textLocation.latitude : latitude,
         longitude: textLocation ? textLocation.longitude : longitude,
-        latitude : latitude,
-        longitude : longitude,
         latitudeDelta: 0.05,
         longitudeDelta: 0.05,
       }}

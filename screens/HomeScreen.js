@@ -27,7 +27,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <ImageBackground
       style={[styles.background]}
-      source={require("../assets/images/bbackground.gif")}
+      source={require("../assets/images/ezgif-2-e72dbb4bb5.gif")}
     >
       <View style={styles.logoBox}>
         <Image

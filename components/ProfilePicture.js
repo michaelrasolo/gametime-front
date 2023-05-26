@@ -87,7 +87,7 @@ export default function ProfilePicture(props) {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: props.picture }}
+        source={{ uri: props.picture != "" ? props.picture : 'https://res.cloudinary.com/dckrwifsf/image/upload/v1685087907/user_elgqcb.png'}}
         style={{ width: 200, height: 200 }}
       />
       <View style={styles.uploadBtnContainer}>

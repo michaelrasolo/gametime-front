@@ -176,20 +176,7 @@ export default function CreateSession({ navigation }) {
               <View style={styles.titleSection}>
                 <Text style={styles.title}>Nombre de joueurs</Text>
                 <View style={styles.fieldSection}>
-                  <View style={styles.SubfieldSection}>
-                    <Text style={styles.fieldName}>Nombre maximum</Text>
-                    <NumericInput
-                      totalHeight={35}
-                      minValue={1}
-                      valueType="integer"
-                      rightButtonBackgroundColor="rgba(59, 59, 59, 0.8)"
-                      iconStyle={{ color: "#FB724C" }}
-                      leftButtonBackgroundColor="rgba(59, 59, 59, 0.8)"
-                      textColor="#F0F0F0"
-                      onChange={(value) => setGameGroup(value)}
-                      value={gameGroup}
-                    />
-                  </View>
+           
 
                   <View style={styles.SubfieldSection}>
                     <Text style={styles.fieldName}>Ma team</Text>
@@ -203,6 +190,20 @@ export default function CreateSession({ navigation }) {
                       textColor="#F0F0F0"
                       onChange={(value) => setTeamGroup(value)}
                       value={teamGroup}
+                    />
+                  </View>
+                  <View style={styles.SubfieldSection}>
+                    <Text style={styles.fieldName}>Nombre maximum</Text>
+                    <NumericInput
+                      totalHeight={35}
+                      minValue={1}
+                      valueType="integer"
+                      rightButtonBackgroundColor="rgba(59, 59, 59, 0.8)"
+                      iconStyle={{ color: "#FB724C" }}
+                      leftButtonBackgroundColor="rgba(59, 59, 59, 0.8)"
+                      textColor="#F0F0F0"
+                      onChange={(value) => setGameGroup(value)}
+                      value={gameGroup}
                     />
                   </View>
                 </View>
@@ -235,7 +236,7 @@ export default function CreateSession({ navigation }) {
                       onValueChange={() => setIsWeekly(!isWeekly)}
                       color={isWeekly ? "#4630EB" : undefined}
                     />
-                    <Text style={styles.fieldName}>Hebdomadaire</Text>
+                    <Text style={styles.fieldNameHebdo}>Hebdomadaire</Text>
                   </View>
                   <View>
                     <Text style={styles.fieldName}>Date limite</Text>
@@ -316,14 +317,21 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 15,
     flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    justifyContent: "center",
+    alignItems: "center",    
   },
-  SubfieldSection: { width: "80%", alignItems: "center" },
+  SubfieldSection: { width: "60%", alignItems: "center" ,  justifyContent: "center"
+},
   fieldName: {
     color: "white",
     fontSize: 17,
     padding: 5,
+  },
+  fieldNameHebdo: {
+    color: "white",
+    fontSize: 17,
+    padding: 5,
+    marginRight: 30
   },
   titleSection: {
     alignItems: "baseline",

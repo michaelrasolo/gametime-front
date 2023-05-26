@@ -33,7 +33,7 @@ const platformShadow = () => {
 
 const MapListSearchBar = (props) => {
   const dispatch = useDispatch();
-
+  const textLocation = useSelector((state) => state.location.value);
   const [searchText, setSearchText] = useState('');
   const [isPressedLeft, setIsPressedLeft] = useState(true);
   const [isPressedRight, setIsPressedRight] = useState(false);
@@ -64,8 +64,8 @@ const MapListSearchBar = (props) => {
 
   const handleChange = (value) => {
     setSearchText(value)
-    if (value.length==1)  {dispatch(emptySelected())}
-    if (value.length < 2) {dispatch(setLocation(null))}
+    if (value.length===0) {dispatch(setLocation(null))
+      dispatch(emptySelected())}
     if (value.length > 2) {
       fetch(`${IPAdresse}/playgrounds/city/${value}`, {
         method: 'PUT',
@@ -83,9 +83,11 @@ const MapListSearchBar = (props) => {
           )
         )
           .then((updatedData) => {
-
+          console.log("data", updatedData)
           dispatch(setPlaygroundList(updatedData))
           dispatch(setLocation({longitude : updatedData[0].location.coordinates[0],latitude : updatedData[0].location.coordinates[1]}))
+          console.log("location",textLocation)
+
         })})
     }
   }

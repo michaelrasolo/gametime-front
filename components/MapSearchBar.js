@@ -18,8 +18,8 @@ const MapSearchBar = (props) => {
 
     const handleChange = async (value) => {
         setSearchText(value);
-        if (value.length==1)  {dispatch(emptySelected())}
-        if (value.length < 2) {dispatch(setLocation(null))}
+        if (value.length===0) {dispatch(setLocation(null))
+          dispatch(emptySelected())}
         if (value.length > 2) {
             const response = await fetch(`${IPAdresse}/playgrounds/city/${value}`, {
               method: 'PUT',

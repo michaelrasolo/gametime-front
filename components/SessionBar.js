@@ -7,6 +7,7 @@ import 'moment/locale/fr'
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useDispatch } from 'react-redux';
 import { selectTime,selectDate} from '../reducers/playground';
+import { useSelector } from 'react-redux';
 
 const SessionBar = (props) => {
     const dispatch = useDispatch()
