@@ -23,9 +23,13 @@ import NumericInput from "react-native-numeric-input";
 import ConfettiCannon from "react-native-confetti-cannon";
 import Config from "../config";
 import { useNavigation } from "@react-navigation/native";
+import { emptySelected } from "../reducers/playground";
+import { useDispatch } from "react-redux";
+
 const IPAdresse = Config.IPAdresse;
 
 export default function SessionPage(props) {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
   const [sessionInfos, setSessionInfos] = useState(null);
   const [sessionParticipants, setSessionParticipants] = useState(null);
@@ -85,6 +89,7 @@ export default function SessionPage(props) {
         if (gameUpdate.result == true) console.log("You joined the game");
         setConfirmation(true);
       });
+      dispatch(emptySelected())
   };
 
   // FUNCTION QUIT THE GAME

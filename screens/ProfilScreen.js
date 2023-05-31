@@ -18,7 +18,11 @@ import Config from "../config";
 const IPAdresse = Config.IPAdresse;
 
 export default function ProfilScreen({ navigation }) {
-  const [birthdate, setBirthdate] = useState('');
+  const buttons = [
+    { key: 'logout', title: [logoutIcon, logoutText] },
+    // Add more buttons as needed
+  ];
+  const [birthdate, setBirthdate] = useState('date de naissance');
   const [city, setCity] = useState('');
   const [gender, setGender] = useState("");
   const [level, setLevel] = useState('');
@@ -36,7 +40,7 @@ export default function ProfilScreen({ navigation }) {
     fetch(`${IPAdresse}/users/${user.token}`)
       .then(response => response.json())
       .then(data => {
-        setBirthdate(data.data.birthdate)
+        setBirthdate("12/12/2000")
         setCity(data.data.city)
         setGender(data.data.gender)
         setLevel(data.data.level)
@@ -114,7 +118,8 @@ const handleValidation = () => {
        <View style={styles.topFields}>
          <View style={styles.fieldSection} width='48%'>
            <Text style={styles.fieldName}>Date de naissance </Text>
-           <DateSearch selectDate={(value) => setBirthdate(value)} value={birthdate}/>
+           <Inputs onChangeText={(value) => setBirthdate(value)} value={birthdate}/>
+           {/* <DateSearch selectDate={(value) => setBirthdate(value)} value={birthdate}/> */}
          </View>
          <View style={styles.fieldSection} width='48%'>
          <Text style={styles.fieldName}>Ville</Text>
@@ -146,9 +151,11 @@ const handleValidation = () => {
          <Inputs onChangeText={(value) => setFavoriteShoes(value)} value={favoriteShoes}/>
        </View>
        <View style={styles.buttonSection}>
-         <OrangeButton title='Enregistrer' width='80%' onPress={() => handleValidation()} />
-        <GreyButton title={[logoutIcon, logoutText]} width='60%' onPress={handleLogoutPress} />
-       </View>
+  <OrangeButton title='Enregistrer' width='80%' onPress={() => handleValidation()} />
+  {buttons.map((button) => (
+    <GreyButton key="logout" title="Se déconnecter" width='60%' onPress={handleLogoutPress} />
+  ))}
+</View>
      </ScrollView>
    </KeyboardAvoidingView>
  );
