@@ -5,14 +5,9 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  Platform,
-  Dimensions
-  
+  Platform,  
 } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Icon from "react-native-ionicons";
-import { height } from "@mui/system";
-
 
 const GameCard = (props,{navigation}) => {
   // SHADOW FUNCTION

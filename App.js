@@ -14,12 +14,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+
 import { Provider } from 'react-redux';
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from "redux-persist";
-import { PersistGate } from "redux-persist/integration/react";
-//import storage from 'redux-persist/lib/storage';
-import asyncStorage from "@react-native-async-storage/async-storage";
+import { configureStore } from '@reduxjs/toolkit';
+
+import storage from 'redux-persist/lib/storage';
 
 import user from './reducers/user';
 import playground from './reducers/playground';
@@ -29,22 +28,21 @@ import game from './reducers/game';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CameraScreen from './screens/CameraScreen';
 import ViewProfileScreen from './components/ViewProfile';
+import { LogBox } from 'react-native';
 
-const reducers = combineReducers({ user, playground, location, game });
 
-const persistConfig = { key: 'GameTime', blacklist: ["game","user","playground"], storage: asyncStorage };
 const store = configureStore({
-  reducer: persistReducer(persistConfig, reducers),
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
- });
+ reducer: {user, playground, location, game },
+});
 
- 
-const persistor = persistStore(store);
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+  LogBox.ignoreAllLogs();//Ignore all log notifications
+
   return (
     <Tab.Navigator screenOptions={({ route }) => ({
       tabBarIcon: ({ color, size }) => {
@@ -81,7 +79,6 @@ export default function App() {
   return (
 
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={HomeScreen} />
@@ -92,7 +89,6 @@ export default function App() {
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
-      </PersistGate>
     </Provider>
   );
 }

@@ -8,7 +8,7 @@ import {
     View,
     TouchableOpacity
   } from 'react-native';
-  import { useLayoutEffect,useRef, useEffect, useState} from 'react';
+  import {useRef, useEffect, useState} from 'react';
   import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
   import { useNavigation } from '@react-navigation/native';
   import Config from "../config";
@@ -24,7 +24,6 @@ import {
     const user = useSelector((state) => state.user.value)
     const game = useSelector((state) => state.game.value)
   
-
     var socket = socketIOClient(IPAdresse);
 
     const scrollViewRef = useRef(null);

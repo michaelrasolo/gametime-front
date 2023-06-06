@@ -134,7 +134,7 @@ const PlaygroundCard = (props) => {
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.playground}>
-          {playgrounds.selectedPlayground.name}, {props.city}
+          {playgrounds.selectedPlayground.name}, {playgrounds.selectedPlayground.city}
         </Text>
         <View style={styles.bottomBox}>
         <Text style={styles.address}>
