@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 
+// Style to be used accross all screens/components
 export const GlobalStyles = StyleSheet.create({
   h2: {
     fontSize: 24,

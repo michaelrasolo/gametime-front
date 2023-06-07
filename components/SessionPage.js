@@ -43,30 +43,30 @@ export default function SessionPage(props) {
     fetch(`${IPAdresse}/sessions/game/${game.gameId}/`) // Game ID
       .then((res) => res.json())
       .then((response) => {
-        response && setSessionInfos(response.sessionData); // Session data
-        response && setSessionParticipants(response.totalParticipants); // Count of session members
+        response && setSessionInfos(response.sessionData); // Store session data in the State if response
+        response && setSessionParticipants(response.totalParticipants); // Store Count of session members in the state
       })
       .catch((error) => {
         console.log("Error fetching session data:", error);
       });
-    fetch(`${IPAdresse}/sessions/check/${game.gameId}/${user.token}`)
+    fetch(`${IPAdresse}/sessions/check/${game.gameId}/${user.token}`) // Check if user is already in the game
       .then((res) => res.json())
       .then((response) => {
         if (response.result == true) {
-          setHasJoined(response.result);
-          setGroup(response.userGroup);
-          setBringBall(response.ball);
+          setHasJoined(response.result); // set HasJoined accordingly
+          setGroup(response.userGroup); // set nb users
+          setBringBall(response.ball); // set if user brings a ball
         } else {
           setHasJoined(false);
         }
       });
-    if (sessionInfos && moment(sessionInfos.date).isBefore(moment())) {
+    if (sessionInfos && moment(sessionInfos.date).isBefore(moment())) { // use moment to check if date is before the current date
       setGameOver(true);
       console.log("moment", moment());
       console.log("date", sessionInfos.date);
       console.log("State:", gameOver);
     }
-  }, [hasJoined, gameOver]);
+  }, [hasJoined, gameOver]); // need to re render if the participation status changes, or if date has passed 
 
   // FUNCTION JOIN THE GAME
 
@@ -124,6 +124,9 @@ export default function SessionPage(props) {
   const handleChat = () => {
     navigation.navigate('Chat');
   }
+
+    // Management of playground photos
+
   const images = {
     playground1: require("../assets/playgrounds/playground1.jpg"),
     playground2: require("../assets/playgrounds/playground2.jpg"),
@@ -142,7 +145,7 @@ export default function SessionPage(props) {
 
   return (
     <>
-      {sessionInfos ? ( // Control if sessionInfos fetch to state is defined
+      {sessionInfos ? ( // Display page if sessionInfos fetch to state is defined
         <View style={styles.container}>
           <HeaderNoLogo onPress={props.onPress} />
           {!confirmation && ( // Session Page before validation
@@ -248,7 +251,7 @@ export default function SessionPage(props) {
                     />
                   </View>
                 </View>
-                {hasJoined && !gameOver ? (
+                {hasJoined && !gameOver ? ( // Display if user already joined the game, and game date has not passed
                   <Text style={styles.time}>Tu participes déjà à ce game</Text>
                 ) : (
                   <></>
@@ -280,7 +283,7 @@ export default function SessionPage(props) {
                       justifyContent: "center",
                     }}
                   >
-                    {gameOver ? (
+                    {gameOver ? ( // Display if the game's date has passed
                       <Text style={styles.time}>
                         Ce game est maintenant terminé.
                       </Text>

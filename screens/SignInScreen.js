@@ -25,7 +25,7 @@ export default function SignInScreen({ navigation }) {
   const user = useSelector((state) => state.user.value)
 
   const dispatch = useDispatch();
-
+// CONNEXION
   const handleConnection = () => {
     fetch(`${IPAdresse}/users/signin`, {
       method: "POST",
@@ -35,9 +35,9 @@ export default function SignInScreen({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          dispatch(login({ nickname: data.nickname, token: data.token, city: data.city }));
+          dispatch(login({ nickname: data.nickname, token: data.token, city: data.city })); //Information for Redux
           navigation.navigate('TabNavigator');
-          dispatch(setLocation(null))    
+          dispatch(setLocation(null)) // Clear location at new connexion    
         } else {
           setIdError(true);
         }
