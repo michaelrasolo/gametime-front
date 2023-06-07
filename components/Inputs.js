@@ -2,9 +2,6 @@ import React from 'react';
 import { Text, View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 
 function Inputs(props){
-
-
-
     return(
         <View style={[styles.container, { width: props.width, height: props.height }]}>
             <Text style={styles.text}>{props.name}</Text>

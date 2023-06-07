@@ -59,34 +59,7 @@ function PlayersComponent(props) {
             ))
           
             }
-            {
-            participantsInfos.map((participant, index) => (
-                  <View key={index} style={styles.container}>
-
-                        <Image style={styles.image} source={{ uri: participant.picture }} />
-
-                    <View style={styles.userBox}>
-                        <Text style={styles.title}>{participant.nickname}</Text>
-                        <Text style={styles.text}>{participant.gender}</Text>
-                        <Text style={styles.text}>{participant.level}</Text>
-                    </View>
-
-                    <View style={styles.infoBox}>
-                      <View style={{marginBottom:18}}>
-                        <Text style={styles.title}>Joueur Préféré</Text>
-                        <Text style={styles.text}>{participant.favoritePlayer}</Text>
-                      </View>
-
-                      <View>
-                        <Text style={styles.title}>Mes chaussures</Text>
-                        <Text style={styles.text}>{participant.favoriteShoes}</Text>
-                      </View>
-
-                    </View>
-                  </View>
-            ))
-          
-            }
+            
       </ScrollView>
 
       <View style={{alignItems: "center", marginTop: 25}}>

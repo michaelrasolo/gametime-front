@@ -53,10 +53,17 @@ const handleCloseModal = () => {
   dispatch(setLocation(null))
 }
 
+const handleCloseModalWithoutEmpty = () => {
+  setModalVisible(false)
+  dispatch(setPlaygroundList([]))
+  dispatch(setLocation(null))
+}
+
+
 
 const handleJoin = () => {
-  setModalVisible(false)
   dispatch(selectGame(filteredPlayground[0]._id))
+  setModalVisible(false)
   setCardPress(true)
   dispatch(emptySelected())
 }
@@ -84,11 +91,11 @@ const handleJoin = () => {
   // });
 
   // const filteredDate = selectedPlayground.playgroundId && sessions.filter(data => {
-  //   const selectedDate = new Date(selectedPlayground.date);
+  //   const selectedDate = new Date(selectedPlayground.date).toDateString
   //   if (selectedDate) {
-  //     const selectedDay = selectedDate.getDate();
-  //     const itemDay = new Date(data.date).getDate();
-  //     return itemDay === selectedDay;
+  //     const itemDay = new Date(data.date).toDateString;
+
+  //     return moment(itemDay).isSame(selectedDate,'day')
   //   }
   //   return false;
   // });
@@ -142,7 +149,7 @@ const gamecards = games.map((data, i) => {
         <View style={styles.modal}>
           <MapSearchBar handleCloseModal={() => { setModalVisible(false)
           dispatch(emptySelected())}} />
-          <MapSession handleJoin={handleJoin} handleCloseModal={handleCloseModal}/>
+          <MapSession handleJoin={handleJoin} handleCloseModalWithoutEmpty={handleCloseModalWithoutEmpty}/>
         </View>
       </Modal>
       <View style={styles.content}>

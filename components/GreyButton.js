@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity,StyleSheet } from 'react-native';
 
+// Fonction pour définir les styles d'ombre en fonction de la plateforme (andoid ou IOS)
 const platformShadow = () => {
   if (Platform.OS === 'android') {
     return {

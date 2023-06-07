@@ -29,9 +29,9 @@ export default function FavoriteScreen({ navigation }) {
   }, [playground.selectedPlayground.name]);
  
   const handleChoosePress = (value) => {
+    const updatedValue = { ...value, id: value._id }; // Create a new object with the updated key
+    dispatch(selectedPlayground(updatedValue)); // 
     navigation.navigate('Search')
-    dispatch(selectedPlayground(value))
-    console.log(playground)
   }
 
   const handleDeletePress = (value) => {

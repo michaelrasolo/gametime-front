@@ -8,7 +8,7 @@ import {
     View,
     TouchableOpacity
   } from 'react-native';
-  import { useLayoutEffect,useRef, useEffect, useState} from 'react';
+  import {useRef, useEffect, useState} from 'react';
   import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
   import { useNavigation } from '@react-navigation/native';
   import Config from "../config";
@@ -23,12 +23,8 @@ import {
     const navigation = useNavigation()
     const user = useSelector((state) => state.user.value)
     const game = useSelector((state) => state.game.value)
-
-    const sessionId = game.gameId; // Récupérer le sessionId à partir de votre état ou de toute autre source
-
-    var socket = socketIOClient(IPAdresse, {
-      query: { sessionId: sessionId }
-    });
+  
+    var socket = socketIOClient(IPAdresse);
 
     const scrollViewRef = useRef(null);
 
@@ -55,35 +51,21 @@ import {
 setMessages(data)});
     }
 
-// const refreshMessages = () => {
-//   fetch(`${IPAdresse}/chat/${game.gameId}`, {
-//     method: 'PUT',
-//     headers: { 'Content-Type': 'application/json' }
-//   })
-//     .then(res => res.json())
-//     .then(data => {
-//       setMessages(data);
-//     });
-
-//   setTimeout(refreshMessages, 3000);
-// };
-
-// refreshMessages();
-
-    // setInterval(refreshMessages, 2000);
 
     useEffect(() => {
-      refreshMessages()
       console.log("Socket connected: ", socket.connected);
-      socket.on("newMessage", (message)=> {
-        console.log(message)
-         setMessages(prevMessages => [...prevMessages, message])
-         scrollViewRef.current.scrollToEnd({ animated: true })
-      });}, []);
-
-      useLayoutEffect(() => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
-      }, []);
+      socket.on("newMessage", (message) => {
+        setMessages(prevMessages => [...prevMessages, message]);
+        scrollViewRef.current.scrollToEnd({ animated: true });
+        refreshMessages(); // Refresh messages when a new message is received
+      });
+    
+      refreshMessages(); // Initial messages fetch when the component mounts
+    
+      return () => {
+        socket.off("newMessage"); // Clean up the event listener when the component unmounts
+      };
+    }, [messages]);
      
 
     const handleSend = () => {

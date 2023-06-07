@@ -1,22 +1,21 @@
+//composant contenant la barre de recherche et les boutons carte et liste lorsqu'on cherche un playground dans la page Création de session
+
 import React from 'react';
 import { TextInput, Text, View, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import OrangeButton from './OrangeButton';
-import GreyButton from './GreyButton';
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaygroundList, emptySelected } from '../reducers/playground';
 import { setLocation } from '../reducers/location';
 import Config from "../config";
 
-
 const IPAdresse = Config.IPAdresse;
 
-
+// Fonction pour définir les styles d'ombre en fonction de la plateforme
 const platformShadow = () => {
   if (Platform.OS === 'android') {
     return {
-      elevation: 4, // Android box shadow
+      elevation: 4, // Ombre pour Android
     };
   } else if (Platform.OS === 'ios') {
     return {
@@ -33,73 +32,78 @@ const platformShadow = () => {
 
 const MapListSearchBar = (props) => {
   const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState(''); //état pour stocker l'input tapé dans la barre de recherche
+  const [isPressedLeft, setIsPressedLeft] = useState(true); //état permettant de gérer l'affichage de la carte (bouton gauche)
+  const [isPressedRight, setIsPressedRight] = useState(false); //état permettant de gérer l'affichage de la liste (bouton droite)
 
-  const [searchText, setSearchText] = useState('');
-  const [isPressedLeft, setIsPressedLeft] = useState(true);
-  const [isPressedRight, setIsPressedRight] = useState(false);
+  // Gère le clic sur le bouton "Carte"
   const handlePressLeft = () => {
-
     if (isPressedLeft === false) {
-      props.handleMap()
-      props.handleList()
-      inputRef.current.blur(); // Unfocus the input
-
+      props.handleMap() // ouvre ou ferme la carte 
+      props.handleList() // ouvre ou ferme la list
+      inputRef.current.blur(); // Désélectionne l'input pour perdre le focus
     }
     setIsPressedLeft(true);
     setIsPressedRight(false);
   }
 
+  // Gère le clic sur le bouton "Liste"
   const handlePressRight = () => {
     if (isPressedRight == false) {
-      props.handleMap()
-      props.handleList()
-      inputRef.current.focus(); // Focus the input
-
+      props.handleMap() // ouvre ou ferme la carte 
+      props.handleList() // ouvre ou ferme la list
+      inputRef.current.focus(); // Sélectionne l'input pour obtenir le focus
     }
     setIsPressedLeft(false);
     setIsPressedRight(true);
   }
 
-  const inputRef = useRef(); // cible l'input search du modal pour pouvoir mettre un focus dessus et ouvrir le keyboard directement à l'ouverture du modal
+  const inputRef = useRef(); // Référence à l'input de recherche pour pouvoir y mettre le focus à l'ouverture de la modale
 
+  // Gère le changement de texte dans l'input de recherche:
+  // - Si l'utilisateur efface le texte dans la barre de recherche (length = 0), on réactive la géolocalisation et vide le reducer
+  // - Sinon, on fetch la base de données pour récupérer les playgrounds correspondant à la ville tapée dans l'input
   const handleChange = (value) => {
-    setSearchText(value)
-    if (value.length==1)  {dispatch(emptySelected())}
-    if (value.length < 2) {dispatch(setLocation(null))}
-    if (value.length > 2) {
-      fetch(`${IPAdresse}/playgrounds/city/${value}`, {
-        method: 'PUT',
+    setSearchText(value);
+    if (value.length === 0) 
+    { 
+      dispatch(setLocation(null));
+      dispatch(emptySelected());
+    }
+    if (value.length > 2)
+     { 
+      fetch(`${IPAdresse}/playgrounds/city/${value}`, { //récupère les terrains de la ville
+        method: 'PUT', 
         headers: { 'Content-Type': 'application/json' }
       })
         .then(res => res.json())
-        .then(data => { Promise.all(
-          data.map((item) =>
-            fetch(`${IPAdresse}/playgrounds/${item._id}`)
-              .then((sessionsResponse) => sessionsResponse.json())
-              .then((sessionsData) => {
-                item["sessionsNb"] = sessionsData.sessions.length;
-                return item;
-              })
+        .then(data => {
+          Promise.all(
+            data.map((item) =>
+              fetch(`${IPAdresse}/playgrounds/${item._id}`) //Récupère pour chaque terrain le nombre de sessions prévues sur ce terrain (info présente sur la playgroundcard)
+                .then((sessionsResponse) => sessionsResponse.json())
+                .then((sessionsData) => {
+                  item["sessionsNb"] = sessionsData.sessions.length;
+                  return item;
+                })
+            )
           )
-        )
-          .then((updatedData) => {
-
-          dispatch(setPlaygroundList(updatedData))
-          dispatch(setLocation({longitude : updatedData[0].location.coordinates[0],latitude : updatedData[0].location.coordinates[1]}))
-        })})
+            .then((updatedData) => {
+              dispatch(setPlaygroundList(updatedData)) //Les terrains correspondant à la ville sont ajouté au reducer qui permet l'affichage dans la liste et la carte
+              dispatch(setLocation({ longitude: updatedData[0].location.coordinates[0], latitude: updatedData[0].location.coordinates[1] })) //On prend la latitude et la longitude du premier terrain de la liste pour repositionner la map sur la ville tapée dans l'input
+            })
+        })
     }
   }
-  return (
 
-    <SafeAreaView style={styles.container} >
-      <View style={[styles.header, { paddingTop: Platform.OS === 'android' && 40 }]} >
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={[styles.header, { paddingTop: Platform.OS === 'android' && 40 }]}>
         <View style={[styles.inputContainer]}>
           <FontAwesome style={styles.icon} name="search" size={30} color="white" />
           <TextInput
             style={styles.input}
             ref={inputRef}
-            // onLayout={() => { inputRef.current.focus() }
-            // }
             placeholder="Saisis ta ville"
             onChangeText={handleChange}
             placeholderTextColor="#242424"
@@ -113,15 +117,23 @@ const MapListSearchBar = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => handlePressLeft()} style={[styles.unpressedButton, isPressedLeft ? styles.pressedButton : styles.unpressedButton, platformShadow()]}  >
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => handlePressLeft()}
+            style={[styles.unpressedButton, isPressedLeft ? styles.pressedButton : styles.unpressedButton, platformShadow()]}
+          >
             <Text style={styles.Text}>Carte</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => handlePressRight()} style={[styles.unpressedButton, isPressedRight ? styles.pressedButton : styles.unpressedButton, platformShadow()]}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => handlePressRight()}
+            style={[styles.unpressedButton, isPressedRight ? styles.pressedButton : styles.unpressedButton, platformShadow()]}
+          >
             <Text style={styles.Text}>Liste</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView >
+    </SafeAreaView>
   )
 }
 
@@ -197,5 +209,4 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontSize: 20
   }
-
 });

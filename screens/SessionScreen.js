@@ -91,7 +91,7 @@ export default function SessionScreen({ navigation }) {
     <View style={styles.container}>
       {!cardPress && (
       <>
-      <HeaderNoLogo text={'Mes Sessions'}/>
+      <HeaderNoLogo onPress={() => navigation.navigate("Search")} text={'Mes Sessions'}/>
       <View style={styles.content}>
         <View style={styles.buttonSection}>
           <RadioButtons3 onPress={handleButtonPress} leftTitle='A venir' rightTitle='Passées' value={PressedButton}/>

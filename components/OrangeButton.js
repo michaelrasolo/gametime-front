@@ -2,10 +2,11 @@ import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
+// Fonction pour définir les styles d'ombre en fonction de la plateforme (andoid ou IOS)
 const platformShadow = () => {
   if (Platform.OS === 'android') {
     return {
-      elevation: 4, // Android box shadow
+      elevation: 4, // Ombre pour Android
     };
   } else if (Platform.OS === 'ios') {
     return {
@@ -20,6 +21,7 @@ const platformShadow = () => {
   }
 };
 
+// Composant OrangeButton
 const OrangeButton = ({ title, width, height, onPress }) => {
   return (
     <TouchableOpacity activeOpacity={0.6} onPress={onPress} style={[styles.container, { width }, platformShadow()]}>
@@ -37,6 +39,7 @@ const OrangeButton = ({ title, width, height, onPress }) => {
   );
 };
 
+// Styles du composant OrangeButton
 const styles = StyleSheet.create({
   container: {
     height: 50,

@@ -34,7 +34,7 @@ const PlaygroundCard2 = (props) => {
 
   useEffect(() => {
     refreshData()
-  }, [playgrounds.selectedPlayground.playgroundId]);
+  }, [playgrounds.selectedPlayground]);
  
 
   // SHADOW FUNCTION

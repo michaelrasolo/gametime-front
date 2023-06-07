@@ -1,8 +1,10 @@
+//composant contenant la barre de recherche présente sur la carte dans la page recherche de session
+
 import React from 'react';
 import { TextInput, Text, View, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useRef, useState } from 'react';
-import { useDispatch, emptySelected} from 'react-redux';
+import { useDispatch, emptySelected } from 'react-redux';
 import { setPlaygroundList } from '../reducers/playground';
 import Config from "../config";
 import { setLocation } from '../reducers/location';
@@ -13,30 +15,32 @@ const MapSearchBar = (props) => {
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState('');
 
+  // Gère le changement de texte dans l'input de recherche:
+  // - Si l'utilisateur efface le texte dans la barre de recherche (length = 0), on réactive la géolocalisation et vide le reducer
+  // - Sinon, on fetch la base de données pour récupérer les playgrounds correspondant à la ville tapée dans l'input
+  const handleChange = async (value) => {
+    setSearchText(value);
+    if (value.length === 0) {
+      dispatch(setLocation(null))
+      dispatch(emptySelected())
+    }
+    if (value.length > 2) {
+      const response = await fetch(`${IPAdresse}/playgrounds/city/${value}`, { //récupère les terrains de la ville
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await response.json();
 
-  // const inputRef = useRef(); // cible l'input search du modal pour pouvoir mettre un focus dessus et ouvrir le keyboard directement à l'ouverture du modal
+      const updatedData = await Promise.all(data.map(async (item) => {  //récupère pour chaque terrain le nombre de sessions prévues sur ce terrain (info présente sur la playgroundcard)
+        const sessionsResponse = await fetch(`${IPAdresse}/playgrounds/${item._id}`);
+        const sessionsData = await sessionsResponse.json();
+        item["sessionsNb"] = sessionsData.sessions.length;
+        return item;
+      }));
+      dispatch(setPlaygroundList(updatedData)); //Les terrains correspondant à la ville sont ajouté au reducer qui permet l'affichage dans la liste et la carte
+      dispatch(setLocation({ longitude: updatedData[0].location.coordinates[0], latitude: updatedData[0].location.coordinates[1] })) //On prend la latitude et la longitude du premier terrain de la liste pour repositionner la map sur la ville tapée dans l'input
 
-    const handleChange = async (value) => {
-        setSearchText(value);
-        if (value.length==1)  {dispatch(emptySelected())}
-        if (value.length < 2) {dispatch(setLocation(null))}
-        if (value.length > 2) {
-            const response = await fetch(`${IPAdresse}/playgrounds/city/${value}`, {
-              method: 'PUT',
-              headers: { 'Content-Type': 'application/json' }
-            });
-            const data = await response.json();
-      
-            const updatedData = await Promise.all(data.map(async (item) => {
-              const sessionsResponse = await fetch(`${IPAdresse}/playgrounds/${item._id}`);
-              const sessionsData = await sessionsResponse.json();
-              item["sessionsNb"] = sessionsData.sessions.length;
-              return item;
-            }));
-            dispatch(setPlaygroundList(updatedData));
-            dispatch(setLocation({longitude : updatedData[0].location.coordinates[0],latitude : updatedData[0].location.coordinates[1]}))
-
-        }
+    }
   }
   return (
 
@@ -46,9 +50,6 @@ const MapSearchBar = (props) => {
           <FontAwesome style={styles.icon} name="search" size={30} color="white" />
           <TextInput
             style={styles.input}
-            // ref={inputRef}
-            // onLayout={() => { inputRef.current.focus() }
-            // }
             placeholder="Saisis ta ville"
             onChangeText={handleChange}
             placeholderTextColor="#242424"
@@ -109,6 +110,6 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10
   },
-  
+
 
 });

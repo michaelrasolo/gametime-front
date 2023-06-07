@@ -6,9 +6,9 @@ import 'moment/locale/fr';
 
 const DateSearch = (props) => {
   const [selectedDate, setSelectedDate] = useState(null);
-  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false); //état permettant d'afficher ou non la modale contenant le calendrier
 
-
+// configuration du calendrier en Français
   LocaleConfig.locales['fr'] = {
     monthNames: [
       'janvier',
@@ -48,6 +48,7 @@ const DateSearch = (props) => {
       'samedi',
     ],
     dayNamesShort: ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'],
+    year: 'année', 
   };
 
   LocaleConfig.defaultLocale = 'fr';
@@ -60,13 +61,13 @@ const DateSearch = (props) => {
     props.selectDate(date.dateString)
   };
 
-  const toggleCalendar = () => {
+  const toggleCalendar = () => { //ouvre la modale calendrier
     setIsCalendarVisible(!isCalendarVisible);
   };
 
 
-  const handleCloseCalendar = () => {
-    setIsCalendarVisible(false);
+  const handleCloseCalendar = () => { //ferme la modale calendrier
+    setIsCalendarVisible(false); 
   };
 
   const currentDate = new Date();

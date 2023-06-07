@@ -68,15 +68,17 @@ export default function SignUpScreen({ navigation }) {
                         console.log(user)
                     }
                 });
-                navigation.navigate('TabNavigator', {screen:'Profile'});
+                navigation.navigate('TabNavigator', {screen:'Search'});
                 dispatch(setLocation(null))    
         }
       };
 
 
   return (
-    <KeyboardAvoidingView
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+<KeyboardAvoidingView
+  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+  style={styles.container}
+>
       <HeaderLogo />
 
       <View style={styles.title}>
